@@ -18,6 +18,7 @@
         'web.report_assets_common': [
             'report_myanmar_font/static/src/scss/fonts.scss',
         ],
+        
     },
     'data': ['views/invoice_report.xml'],
     'installable': True,
