@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="kbz_product_product_form" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="after">
+                <field name="brand_id" required="1"/>
+                <field name="brand_owner" widget="many2many_tags" required="1"/>
+            </field>
+            <field name="default_code" position="replace">
+                <label for="default_code"/>
+                <div name="default_code" class="o_row">
+                    <field name="default_code" readonly="True"/>
+                    <span name="if_code">
+                        <button string="Generate Code" name="generate_default_code"
+                                type="object" class="oe_link pt-0 oe_inline"/>
+                    </span>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="kbz_product_template_form" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="brand_id"/>
+                <field name="brand_owner" widget="many2many_tags" required="1"/>
+            </field>
+            <field name="barcode" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </field>
+            <field name="default_code" position="replace">
+                <label for="default_code"/>
+                <div name="default_code" class="o_row">
+                    <field name="default_code" readonly="1"/>
+                    <span name="if_code">
+
+                        <button string="Generate Code" name="generate_default_code"
+
+                                type="object" class="oe_link pt-0 oe_inline"/>
+                    </span>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="kbz_product_product_list_inherit" model="ir.ui.view">
+        <field name="name">product.product.list.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="after">
+                <field name='brand_id'/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_valuation_update,stock.valuation.update,model_stock_valuation_update,,1,1,1,1
+access_account_date_update,account.date.update,model_account_date_update,,1,1,1,1
+access_account_line_date_update,account.line.date.update,model_account_line_date_update,,1,1,1,1
+access_account_move_line_update,account.move.line.update,model_account_move_line_update,,1,1,1,1

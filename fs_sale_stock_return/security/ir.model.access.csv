@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_stock_return_all,All access for Sale Stock Return,model_sale_stock_return,base.group_user,1,1,1,1
+access_sale_stock_return_line_all,All access for Sale Stock Return Line,model_sale_stock_return_line,base.group_user,1,1,1,1
+access_sale_stock_return_image_all,All access for Sale Stock Return Image,model_sale_stock_return_image,base.group_user,1,1,1,1
+access_sale_return_payment_all,User access for Sale Return Payment,model_sale_return_payment,base.group_user,1,0,0,0
+access_sale_return_payment_system,User Access For Payment System,model_sale_return_payment,base.group_system,1,0,0,1
+

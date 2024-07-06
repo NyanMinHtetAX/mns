@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="ExpiredLotsDashboard">
+        <div class="expired-lots-dashboard-container">
+            <div class="expired-lots-dashboard-card" data-block-name="a">
+                <div class="expired-lots-card-label">
+                    <span class="expired-lots-a-count"></span>
+                </div>
+                <div class="expired-lots-card-text">
+                    <div>Expired In</div>
+                    <div class="expired-lots-a-duration"></div>
+                    <div class="expired-lots-a-unit"></div>
+                </div>
+            </div>
+            <div class="expired-lots-dashboard-card" data-block-name="b">
+                <div class="expired-lots-card-label">
+                    <span class="expired-lots-b-count"></span>
+                </div>
+                <div class="expired-lots-card-text">
+                    <div>Expired In</div>
+                    <div class="expired-lots-b-duration"></div>
+                    <div class="expired-lots-b-unit"></div>
+                </div>
+            </div>
+            <div class="expired-lots-dashboard-card" data-block-name="c">
+                <div class="expired-lots-card-label">
+                    <span class="expired-lots-c-count"></span>
+                </div>
+                <div class="expired-lots-card-text">
+                    <div>Expired In</div>
+                    <div class="expired-lots-c-duration"></div>
+                    <div class="expired-lots-c-unit"></div>
+                </div>
+            </div>
+            <div class="expired-lots-dashboard-card" data-block-name="d">
+                <div class="expired-lots-card-label">
+                    <span class="expired-lots-d-count"></span>
+                </div>
+                <div class="expired-lots-card-text expired-lots-card-d">
+                    Expired
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

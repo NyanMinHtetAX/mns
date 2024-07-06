@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_assign_to_cash_collector" model="ir.actions.server">
+        <field name="name">Assign to Cash Collector</field>
+        <field name="model_id" ref="model_account_move"/>
+        <field name="binding_model_id" ref="model_account_move" />
+        <field name="state">code</field>
+        <field name="binding_view_types">list,form</field>
+        <field name="code">
+            action = records.assign_to_cash_collector()
+        </field>
+    </record>
+    <record model="ir.ui.view" id="account_invoice_form_payment_collection">
+            <field name="name">Account Invoice</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="sale.account_invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                        <field name="invoice_address_id"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+</odoo>

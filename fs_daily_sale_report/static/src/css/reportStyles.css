@@ -1,0 +1,13 @@
+h2.daily-sale-header{
+    text-align: center;
+}
+
+.dailySaleSummary-table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #cecece;
+}
+
+.dailySaleSummary-table td{
+    padding: 8px;
+}

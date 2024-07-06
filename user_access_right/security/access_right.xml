@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>     
+        <record id="group_return_btn_access" model="res.groups">
+            <field name="name">Access Picking Return Btn </field>
+        </record>
+    </data>
+</odoo>
+

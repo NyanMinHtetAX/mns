@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_outlet_tree" model="ir.ui.view">
+            <field name="name">res.partner.outlet.tree</field>
+            <field name="model">res.partner.outlet</field>
+            <field name="arch" type="xml">
+                <tree string="Outlet">
+                    <field name="name"/>
+                    <field name="channel_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_outlet_form" model="ir.ui.view">
+            <field name="name">res.outlet.form</field>
+            <field name="model">res.partner.outlet</field>
+            <field name="arch" type="xml">
+                <form string="Outlet">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="True"/>
+                                 <field name="channel_id"  required="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_outlet" model="ir.actions.act_window">
+            <field name="name">Outlet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.outlet</field>
+            <field name="view_id" ref="view_outlet_tree"/>
+        </record>
+
+        <menuitem id="menu_res_outlet_type"
+              name="Outlet Type"
+              parent="contacts.res_partner_menu_config"
+              action="action_outlet"
+              sequence="1000"/>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="res_users_form_inherit" model="ir.ui.view">
+			<field name="name">res.users.form.inherit</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page name="expense_approval" string="Expense Approval" groups='hr_expense.group_hr_expense_manager'>
+						 <group>
+							<group>
+								<field name="is_limit_expense"/>
+								<field name="limit_expense_amount" attrs="{'invisible': [('is_limit_expense', '=', False)]}"/>
+							</group>
+						  </group>
+					</page>
+				</notebook>
+			</field>
+		</record>
+	</data>
+</odoo>

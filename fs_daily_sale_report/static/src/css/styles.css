@@ -1,0 +1,273 @@
+:root {
+  --daily-sale-primary: #4E4496;
+  --daily-sale-primary-light: #6456c4;
+  --ds-customer-count: #43B4E6;
+  --ds-zero-sale-count: #D8705C;
+  --ds-sale-count: #2EAE17;
+  --ds-new-customer-count: #FD9727;
+  --ds-cp-btn: #1EA6CF;
+  --ds-cp-btn-hover: #1887a8;
+  --ds-pdf-download-btn: #42AAB2;
+  --ds-pdf-download-btn-hover: #2d838a;
+  --ds-xlsx-download-btn: #EA8928;
+  --ds-xlsx-download-btn-hover: #b86818;
+}
+
+.daily-sale-summary-btn{
+    color: #ffffff;
+    background: var(--ds-cp-btn);
+    font-weight: bold;
+    font-size: 13px;
+    height: 35px;
+    border-radius: 12px;
+    padding: 4px 20px;
+}
+
+.daily-sale-summary-btn:hover{
+    color: #ffffff;
+    background: var(--ds-cp-btn-hover);
+}
+
+.btn-toggle-arrow{
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+.daily-sale-summary-header-label {
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.daily-sale-summary-header-label button{
+    margin-top: 8px;
+    margin-right: 8px;
+}
+
+.daily-sale-summary-table-title{
+    width: 85%;
+    margin: auto;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.cp-container{
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 65%;
+    margin: auto;
+}
+
+.daily-sale-summary-date span{
+    top: 5px !important;
+    right: 8px !important;
+}
+
+.daily-sale-summary-header input{
+    text-align: center;
+    height: 31px;
+    border: none;
+    color: #ffffff;
+    background: var(--daily-sale-primary);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.daily-sale-summary-option-selector{
+    position: relative;
+}
+
+.sale-teams-container{
+    position: absolute;
+    top: 45px;
+    left: 0;
+    z-index: 1000;
+    1px solid #c5c5c5;
+}
+
+.selector-item{
+    line-height: 35px;
+    width: 100%;
+    background: #ffffff;
+    color: #000000;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.selector-item:hover{
+    background: #cecece;
+}
+
+.daily-sale-pdf-download button{
+    background: var(--ds-pdf-download-btn);
+}
+
+.daily-sale-pdf-download button:hover{
+    background: var(--ds-pdf-download-btn-hover);
+}
+
+.daily-sale-xlsx-download button{
+    background: var(--ds-xlsx-download-btn);
+}
+
+.daily-sale-xlsx-download button:hover{
+    background: var(--ds-xlsx-download-btn-hover);
+}
+
+/* Main Info Table */
+.daily-sale-main-info-table {
+    margin: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.daily-sale-main-info-table tr{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.daily-sale-main-info-table tr th,td{
+    border: 1px solid black;
+    padding: 8px;
+    border-collapse: collapse;
+}
+
+/* Item Summary Table */
+
+.daily-sale-summary-table{
+    width: 85%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.daily-sale-summary-table tr{
+    border-collapse: collapse;
+}
+
+.daily-sale-summary-table tr th,td{
+    padding: 10px 8px;
+    border-collapse: collapse;
+    border: none;
+}
+
+.daily-sale-summary-table tbody tr:nth-child(odd){
+    background: #eeeeee;
+}
+
+.daily-sale-summary-table thead tr:nth-child(1){
+    color: #ffffff;
+    background: var(--daily-sale-primary);
+    font-size: 14px;
+}
+
+.daily-sale-counts-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
+    margin: auto;
+}
+
+.daily-sale-card {
+    display: flex;
+    background: #f2f2f2;
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: pointer;
+    /*box-shadow: 0 0 20px 8px #d0d0d0;*/
+    width: 210px;
+    line-height: 90px;
+}
+
+.daily-sale-card div{
+    display: inline-block;
+}
+
+.daily-sale-count-container{
+    flex: 4;
+    color: #ffffff;
+    background: var(--daily-sale-primary);
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.daily-sale-count-label{
+    flex: 6;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.customer-count {
+    border: 3px solid var(--ds-customer-count);
+}
+
+.customer-count div:nth-child(1){
+    background: var(--ds-customer-count);
+}
+
+.sale-order-count {
+    border: 3px solid var(--ds-sale-count);
+}
+
+.sale-order-count div:nth-child(1){
+    background: var(--ds-sale-count);
+}
+
+.zero-sale-visit-count {
+    border: 3px solid var(--ds-zero-sale-count);
+}
+
+.zero-sale-visit-count div:nth-child(1){
+    background: var(--ds-zero-sale-count);
+}
+
+.new-customer-count {
+    border: 3px solid var(--ds-new-customer-count);
+}
+
+.new-customer-count div:nth-child(1){
+    background: var(--ds-new-customer-count);
+}
+
+.ds-down-arrow{
+    position: absolute;
+    top: 6px;
+    left: auto;
+    bottom: auto;
+    right: 5px;
+    pointer-events: none;
+}
+
+.ds-down-arrow:after{
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    -moz-transform: scale(0.9999);
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #ffffff;
+}
+
+.ds-calendar-icon{
+    position: absolute;
+    color: white;
+    top: 11px;
+    left: 15px;
+}
+
+.btn-toggle{
+    color: #000000;
+    background: #cecece;
+    border: none;
+}

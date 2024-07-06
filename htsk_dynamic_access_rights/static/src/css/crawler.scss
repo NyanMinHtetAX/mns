@@ -1,0 +1,8 @@
+.dynamics-hidden{
+  display: none !important;
+}
+.dynamics-disabled{
+  pointer-events: none !important;
+  opacity: 0.5;
+  cursor: not-allowed;
+}

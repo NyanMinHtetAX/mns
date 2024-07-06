@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_daily_sale_summary,daily.sale.summary,model_daily_sale_summary,base.group_user,1,1,1,1
+access_van_order_all,User access for Van Order,model_van_order,base.group_user,1,1,1,1
+access_van_order_line_all,User access for Van Order Line,model_van_order_line,base.group_user,1,1,1,1
+access_van_order_payment_all,User access for Van Order Payment,model_van_order_payment,base.group_user,1,1,1,1
+access_van_order_payment_system,User Access For Payment System,model_van_order_payment,base.group_system,1,0,0,1

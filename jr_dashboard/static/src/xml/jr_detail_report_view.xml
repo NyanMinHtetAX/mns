@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="JRReport">
+        <t t-name="LoginUser1">
+            <section class="dashboard_main_section" id="main_section_login">
+                <div class="row" style="padding-top:15px;height:48px">
+                    <div class="col-sm-12 mb-4">
+                        <div class="row" style="">
+                            <div class="col-12 col-sm-12 col-md-8" style="color:#64a638;text-align:center">
+                                <h2 class="section-header" style="color:#64a638;">justOrder Detail Report</h2>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4">
+                                <form class="form-group">
+                                    <select id="top_selling_customer" class="form-control">
+                                        <t t-if="widget.time_range == 'this_year'">
+                                            <option id="this_year" value="this_year" selected="">
+                                                This Year
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option id="this_year" value="this_year">
+                                                This Year
+                                            </option>
+                                        </t>
+                                        <t t-if="widget.time_range == 'this_month'">
+                                            <option id="this_month" value="this_month" selected="">
+                                                This Month
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option id="this_month" value="this_month">
+                                                This Month
+                                            </option>
+                                        </t>
+                                        <t t-if="widget.time_range == 'this_week'">
+                                            <option id="this_week" value="this_week" selected="">
+                                                This Week
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option id="this_week" value="this_week">
+                                                This Week
+                                            </option>
+                                        </t>
+                                        <t t-if="widget.time_range == 'last_month'">
+                                            <option id="last-month" value="last-month" selected="">
+                                                Last Months
+                                            </option>
+                                        </t>
+                                        <t t-else="">
+                                            <option id="last-month" value="last-month">
+                                                Last Month
+                                            </option>
+                                        </t>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <hr/>
+            </section>
+        </t>
+        <t t-name="Managercrm">
+            <section class="dashboard_main_section" id="main_section_manager">
+                <div class="crm_dash_cards row">
+                    <div class="col-sm-12 col-md-3">
+                        <div class="dashboard-card card-shadow my_lead">
+                            <div
+                                    class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                                <i class="fa fa-shopping-cart text-mauve"/>
+                            </div>
+                            <div class="dashboard-card__details">
+                                <h3>
+                                    <span>
+                                        <div id="leads_this_year"/>
+                                        <div id="leads_this_quarter"/>
+                                        <div id="leads_this_month"/>
+                                        <div id="leads_this_week"/>
+                                    </span>
+                                </h3>
+                                <h2 style="color:#FFFFFF">Total Order</h2>
+                            </div>
+                            <div class="total_order">
+                                <h1 style="color:#FFFFFF">
+                                    <t t-esc="widget.total_order"/>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="dashboard-card1 card-shadow opportunity">
+                            <div
+                                    class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                                <i class="fa fa-shopping-cart text-mauve"/>
+                            </div>
+                            <div class="dashboard-card__details">
+                                <h3>
+                                    <span>
+                                        <div id="opp_this_year"/>
+                                        <div id="opp_this_quarter"/>
+                                        <div id="opp_this_month"/>
+                                        <div id="opp_this_week"/>
+                                    </span>
+                                </h3>
+                                <h2 style="color:#FFFFFF">New Order</h2>
+                            </div>
+                            <div class="neworder">
+                                <h1 style="color:#FFFFFF">
+                                    <t t-esc="widget.new_order"/>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="dashboard-card2 card-shadow exp_revenue">
+                            <div
+                                    class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                                <i class="fa fa-user-circle text-mauve"/>
+                            </div>
+                            <div class="dashboard-card__details">
+                                <h3>
+                                    <span>
+                                        <div id="exp_rev_this_year"/>
+                                        <div id="exp_rev_this_quarter"/>
+                                        <div id="exp_rev_this_month"/>
+                                        <div id="exp_rev_this_week"/>
+                                    </span>
+                                </h3>
+                                <h2 style="color:#FFFFFF">Total Customer</h2>
+
+                            </div>
+                            <div class="customer">
+                                <h1 style="color:#FFFFFF">
+                                    <t t-esc="widget.total_customer"/>
+                                    <t t-if="widget.total_customer1">
+                                        <t t-esc="widget.total_customer1"/>
+                                    </t>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="dashboard-card3 card-shadow revenue_card revenue_card">
+                            <div
+                                    class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                                <i class="fa fa-check text-mauve"/>
+                            </div>
+                            <div class="dashboard-card__details">
+                                <h3>
+                                    <span>
+                                        <div id="rev_this_year"/>
+                                        <div id="rev_this_quarter"/>
+                                        <div id="rev_this_month"/>
+                                        <div id="rev_this_week"/>
+                                    </span>
+                                </h3>
+                                <h2 style="color:#FFFFFF">Total Wishlist</h2>
+
+                            </div>
+                            <div class="wishlist">
+                                <h1 style="color:#FFFFFF">
+                                    <t t-esc="widget.total_wishlist"/>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border 1px solid #64a638"/>
+            </section>
+        </t>
+        <div class="main_page">
+            <section class="dashboard_main_section" id="main_section_admin">
+                <div class="row mt-5">
+                    <div class="top_sp_revenue_div col-12 col-sm-12 col-md-6">
+                        <div class="chart-container card-shadow">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="h5">Top Selling Customers</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form-group col-6" style="margin-left:170px">
+                                        <!--                                        <select id="top_selling_customer" class="form-control">-->
+                                        <!--                                            <t t-if="widget.time_range == 'this_year'">-->
+                                        <!--                                                <option id="this_year" value="this_year" selected="">-->
+                                        <!--                                                    This Year-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-else="">-->
+                                        <!--                                                 <option id="this_year" value="this_year">-->
+                                        <!--                                                    This Year-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-if="widget.time_range == 'this_month'">-->
+                                        <!--                                                <option id="this_month" value="this_month" selected="">-->
+                                        <!--                                                    This Month-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-else="">-->
+                                        <!--                                                  <option id="this_month" value="this_month">-->
+                                        <!--                                                   This Month-->
+                                        <!--                                                 </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-if="widget.time_range == 'this_week'">-->
+                                        <!--                                                <option id="this_week" value="this_week" selected="">-->
+                                        <!--                                                    This Week-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-else="">-->
+                                        <!--                                                <option id="this_week" value="this_week">-->
+                                        <!--                                                    This Week-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-if="widget.time_range == 'last_month'">-->
+                                        <!--                                                <option id="last-month" value="last-month" selected="">-->
+                                        <!--                                                    Last Months-->
+                                        <!--                                                </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                            <t t-else="">-->
+                                        <!--                                                    <option id="last-month" value="last-month">-->
+                                        <!--                                                    Last Month-->
+                                        <!--                                                    </option>-->
+                                        <!--                                            </t>-->
+                                        <!--                                        </select>-->
+                                    </form>
+                                </div>
+                            </div>
+                            <hr/>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Customer Name</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tbody>
+                                        <t t-foreach="widget.top_selling_customer" t-as="activity">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="activity.customer"/>
+                                                </td>
+
+                                                <td class="text-right">
+                                                    <t t-esc="activity.amount"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="top_country_count_div col-12 col-sm-12 col-md-6">
+                        <div class="chart-container card-shadow">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="h5">Total Recent Orders</h3>
+                                </div>
+                                <div class="col-md-6">
+
+                                </div>
+                            </div>
+                            <hr/>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Order Reference No</th>
+                                        <th class="text-right">
+                                            <span style="margin-right:5px">Order Date</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tbody>
+                                        <t t-foreach="widget.recent_order" t-as="rec">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="rec.ref"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <t t-esc="rec.order_date"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</templates>

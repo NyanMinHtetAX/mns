@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product_extension.kbz_product_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='brand_id']" position="before">
+                <field name="product_group_id" options="{'no_create': True}" attrs="{'required':[('detailed_type','!=','service')]}"/>
+            </xpath>
+           
+        </field>
+    </record>
+    <record id="view_product_group_form" model="ir.ui.view">
+        <field name="name">product.group.form</field>
+        <field name="model">product.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="code" required="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_product_group_tree" model="ir.ui.view">
+        <field name="name">product.group.tree</field>
+        <field name="model">product.group</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code" required="True"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_product_group" model="ir.actions.act_window">
+        <field name="name">Product Group</field>
+        <field name="res_model">product.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new product group here.
+            </p>
+            <p>
+                You'll be able to manage your product groups here.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_product_group_field_sale"
+              name="Product Group"
+              parent="base_field_sale.menu_others_fieldsale"
+              action="action_product_group"
+              sequence="10"/>
+    <menuitem id="menu_product_group"
+              name="Product Group"
+              parent="stock.menu_product_in_config_stock"
+              action="action_product_group"
+              sequence="10"/>
+</odoo>

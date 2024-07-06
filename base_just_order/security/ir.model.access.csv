@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jr_order,access_jr_order,model_jr_order,,1,1,1,1
+access_jr_category,access_jr_category,model_jr_category,,1,1,1,1
+access_jr_report,access_jr_report,model_jr_report,,1,1,1,1
+access_jr_config,access_jr_config,model_jr_config,base.group_user,1,1,1,1
+access_app_key,access_app_key,model_app_key,base.group_user,1,1,1,1
+access_product_jr_images,access_product_jr_images,model_product_jr_images,base.group_user,1,1,1,1
+access_access_token,access_access_token,model_access_token,,1,1,1,1
+access_jr_wishlist,access_jr_wishlist,model_jr_wishlist,base.group_user,1,1,1,1
+

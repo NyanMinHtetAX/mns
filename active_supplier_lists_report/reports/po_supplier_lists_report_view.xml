@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="active_supplier_list_sql_report_form" model="ir.ui.view">
+        <field name="name">active.supplier.list.sql.report.form</field>
+        <field name="model">active.supplier.list.sql.report</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date_approve"/>
+                            <field name="order_id"/>
+                            <field name="company_id"/>
+                            <field name="purchaser_id"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="to_thirty_days"/>
+                            <field name="to_sixty_days"/>
+                            <field name="to_ninety_days"/>
+                            <field name="to_one_twenty_days"/>
+                            <field name="to_older_days"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="active_supplier_list_sql_report_tree" model="ir.ui.view">
+        <field name="name">active.supplier.list.sql.report.tree</field>
+        <field name="model">active.supplier.list.sql.report</field>
+        <field name="arch" type="xml">
+            <tree string="PO Active Supplier Lists Report" create="false" edit="false" delete="false">
+                <field name="partner_id" optional="show"/>
+                <field name="date_approve" optional="show"/>
+                <field name="order_id" optional="show"/>
+                <field name="purchaser_id" optional="show"/>
+                <field name="user_id" optional="show"/>
+                <field name="to_thirty_days" optional="show"/>
+                <field name="to_sixty_days" optional="show"/>
+                <field name="to_ninety_days" optional="show"/>
+                <field name="to_one_twenty_days" optional="show"/>
+                <field name="to_older_days" optional="show"/>
+                <field name="company_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_active_supplier_list_sql_report" model="ir.actions.act_window">
+        <field name="name">PO Active Supplier Lists Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">active.supplier.list.sql.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="active_supplier_list_sql_report_tree"/>
+    </record>
+
+    <menuitem
+            id="menu_active_supplier_list_sql_report"
+            name="PO Active Supplier Lists Report"
+            parent="purchase.purchase_report_main"
+            action="action_active_supplier_list_sql_report"
+            sequence="400"/>
+</odoo>

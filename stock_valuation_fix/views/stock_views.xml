@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_account.stock_valuation_layer_action" model="ir.actions.act_window">
+        <field name="context">{'search_default_group_by_product_id': 1, 'from_view': True}</field>
+    </record>
+    <record id="stock_valuation_layer_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree.inherit</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+        <field name="groups_id" eval="[(4, ref('group_fix_valuation'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="edit">true</attribute>
+                <attribute name="multi_edit">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='value']" position="before">
+                <field name="unit_cost" readonly="0"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_form_inherit" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form.inherit</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+        <field name="groups_id" eval="[(4, ref('group_fix_valuation'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="edit">true</attribute>
+            </xpath>
+            <xpath expr="//field[@name='unit_cost']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='value']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_delete_stock_journal" model="ir.actions.server">
+        <field name="name">Delete Stock Journal</field>
+        <field name="model_id" ref="model_stock_valuation_layer"/>
+        <field name="binding_model_id" ref="model_stock_valuation_layer"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="groups_id" eval="[(4, ref('group_fix_valuation'))]"/>
+        <field name="state">code</field>
+        <field name="code">records._delete_stock_journal()</field>
+    </record>
+    <record id="action_regenerate_stock_journal" model="ir.actions.server">
+        <field name="name">Generate Stock Journal</field>
+        <field name="model_id" ref="model_stock_valuation_layer"/>
+        <field name="binding_model_id" ref="model_stock_valuation_layer"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="groups_id" eval="[(4, ref('group_fix_valuation'))]"/>
+        <field name="state">code</field>
+        <field name="code">records._generate_stock_journal()</field>
+    </record>
+
+    <record id="view_svl_fix_history_form" model="ir.ui.view">
+        <field name="name">svl.fix.history.form</field>
+        <field name="model">svl.fix.history</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="svl_id"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="name" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_svl_fix_history_tree" model="ir.ui.view">
+        <field name="name">svl.fix.history.tree</field>
+        <field name="model">svl.fix.history</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false" default_order="create_date desc">
+                <field name="create_date"/>
+                <field name="product_id"/>
+                <field name="svl_id"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_svl_fix_history_search" model="ir.ui.view">
+        <field name="name">svl.fix.history.search</field>
+        <field name="model">svl.fix.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="svl_id"/>
+                <field name="user_id"/>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_svl_fix_history" model="ir.actions.act_window">
+        <field name="name">Valuation Fix History</field>
+        <field name="res_model">svl.fix.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is no data.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_svl_fix_history"
+              name="Valuation Fix History"
+              parent="stock.menu_warehouse_report"
+              action="action_svl_fix_history"
+              groups="stock_valuation_fix.group_fix_valuation"
+              sequence="200"/>
+</odoo>

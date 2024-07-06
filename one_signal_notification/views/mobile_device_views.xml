@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mobile_device_form_inherit" model="ir.ui.view">
+        <field name="name">mobile.device.form.inherit</field>
+        <field name="model">mobile.device</field>
+        <field name="inherit_id" ref="base_field_sale.view_mobile_device_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='registered_by_user_id']" position="after">
+                <field name="notification_token" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

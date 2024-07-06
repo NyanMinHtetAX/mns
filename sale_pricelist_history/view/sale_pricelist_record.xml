@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_pricelist_record_form_view" model="ir.ui.view">
+            <field name="name">sale.pricelist.record.form.view</field>
+            <field name="model">sale.pricelist.record</field>
+            <field name="arch" type="xml">
+                <form string="Sale Pricelist Information" create="false" edit="false">
+                    <group>
+                        <group string="Customer">
+                            <field name="ticket_number"/>
+                            <field name="partner_id"
+                                   context="{'default_customer': 1, 'search_default_customer': 1, 'default_supplier': 0}"/>
+                        </group>
+                        <group string="Price List">
+                            <field name="ticket_date"/>
+                            <field name="product_tmpl_id" string="Product"/>
+                            <label for="price"/>
+                            <div>
+                                <field name="price" class="oe_inline"/>
+                                <field name="currency_id" class="oe_inline" groups="base.group_multi_currency"/>
+                            </div>
+                            <field name="sale_qty"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_pricelist_record_search_view" model="ir.ui.view">
+            <field name="name">sale.pricelist.record.search.view</field>
+            <field name="model">sale.pricelist.record</field>
+            <field name="arch" type="xml">
+                <search string="Vendor">
+                    <field name="partner_id"/>
+                    <field name="product_tmpl_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="groupby_product" domain="[]"
+                                context="{'group_by': 'product_tmpl_id'}"/>
+                        <filter string="Customer" name="partner_id" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="sale_pricelist_record_tree_view" model="ir.ui.view">
+            <field name="name">pricelist.record.tree.view</field>
+            <field name="model">sale.pricelist.record</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Information" create="false" edit="false">
+                    <field name="sequence" widget="handle"/>
+                    <field name="partner_id"/>
+                    <field name="product_tmpl_id" string="Product"/>
+                    <field name="sale_qty"/>
+                    <field name="price" string="Price"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="ticket_date"/>
+                    <field name="ticket_number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sale_product_pricelist_record_action" model="ir.actions.act_window">
+            <field name="name">Sale Pricelists Record</field>
+            <field name="res_model">sale.pricelist.record</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale_pricelist_record_tree_view"/>
+            <field name="search_view_id" ref="sale_pricelist_record_search_view"/>
+        </record>
+        <menuitem action="sale_product_pricelist_record_action" id="sale_pricelist_record" name="Sale Pricelists Record"
+                  parent="sale.sale_order_menu" sequence="16"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+.expired-lots-dashboard-container{
+    display: flex;
+    width: 100%;
+}
+
+.expired-lots-dashboard-card{
+    display: flex;
+    flex: 1;
+    height: 120px;
+    margin: 8px 8px;
+    text-align: center;
+    border: 1px solid #cecece;
+    cursor: pointer;
+}
+
+.expired-lots-card-label{
+    flex: 1;
+    background: #fafa99;
+    line-height: 120px;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.expired-lots-card-text div{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.expired-lots-card-text div:nth-child(1),
+.expired-lots-card-text div:nth-child(3){
+    font-size: 16px;
+}
+
+.expired-lots-card-text div:nth-child(2){
+    font-size: 20px;
+}
+
+.expired-lots-card-text{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.expired-lots-card-d{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="dynamic_button_tree">
+            <field name="name">dynamic.button.tree</field>
+            <field name="model">dynamic.button</field>
+            <field name="arch" type="xml">
+                <tree string="Dynamic Buttons">
+                    <field name="name"></field>
+                    <field name="model"/>
+                    <field name="view"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dynamic_page_tree">
+            <field name="name">dynamic.page.tree</field>
+            <field name="model">dynamic.page</field>
+            <field name="arch" type="xml">
+                <tree string="Dynamic Pages">
+                    <field name="name"></field>
+                    <field name="model"/>
+                    <field name="view"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dynamic_access_tree_view">
+            <field name="name">dynamic.access.tree</field>
+            <field name="model">dynamic.access.config</field>
+            <field name="arch" type="xml">
+                <tree string="Dynamic Buttons and Pages">
+                    <field name="model"/>
+                    <field name="view"/>
+                    <field name="users" widget="many2many_tags"/>
+                    <field name="button_rules" widget="many2many_tags"/>
+                    <field name="page_rules" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dynamic_access_form_view" model="ir.ui.view">
+            <field name="name">dynamic.access.form</field>
+            <field name="model">dynamic.access.config</field>
+            <field name="arch" type="xml">
+                <form string="Dynamic Access Rights">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="model" options="{'no_create_edit': True,&quot;no_open&quot;: True}" required="True"/>
+                                <field name="view" options="{'no_create_edit': True,&quot;no_open&quot;: True}" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="users" widget="many2many_tags" options="{'no_create_edit': True,&quot;no_open&quot;: True}"/>
+                                <field name="groups" widget="many2many_tags" options="{'no_create_edit': True,&quot;no_open&quot;: True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="appy_to" widget="radio"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Restrictions" name="restricted_objects">
+                                <group>
+                                    <field name="button_rules" widget="one2many" mode="tree,kanban" context="{'default_config_id':active_id}">
+                                        <tree editable="bottom">
+                                            <field name="button_domain" invisible="1"/>
+                                            <field name="button" widget="many2many_tags" string="Buttons" domain="button_domain"/>
+                                            <field name="restriction"/>
+                                        </tree>
+                                    </field>
+                                    <field name="page_rules" widget="one2many" mode="tree,kanban" >
+                                        <tree editable="bottom">
+                                            <field name="page_domain" invisible="1"/>
+                                            <field name="page" widget="many2many_tags" string="Pages" domain="page_domain"/>
+                                            <field name="restriction"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_dynamic_access_config">
+            <field name="name">Dynamic Access Rights</field>
+            <field name="res_model">dynamic.access.config</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Nothing has been configured yet
+                </p>
+                <p>
+                    Click on create button above to configure
+                </p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_dynamic_buttons">
+            <field name="name">Discovered Buttons</field>
+            <field name="res_model">dynamic.button</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Nothing here yet
+                </p>
+                <p>Buttons will be discovered automatically when configuring access</p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_dynamic_pages">
+            <field name="name">Discovered Pages</field>
+            <field name="res_model">dynamic.page</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Nothing here yet
+                </p>
+                <p>Pages will be discovered automatically when configuring access</p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_dynamic_groups">
+            <field name="name">Batch Groups Assignment</field>
+            <field name="res_model">res.groups.assign</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Nothing has been configured yet
+                </p>
+                <p>Add or Remove user from groups in batch. Create a new rule to get started</p>
+            </field>
+        </record>
+        <record id="groups_asign_view_tree" model="ir.ui.view">
+            <field name="name">groups_asign_view_tree</field>
+            <field name="model">res.groups.assign</field>
+            <field name="arch" type="xml">
+                <tree string="Batch Groups Assignment">
+                    <field name="operation_type"/>
+                    <field name="users" widget="many2many_tags"/>
+                    <field name="target_users"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_groups_assign_form" model="ir.ui.view">
+            <field name="name">view_view_form</field>
+            <field name="model">res.groups.assign</field>
+            <field name="arch" type="xml">
+                <form string="Group Assignment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="operation_type"/>
+                            </group>
+                            <group>
+                                <field name="target_users"/>
+                            </group>
+                            <group>
+                                <field name="target_groups"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="users" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="groups" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="model_dynamic_access_rights_action_execute" model="ir.actions.server">
+            <field name="name">Execute</field>
+            <field name="model_id" ref="htsk_dynamic_access_rights.model_res_groups_assign"/>
+            <field name="binding_model_id" ref="htsk_dynamic_access_rights.model_res_groups_assign"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.execute_assignment()</field>
+        </record>
+        <menuitem name="Dynamic Access" id="dynamic_access_config_menu"  web_icon="htsk_dynamic_access_rights,static/description/icon.png"/>
+        <menuitem name="Access Control" id="access_control_menu" parent="dynamic_access_config_menu" sequence="1"/>
+        <menuitem name="Access Rights" id="access_rights_menu" parent="access_control_menu" action="action_dynamic_access_config" sequence="1"/>
+        <menuitem name="Discovered Buttons" id="dynamic_buttons_menu" parent="access_control_menu" action="action_dynamic_buttons" sequence="2"/>
+        <menuitem name="Discovered Pages" id="dynamic_pages_menu" parent="access_control_menu" action="action_dynamic_pages" sequence="3"/>
+        <menuitem name="Groups Assignment" id="groups_rules" parent="dynamic_access_config_menu" action="action_dynamic_groups" sequence="2"/>
+    </data>
+</odoo>

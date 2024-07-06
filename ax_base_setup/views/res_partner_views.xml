@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <filter string="Customers" name="customer" domain="[('customer', '=', True)]"/>
+                    <filter string="Vendors" name="supplier" domain="[('supplier', '=', True)]"/>
+                </xpath>
+                <xpath expr="//search//field[@name='parent_id']" position="after">
+                    <field name="ref"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//group//div[hasclass('o_address_format')]//field[@name='street2']"
+                       position="after">
+                    <field name="township_id"
+                           class="o_address_street"
+                           placeholder="Township"
+                           options='{"no_open": True}'
+                           context="{'city_id': x_city_id}"
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                    <field name="city_code"
+                           class="o_address_street"
+                           placeholder="City Code"
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                    <field name="x_city_id"
+                           placeholder="City / District"
+                           class="o_address_city"
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                           options='{"no_open": True}'
+                           context="{'state_id': state_id}"/>
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='child_ids']//form//group//div[hasclass('o_address_format')]//field[@name='street2']"
+                       position="after">
+                    <field name="township_id"
+                           class="o_address_street"
+                           placeholder="Township"
+                           options='{"no_open": True}'
+                           context="{'city_id': x_city_id}"/>
+                    <field name="city_code"
+                           class="o_address_street"
+                           placeholder="City Code"/>
+                    <field name="x_city_id"
+                           placeholder="City / District"
+                           class="o_address_city"
+                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                           options='{"no_open": True}'
+                           context="{'state_id': state_id}"/>
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='child_ids']//form//group//group[2]//field[@name='mobile']"
+                       position="after">
+                    <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                    <field name="facebook_link" widget="url" placeholder="e.g. https://www.facebook.com"/>
+                    <field name="viber_no"/>
+                    <field name="what_app_no"/>
+                    <field name="we_chat"/>
+                    <field name="date_of_birth"/>
+                    <field name="religion_id"/>
+                </xpath>
+                <xpath expr="//sheet//group//div[hasclass('o_address_format')]//field[@name='city']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='child_ids']//form//group//div[hasclass('o_address_format')]//field[@name='city']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]//h1" position="after">
+                    <field name="ref" placeholder="Reference ID"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="company_register_id" string="Shop Name"/>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="facebook_link" widget="url" placeholder="e.g. https://www.facebook.com"/>
+                    <field name="viber_no"/>
+                    <field name="what_app_no"/>
+                    <field name="we_chat"/>
+                </xpath>
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='sale']//field[@name='user_id']"
+                       position="before">
+                    <field name="customer"/>
+                </xpath>
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='purchase']//field[@name='property_supplier_payment_term_id']"
+                       position="before">
+                    <field name="supplier" string="Is A Vendor?"/>
+                </xpath>
+
+                <xpath expr="//group[@name='sale']//field[@name='property_product_pricelist']" position="after">
+                    <field name="over_payment" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"
+                           string="Unallow Payment ?"/>
+                    <field name="credit_limit"
+                           attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                    <field name="over_credit"
+                           attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_partner_property_form" model="ir.ui.view">
+            <field name="name">res.partner.purchase.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="purchase.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='purchase']//field[@name='property_purchase_currency_id']"
+                       position="after">
+                    <field name="v_over_payment"
+                           attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"
+                           string="Unallow Payment ?"/>
+                    <field name="v_credit_limit"
+                           attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"
+                           string="Credit Limit Amount"/>
+                    <field name="v_over_credit" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"
+                           string="Disallow Over Credit"/>
+                </xpath>
+            </field>
+        </record>
+<!--        &lt;!&ndash;  Unallow payment term move to sale &ndash;&gt;-->
+<!--        <record id="res_partner_view_form_property_inherit_unallow_payment" model="ir.ui.view">-->
+<!--            <field name="name">res.partner.view.form.property.inherit.unallow.payment</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="account.view_partner_property_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='property_payment_term_id']" position="after">-->
+<!--                    <field name="v_over_payment"-->
+<!--                           attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"-->
+<!--                           string="Unallow Payment ?"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <!--  Unallow payment term move to sale -->
+        <record id="view_partner_tree" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_name']" position="before">
+                    <field name="ref"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+            <field name="name">Vendors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain">[('supplier', '=', True)]</field>
+            <field name="context">{'default_customer': 0,'default_supplier': 1, 'default_is_company': True}</field>
+        </record>
+
+        <record id="account.res_partner_action_customer" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain">[('customer', '=', True)]</field>
+            <field name="context">{'default_customer':1, 'default_supplier': 0, 'default_is_company': True}</field>
+        </record>
+        <record id="ax_base_setup.res_partner_action_customer_fieldsale" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain">[('customer', '=', True)]</field>
+            <field name="context">{'default_customer':1, 'default_supplier': 0, 'default_is_company': True}</field>
+        </record>
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">Vendors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain">[('supplier', '=', True)]</field>
+            <field name="context">{'default_customer': 0,'default_supplier': 1, 'default_is_company': True}</field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new vendor in your address book
+              </p><p>
+                Odoo helps you easily track all activities related to a vendor.
+              </p>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('customer', '=', True)]</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new customer in your address book
+              </p><p>
+                Odoo helps you easily track all activities related to a customer.
+              </p>
+            </field>
+        </record>
+        <record id="base.action_partner_customer_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{'default_customer':1, 'search_default_customer':1, 'default_is_company': True}</field>
+            <field name="filter" eval="True"/>
+        </record>
+    </data>
+</odoo>

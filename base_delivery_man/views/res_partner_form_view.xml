@@ -1,0 +1,84 @@
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                 <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+           <xpath expr="//field[@name='category_id']" position="after">
+               <field name="vehicle_no"/>
+               <field name="is_delivery_man" widget="boolean_toggle" invisible="1"/>
+           </xpath>
+            <xpath expr="//field[@name='what_app_no']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//field[@name='we_chat']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_partner_property_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_view_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_sale_order']" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_view_purchase_account_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.purchase.account.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="purchase.res_partner_view_purchase_account_buttons"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(purchase.act_res_partner_2_supplier_invoices)d']" position="attributes">
+                 <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+     <record id="res_partner_view_purchase_buttons_inherit1" model="ir.ui.view">
+            <field name="name">res.partner.view.purchase.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="purchase.res_partner_view_purchase_buttons" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(purchase.act_res_partner_2_purchase_order)d']" position="attributes">
+                      <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="partner_view_buttons_inherit">
+        <field name="name">partner.view.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.partner_view_buttons"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_partner_invoices']" position="attributes">
+                 <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="account_reports_partner_view_buttons_inherit">
+        <field name="name">partner.view.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account_reports.partner_view_buttons"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='partner_ledger_button']" position="attributes">
+                  <attribute name="attrs">{'invisible':[('is_delivery_man', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

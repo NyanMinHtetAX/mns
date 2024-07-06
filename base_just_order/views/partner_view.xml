@@ -1,0 +1,89 @@
+<odoo>
+    <data>
+        <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='type_person']" position="after">
+                    <filter string="From Mobile" name="is_from_mobile" domain="[('is_from_mobile', '=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+         <record id="view_new_customer_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='type_person']" position="after">
+                    <filter string="New Customers" name="check_new_customer" domain="[('check_new_customer', '=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_mobile_partner_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_from_mobile', '=', True)]</field>
+            <field name="context">{'default_is_from_mobile': 1,'default_supplier':
+                0,'default_customer': 0,'default_is_company': True}
+            </field>
+            <field name="search_view_id" ref="view_res_partner_filter_inherit"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Contact in your address book
+                </p>
+                <p>
+                    Odoo helps you track all activities related to your contacts.
+                </p>
+            </field>
+        </record>
+        <record id="action_new_customer_form" model="ir.actions.act_window">
+            <field name="name">New Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('check_new_customer', '=', True)]</field>
+            <field name="context">{'search_default_check_new_customer': 1,'default_is_from_mobile': 1,'default_supplier':
+                0,'default_customer': 0,'default_is_company': True}
+            </field>
+            <field name="search_view_id" ref="view_new_customer_filter_inherit"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Contact in your address book
+                </p>
+                <p>
+                    Odoo helps you track all activities related to your contacts.
+                </p>
+            </field>
+        </record>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='misc']//field[@name='company_id']"
+                       position="after">
+                    <field name="is_from_mobile" string="Mobile Customer?"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//field[@name='child_ids']//form//field[@name='country_id']" position="after">
+                    <field name="delivery_type" widget="radio" options="{'horizontal': true}"  attrs="{'invisible': [('type', '!=', 'delivery')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

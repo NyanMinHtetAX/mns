@@ -1,0 +1,12 @@
+<odoo>
+	<data>
+		<template id="report_invoice_document_new_report_design" inherit_id="account.report_invoice_document" priority="21">
+			<!-- Hide some info -->
+			<xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+				<td name="account_invoice_line_name">
+					<span t-esc="o.convert_font(line.name)" t-options="{'widget': 'text'}"/>
+				</td>
+			</xpath>
+		</template>
+	</data>
+</odoo>

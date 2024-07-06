@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_discover_buttons_and_pages" model="ir.cron">
+            <field name="name">IRUIView; Discover Buttons and Pages</field>
+            <field name="model_id" ref="base.model_ir_ui_view"/>
+            <field name="state">code</field>
+            <field name="code">model.discover_buttons_and_pages()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+    </data>
+</odoo>

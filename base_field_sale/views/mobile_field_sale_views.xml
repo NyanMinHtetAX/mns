@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mobile_device_search" model="ir.ui.view">
+        <field name="name">mobile.device.search</field>
+        <field name="model">mobile.device</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="device_model"/>
+                <field name="device_imei"/>
+                <field name="register_date"/>
+                <field name="sale_team_id"/>
+                <field name="registered_by_user_id"/>
+                <field name="state"/>
+                <group string="Group By...">
+                    <filter name="group_by_sale_team_id" string="Sales Team" context="{'group_by': 'sale_team_id'}"/>
+                    <filter name="group_by_register_date" string="Registered Date" context="{'group_by': 'register_date'}"/>
+                    <filter name="group_by_registered_by_user_id" string="Registered By" context="{'group_by': 'registered_by_user_id'}"/>
+                    <filter name="group_by_model" string="Model" context="{'group_by': 'device_model'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_mobile_device_form" model="ir.ui.view">
+        <field name="name">mobile.device.form</field>
+        <field name="model">mobile.device</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="btn_approve"
+                            string="Approve"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="btn_reject"
+                            string="Reject"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="btn-danger"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1" attrs="{'readonly': [('is_admin', '!=', True),
+                                                                                 ('state', '!=', 'draft')]}"/>
+                            <field name="device_model" required="1" attrs="{'readonly': [('is_admin', '!=', True),
+                                                                                         ('state', '!=', 'draft')]}"/>
+                            <field name="device_imei" required="1" attrs="{'readonly': [('is_admin', '!=', True),
+                                                                                        ('state', '!=', 'draft')]}"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="register_date" required="1" attrs="{'readonly': [('is_admin', '!=', True),
+                                                                                          ('state', '!=', 'draft')]}"/>
+                            <field name="sale_team_id" required="1" attrs="{'readonly': [('is_admin', '!=', True),
+                                                                                         ('state', '!=', 'draft')]}"/>
+                            <field name="registered_by_user_id" domain="[('share', '=', False)]" required="1"
+                                   attrs="{'readonly': [('is_admin', '!=', True),
+                                                        ('state', '!=', 'draft')]}"/>
+                            <field name="is_admin" invisible="1"/>
+                            <field name="expire_date" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="reject_reason" nolabel="1" readonly="1" attrs="{'invisible': [('state', '!=', 'reject')]}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_mobile_device_tree" model="ir.ui.view">
+        <field name="name">mobile.device.tree</field>
+        <field name="model">mobile.device</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="not active">
+                <field name="name"/>
+                <field name="device_model"/>
+                <field name="device_imei"/>
+                <field name="register_date"/>
+                <field name="sale_team_id"/>
+                <field name="company_id"/>
+                <field name="registered_by_user_id" domain="[('share', '=', False)]"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'approve'"
+                       decoration-danger="state == 'reject'" />
+                <field name="expire_date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_mobile_device" model="ir.actions.act_window">
+        <field name="name">Devices</field>
+        <field name="res_model">mobile.device</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'active_test': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new device here.
+            </p>
+            <p>
+                You'll be able to manage your registered devices here.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_multi_approve_mobile_device" model="ir.actions.server">
+        <field name="name">Approve</field>
+        <field name="model_id" ref="model_mobile_device"/>
+        <field name="binding_model_id" ref="model_mobile_device"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.btn_approve()
+        </field>
+    </record>
+
+    <record id="action_multi_reject_mobile_device" model="ir.actions.server">
+        <field name="name">Reject</field>
+        <field name="model_id" ref="model_mobile_device"/>
+        <field name="binding_model_id" ref="model_mobile_device"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.btn_reject()
+        </field>
+    </record>
+
+</odoo>

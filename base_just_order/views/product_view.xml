@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_image_form" model="ir.ui.view">
+        <field name="name">product.images.view.form</field>
+        <field name="model">product.jr.images</field>
+        <field name="arch" type="xml">
+            <form string="Product Images">
+                <field name="sequence" invisible="1"/>
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <label for="name" string="Image Name"/>
+                        <h2>
+                            <field name="name" placeholder="Image Name"/>
+                        </h2>
+                        <label for="video_url" string="Video URL" invisible="1"/>
+                        <br/>
+                        <field name="video_url" invisible="1"/>
+                        <br/>
+                        <span>
+                            <label for="description" string="Description"/>
+                            <br/>
+                            <field name="description" placeholder="Description. . . "/>
+                        </span>
+                        <br/>
+
+                    </div>
+                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                        <div class="row">
+                            <div class="col">
+                                <field name="image_1920" widget="image" required="1"
+                                       options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
+                            </div>
+                            <div class="col" attrs="{'invisible': [('video_url', 'in', ['', False])]}">
+                                <div class="o_video_container p-2">
+                                    <span>Video Preview</span>
+                                    <field name="embed_code" class="mt-2" widget="video_preview"/>
+                                    <h4 class="o_invalid_warning text-muted text-center"
+                                        attrs="{'invisible': [('embed_code', '!=', False)]}">
+                                        Please enter a valid Video URL.
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="product_image_view_kanban" model="ir.ui.view">
+        <field name="name">product.images.view.kanban</field>
+        <field name="model">product.jr.images</field>
+        <field name="arch" type="xml">
+            <kanban string="Product Images" default_order="sequence">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image_1920" required="1"/>
+                <field name="sequence" widget="handle"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="card oe_kanban_global_click p-0">
+                            <div class="o_squared_image">
+                                <img class="o_kanban_image_inner_pic"
+                                     t-att-src="kanban_image('product.jr.images', 'image_1920', record.id.raw_value)"
+                                     t-att-alt="record.name.value"/>
+                            </div>
+                            <div class="card-body p-0">
+                                <h4 class="card-title p-2 m-0 bg-200">
+                                    <small>
+                                        <field name="name"/>
+                                    </small>
+                                </h4>
+                            </div>
+                            <!-- below 100 Kb: good -->
+                            <t t-if="record.image_1920.raw_value.length &lt; 100*1000">
+                                <t t-set="size_status" t-value="'badge-success'"/>
+                                <t t-set="message">Acceptable file size</t>
+                            </t>
+                            <!-- below 1000 Kb: decent -->
+                            <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">
+                                <t t-set="size_status" t-value="'badge-warning'"/>
+                                <t t-set="message">Huge file size. The image should be optimized/reduced.</t>
+                            </t>
+                            <!-- above 1000 Kb: bad -->
+                            <t t-else="1">
+                                <t t-set="size_status" t-value="'badge-danger'"/>
+                                <t t-set="message">Optimization required! Reduce the image size or increase your
+                                    compression settings.
+                                </t>
+                            </t>
+                            <span t-attf-class="badge #{size_status} o_product_image_size"
+                                  t-esc="record.image_1920.value" t-att-title="message"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+        <field name="name">Products</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="after">
+                <page name="m-commerce" string="mCommerce">
+                    <group>
+                        <group>
+                            <field name="avail_in_mobile" string="Available In Mobile" force_save="1"/>
+                            <field name="category_id"/>
+                            <field name="alternative_product_mcom_ids" widget="many2many_tags"
+                                   domain="[('id', '!=', active_id), '|', ('company_id', '=', company_id), ('company_id', '=', False)]"
+                                   attrs="{'invisible': [('sale_ok','=',False)]}"
+                                   placeholder="Displayed in bottom of product pages"/>
+                            <field name="sale_description" placeholder="Description . . . . .  ."/>
+                        </group>
+                        <group>
+                            <div>
+                                <field name="is_publish" widget="boolean_toggle"/>
+                                <span>Published</span>
+                            </div>
+                            <br/>
+                            <label for="is_continue_selling"
+                                   string="Out-of-Stock"/>
+                            <div>
+                                <field name="is_continue_selling" class="oe_inline"/>
+                                Continue Selling
+                            </div>
+
+                            <label for="show_available_qty"
+
+                                   string="Show Available Qty"/>
+                            <div style="width:100%">
+                                <field name="show_available_qty" class="oe_inline"/>
+                                <span attrs="{'invisible': [('show_available_qty', '=', False)]}">
+                                    <label for="available_onhand_limit" string="only if below" class="o_light_label"/>
+                                    <field name="available_onhand_limit" class="oe_inline col-3" widget="integer"/>
+                                    Units
+                                </span>
+                            </div>
+
+
+                        </group>
+                        <div class="p-image" style="width:100%">
+                            <separator string="Product Image" style="color:#000000;font-size:18px"/>
+                            <br/>
+                            <field name="product_mcom_image_ids" class="o_website_sale_image_list"
+                                   context="{'default_name': name, 'default_product_tmpl_id': active_id}" mode="kanban"
+                                   add-label="Add a Media" nolabel="1">
+
+                                <kanban string="Product Images" default_order="sequence">
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <field name="image_1920"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <templates>
+                                        <!--                                        <t t-name="kanban-box">-->
+                                        <!--                                            <div class="card oe_kanban_global_click p-0">-->
+                                        <!--                                                <div class="o_squared_image">-->
+                                        <!--                                                    <img class="card-img-top"-->
+                                        <!--                                                         t-att-src="kanban_image('product.images', 'image_1920', record.id.raw_value)"-->
+                                        <!--                                                         t-att-alt="record.name.value"/>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="card-body p-0">-->
+                                        <!--                                                    <h4 class="card-title p-2 m-0 bg-200">-->
+                                        <!--                                                        <small>-->
+                                        <!--                                                            <field name="name"/>-->
+                                        <!--                                                        </small>-->
+                                        <!--                                                    </h4>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                &lt;!&ndash; below 100 Kb: good &ndash;&gt;-->
+                                        <!--                                                <t t-if="record.image_1920.raw_value.length &lt; 100*1000">-->
+                                        <!--                                                    <t t-set="size_status" t-value="'badge-success'"/>-->
+                                        <!--                                                    <t t-set="message">Acceptable file size</t>-->
+                                        <!--                                                </t>-->
+                                        <!--                                                &lt;!&ndash; below 1000 Kb: decent &ndash;&gt;-->
+                                        <!--                                                <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">-->
+                                        <!--                                                    <t t-set="size_status" t-value="'badge-warning'"/>-->
+                                        <!--                                                    <t t-set="message">Huge file size. The image should be-->
+                                        <!--                                                        optimized/reduced.-->
+                                        <!--                                                    </t>-->
+                                        <!--                                                </t>-->
+                                        <!--                                                &lt;!&ndash; above 1000 Kb: bad &ndash;&gt;-->
+                                        <!--                                                <t t-else="1">-->
+                                        <!--                                                    <t t-set="size_status" t-value="'badge-danger'"/>-->
+                                        <!--                                                    <t t-set="message">Optimization required! Reduce the image size or-->
+                                        <!--                                                        increase your compression settings.-->
+                                        <!--                                                    </t>-->
+                                        <!--                                                </t>-->
+                                        <!--                                                <span t-attf-class="badge #{size_status} o_product_image_size"-->
+                                        <!--                                                      t-esc="record.image_1920.value" t-att-title="message"/>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </t>-->
+                                        <t t-name="kanban-box">
+                                            <div class="card oe_kanban_global_click p-0" style="width:90px;height:90px">
+                                                <div class="o_squared_image">
+                                                    <img style="width:160px;height:90px"
+                                                         t-att-src="kanban_image('product.jr.images', 'image_1920', record.id.raw_value)"
+                                                         t-att-alt="record.name.value"/>
+                                                </div>
+                                                <div class="card-body p-0">
+                                                    <h4 class="card-title p-2 m-0 bg-200">
+                                                        <small>
+                                                            <field name="name"/>
+                                                        </small>
+                                                    </h4>
+                                                </div>
+                                                <!-- below 100 Kb: good -->
+                                                <t t-if="record.image_1920.raw_value.length &lt; 100*1000">
+                                                    <t t-set="size_status" t-value="'badge-success'"/>
+                                                    <t t-set="message">Acceptable file size</t>
+                                                </t>
+                                                <!-- below 1000 Kb: decent -->
+                                                <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">
+                                                    <t t-set="size_status" t-value="'badge-warning'"/>
+                                                    <t t-set="message">Huge file size. The image should be
+                                                        optimized/reduced.
+                                                    </t>
+                                                </t>
+                                                <!-- above 1000 Kb: bad -->
+                                                <t t-else="1">
+                                                    <t t-set="size_status" t-value="'badge-danger'"/>
+                                                    <t t-set="message">Optimization required! Reduce the image size or
+                                                        increase your compression settings.
+                                                    </t>
+                                                </t>
+                                                <span t-attf-class="badge #{size_status} o_product_image_size"
+                                                      t-esc="record.image_1920.value" t-att-title="message"/>
+                                            </div>
+                                        </t>
+                                        <!--                                            <div class="oe_kanban_card" style="width:90px;height:90px;background-color:white;border:1px solid white">-->
+
+                                        <!--                                                   <img class="o_attachment_image" style="width:90px;height:90px" t-att-src="kanban_image('product.images', 'image_1920', record.id.raw_value)"/>-->
+
+                                        <!--                                            </div>-->
+
+                                    </templates>
+                                </kanban>
+
+                            </field>
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="just_order_product_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('avail_in_mobile','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first product!
+            </p>
+        </field>
+    </record>
+    <record id="product_image_action" model="ir.actions.act_window">
+        <field name="name">Products Image</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.jr.images</field>
+        <field name="view_mode">form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first product!
+            </p>
+        </field>
+    </record>
+</odoo>

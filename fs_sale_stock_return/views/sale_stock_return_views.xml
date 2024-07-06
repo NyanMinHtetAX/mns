@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_stock_return_form" model="ir.ui.view">
+        <field name="name">sale.stock.return.form</field>
+        <field name="model">sale.stock.return</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="btn_confirm"
+                            string="Confirm"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="btn_validate"
+                            string="Validate"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="btn_show_pickings"
+                                string="Pickings"
+                                type="object"
+                                icon="fa-truck"
+                                class="oe_stat_button">
+                        </button>
+                        <button name="btn_show_svl"
+                                string="Valuations"
+                                type="object"
+                                icon="fa-dollar"
+                                class="oe_stat_button">
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="name" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"/>
+                            <field name="order_ref" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   />
+                            <field name="partner_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"
+                                   options="{'no_create': True}"/>
+                            <field name="type"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"/>
+                            <field name="reason"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"/>
+                            <field name="analytic_account_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="team_id"
+                                   required="1"
+                                   domain="[('is_van_team', '=', True)]"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   options="{'no_create': True}"/>
+                            <field name="sale_man_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   domain="[('id', 'in', sale_man_ids)]"
+                                   required="1"
+                                   options="{'no_create': True}"/>
+                            <field name="route_plan_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"
+                                   options="{'no_create': True}"/>
+                            <field name="reference"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"/>
+                            <field name="company_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   required="1"
+                                   options="{'no_create': True}"/>
+                            <field name="sale_man_ids" invisible="1"/>
+                            <field name="description" attrs="{'invisible': [('reason', '!=', 'custom')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="products" string="Products">
+                            <field name="line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" required="1" options="{'no_create': True}"/>
+                                    <field name="qty" required="1"/>
+                                    <field name="multi_uom_line_id" domain="[('id', 'in', multi_uom_line_ids)]" required="1" options="{'no_create': True}"/>
+                                    <field name="multi_uom_line_ids" invisible="1"/>
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="lot_id"
+                                           domain="[('product_id', '=', product_id)]"
+                                           attrs="{'required': [('tracking', '!=', 'none')]}"
+                                           options="{'no_create': True}"/>
+                                    <field name="type" required="1"/>
+                                    <field name="expired_date"
+                                           attrs="{'column_invisible': [('parent.reason', '!=', 'expired')],
+                                                   'required': [('parent.reason', '=', 'expired')]}"/>
+                                    <field name="note"
+                                           attrs="{'column_invisible': [('parent.reason', '!=', 'custom')]}"/>
+                                    <field name="price_unit" required="1"/>
+                                    <field name="price_subtotal" required="1"/>
+                                    <field name="sale_stock_return_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Photos">
+                            <field name="image_ids" attrs="{'readonly': [('state', '!=', 'done')]}" mode="kanban"/>
+                        </page>
+                        <page string="Payment Slip">
+                            <field name="slip_image" widget="image"/>
+                        </page>
+                        <page name="payments" string="Payments">
+                            <field name="payment_ids" mode="tree" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="payment_method_id"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id"/>
+                                    <field name="journal_id" invisible="1"/>
+                                    <field name="return_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Remarks">
+                            <field name="remarks" attrs="{'readonly': [('state', '!=', 'done')]}"/>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_sale_stock_return_tree" model="ir.ui.view">
+        <field name="name">sale.stock.return.tree</field>
+        <field name="model">sale.stock.return</field>
+        <field name="arch" type="xml">
+            <tree default_order="date desc">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="type"/>
+                <field name="reason"/>
+                <field name="order_ref"/>
+                <field name="team_id"/>
+                <field name="sale_man_id"/>
+                <field name="route_plan_id"/>
+                <field name="reference"/>
+                <field name="company_id"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state=='confirm'"
+                       decoration-success="state=='done'"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_sale_stock_return" model="ir.actions.act_window">
+        <field name="name">Sale Return</field>
+        <field name="res_model">sale.stock.return</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new sale return here.
+            </p>
+            <p>
+                You'll be able to manage your sale return records here.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_sale_stock_return"
+              name="Sale Return"
+              parent="base_field_sale.fieldsaleorder"
+              action="action_sale_stock_return"
+              sequence="5"/>
+</odoo>

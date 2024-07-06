@@ -1,0 +1,70 @@
+<odoo>
+     <record id="purchase_order_form_supplier" model="ir.ui.view">
+            <field name="name">purchase.order.form.supplier</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="city_id" options="{'no_create': True, 'no_open': True}"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create': True}</attribute>
+                    <attribute name="domain">[('supplier', '=', True)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='id']" position="before">
+                    <field name="purchaser_id" readonly="False"/>
+                    <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user" readonly="True" force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//field[@name='product_id']" position="replace">
+                    <field name="product_id" attrs="{  'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))],'required': [('display_type', '=', False)], }" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" force_save="1" domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id),('brand_owner', '=', parent.partner_id)]" options="{'no_create': True, 'no_edit': True}"/>
+                </xpath>
+                <xpath expr="//page[@name='purchase_delivery_invoice']//field[@name='user_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//group[@name='other_info']//field[@name='user_id']" position="replace">
+                </xpath>
+                <xpath expr="//page[@name='purchase_delivery_invoice']//group[@name='invoice_info']//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//sheet//group//group[2]" position="inside">
+                    <field name="payment_term_id" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}" options="{'no_create': True}"/>
+                </xpath>
+            </field>
+     </record>
+
+    <record id="view_purchase_order_filter_cities" model="ir.ui.view">
+        <field name="name">request.quotation.select.cities</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <group expand="1" string="Group By">
+                    <filter string="Cities" name="cities" domain="[]" context="{'group_by': 'city_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_search_cities" model="ir.ui.view">
+        <field name="name">purchase.order.select.cities</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <group expand="1" string="Group By">
+                    <filter string="Cities" name="cities" domain="[]" context="{'group_by': 'city_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_tree_view" model="ir.ui.view">
+            <field name="name">purchase.order.inherit.tree.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="picking_type_id"/>
+                </field>
+            </field>
+        </record>
+</odoo>

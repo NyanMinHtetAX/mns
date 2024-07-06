@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="daily_sale_summary_sequence" model="ir.sequence">
+            <field name="name">Daily Sale Summary Sequence</field>
+            <field name="code">daily.sale.summary</field>
+            <field name="prefix">%(day)s%(month)s%(y)s-</field>
+            <field name="padding">3</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="van_order_sequence" model="ir.sequence">
+            <field name="name">Van Order Sequence</field>
+            <field name="code">van.order.sequence</field>
+            <field name="prefix">VO</field>
+            <field name="padding">4</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

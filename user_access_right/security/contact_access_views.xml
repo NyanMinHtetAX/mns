@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="group_access_sale_tab" model="res.groups">
+            <field name="name">Disallow Sales and Purchase Tab</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_cash_collection_report_tree" model="ir.ui.view">
+            <field name="name">tree.cash.collection.report</field>
+            <field name="model">cash.collection</field>
+            <field name="arch" type="xml">
+                <tree string="Cash Collection" create="0">
+                    <field name="assigned_date"/>
+                    <field name="to_collect_date"/>
+                    <field name="collect_no"/>
+                    <field name="customer"/>
+                    <field name="invoice_address"/>
+                    <field name="assigned_amount"/>
+                    <field name="collected_amount"/>
+                    <field name="remained_amount"/>
+                    <field name="collector"/>
+                    <field name="assign_person"/>
+                    <field name="payment_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_cash_collection_report_search" model="ir.ui.view">
+            <field name="name">cash.collection.report.search</field>
+            <field name="model">cash.collection</field>
+            <field name="arch" type="xml">
+                <search string="Cash Collection">
+                    <field name="assigned_date"/>
+                    <field name="to_collect_date"/>
+                    <field name="customer"/>
+                    <field name="invoice_address"/>
+                    <field name="collector"/>
+
+                    <group string="Group By">
+                        <filter string="Customer" name="group_by_customer" context="{'group_by':'customer'}"/>
+                        <filter string="Invoice Address" name="group_by_invoice_address"
+                                context="{'group_by':'invoice_address'}"/>
+                        <filter string="Assigned Date" name="group_by_assigned_date"
+                                context="{'group_by':'assigned_date'}"/>
+                        <filter string="To Collect Date" name="group_by_to_collect_date"
+                                context="{'group_by':'to_collect_date'}"/>
+                        <filter string="Collector" name="group_by_collector" context="{'group_by':'collector'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_cash_collection_report" model="ir.actions.act_window">
+            <field name="name">Cash Collection Report</field>
+            <field name="res_model">cash.collection</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="cash_collection_report"
+                  name="Cash Collection Report"
+                  parent="account.menu_finance_receivables"
+                  action="action_cash_collection_report"
+                  sequence="300"/>
+    </data>
+</odoo>

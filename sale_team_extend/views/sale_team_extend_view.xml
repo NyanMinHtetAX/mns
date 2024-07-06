@@ -1,0 +1,123 @@
+<odoo>
+  <record id="crm_team_view_form_inherit" model="ir.ui.view">
+    <field name="name">crm.team.form.view.inherit</field>
+    <field name="model">crm.team</field>
+      <field name="mode">primary</field>
+    <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='use_quotations']/parent::div" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+      <xpath expr="//group[@name='right']" position="attributes">
+          <attribute name="string"/>
+          <attribute name="attrs">{'invisible': 0}</attribute>
+      </xpath>
+      <xpath expr="//group[@name='left']" position="replace">
+        <group name="left">
+          <field name="active" invisible="1"/>
+          <field name="sequence" invisible="1"/>
+          <field name="is_membership_multi" invisible="1"/>
+          <field name="user_id" widget="many2one_avatar_user" domain="[('share', '=', False)]" options="{'no_create': True, 'no_open': True}"/>
+          <field name="device_id" options="{'no_create': True, 'no_open': True}"/>
+          <field name="vehicle_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+            <field name="is_van_team"/>
+          <field name="currency_id" invisible="1"/>
+          <field name="member_company_ids" invisible="1"/>
+      </group>
+      </xpath>
+      <xpath expr="//group[@name='right']" position="inside">
+        <field name="company_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_company"/>
+      </xpath>
+      <xpath expr="//div[@name='button_box']" position="replace">
+        <div class="oe_button_box" name="button_box">
+          <button name="action_view_products"
+              type="object"
+              class="oe_stat_button"
+              icon="fa-tags"
+              >
+              <field name="products_count" widget="statinfo" string="Products"/>
+          </button>
+          <button name="action_view_route_plan"
+              type="object"
+              class="oe_stat_button"
+              icon="fa-map-marker"
+              >
+              <field name="route_plan_count" widget="statinfo" string="Route Plans"/>
+          </button>
+          <button name="action_view_customers"
+              type="object"
+              class="oe_stat_button"
+              icon="fa-users"
+              >
+              <field name="customers_count" widget="statinfo" string="Customers"/>
+          </button>
+        </div>
+      </xpath>
+      <xpath expr="//page[@name='members_users']" position="after">
+          <page string="Product Groups" name="products">
+            <field name="product_group_ids" attrs="{'required': [('is_van_team', '==', True)]}"/>
+          </page>
+      </xpath>
+      <xpath expr="//notebook" position="inside">
+        <page string="Customers" name="customers">
+          <field name="partner_ids" nolabel="1">
+            <tree limit="10">
+              <field name="name"/>
+                <field name="ref"/>
+                <field name="phone"/>
+                <field name="sale_channel_ids" widget="many2many_tags"/>
+                <field name="outlet_type"/>
+                <field name="township_id"/>
+                <field name="latitude" invisible="1"/>
+                <field name="longitude" invisible="1"/>
+              </tree>
+            </field>
+          <!-- <field name="partner_ids" widget="section_and_note_one2many" mode="tree,kanban" readonly="0"/> -->
+        </page>
+        <page name="inventory" string="Inventory">
+            <group>
+                <group string="Warehouse">
+                    <field name="allowed_location_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" required="1"/>
+                    <field name="van_location_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                </group>
+                <group string="Operation">
+                    <field name="picking_type_id" options="{'no_create': True, 'no_open': True}"/>
+                </group>
+            </group>
+        </page>
+        <page name="accounting" string="Accounting">
+            <group>
+                <group string="Accounting">
+                    <field name="invoiced_target"/>                
+                    <field name="payment_method_ids" widget="many2many_tags" required="1" domain="[('company_id', '=', company_id)]"/>                                
+                    <field name="analytic_account_id" options="{'no_create': True, 'no_open': True}"/>                
+                </group>
+                <group string="Journal">
+                  <field name="invoice_journal_id" options="{'no_create': True, 'no_open': True}" domain="[('type', '=', 'sale')]"/>                
+                </group>
+            </group>
+        </page>
+      </xpath>
+        <xpath expr="//page[@name='members_users']" position="after">
+                <page string="Route Plans" name="route_plan">
+                    <field name="route_plan_ids" widget="section_and_note_one2many" mode="tree,kanban"/>
+                </page>
+            </xpath>
+    </field>
+  </record>
+    <record id="action_view_sale_team_tree_field_sale" model="ir.actions.act_window.view">
+        <field name="sequence">5</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="sales_team.crm_team_view_tree"/>
+        <field name="act_window_id" ref="crm_team_action_config_fieldsale"/>
+    </record>
+    <record id="action_view_sale_team_form_field_sale" model="ir.actions.act_window.view">
+        <field name="sequence">10</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="crm_team_view_form_inherit"/>
+        <field name="act_window_id" ref="crm_team_action_config_fieldsale"/>
+    </record>
+    <record id="sales_team.crm_team_action_config" model="ir.actions.act_window">
+        <field name="domain">[('is_van_team', '!=', True)]</field>
+    </record>
+</odoo>

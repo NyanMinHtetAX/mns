@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_consignment_requisition_form" model="ir.ui.view">
+        <field name="name">consignment.requisition.form</field>
+        <field name="model">consignment.requisition</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" 
+                            string="Approve" 
+                            type="object" 
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="action_validate" 
+                            string="Validate" 
+                            type="object" 
+                            attrs="{'invisible': [('state', '!=', 'approve')]}"
+                            class="oe_highlight"/>
+                    <button name="action_deliver" 
+                            string="Deliver" 
+                            type="object" 
+                            attrs="{'invisible': [('state', '!=', 'validate')]}"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="pricelist_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="warehouse_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="team_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="user_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="origin" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="user_ids" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="products" string="Products">
+                            <field name="requisition_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="multi_uom_line_id" 
+                                           string="UoM"
+                                           domain="[('id', 'in', multi_uom_line_ids)]"/>
+                                    <field name="multi_uom_line_ids" invisible="1"/>
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="lot_id" 
+                                           attrs="{'required': [('tracking', '!=', 'none'),
+                                                                ('requisition_id.state', '!=', 'draft')]}"
+                                           string="Lot/Serial"/>
+                                    <field name="price_unit" 
+                                           string="Unit Price"/>
+                                    <field name="price_subtotal" 
+                                           string="Subtotal"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="requisition_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="remarks" string="Remarks">
+                            <field name="remarks" attrs="{'readonly': [('state', '=', 'deliver')]}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" />
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_consignment_requisition_tree" model="ir.ui.view">
+        <field name="name">consignment.requisition.tree</field>
+        <field name="model">consignment.requisition</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="date" />
+                <field name="partner_id" />
+                <field name="pricelist_id" />
+                <field name="type" />
+                <field name="origin" />
+                <field name="company_id" />
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_consignment_requisition" model="ir.actions.act_window">
+        <field name="name">Consignment Requisition</field>
+        <field name="res_model">consignment.requisition</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new consignment requisition here.
+            </p>
+            <p>
+                You'll be able to manage your consignment requisitions here.
+            </p>
+        </field>
+    </record>
+</odoo>

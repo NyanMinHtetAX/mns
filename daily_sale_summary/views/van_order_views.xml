@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_van_order_form" model="ir.ui.view">
+        <field name="name">van.order.form</field>
+        <field name="model">van.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="btn_apply_promotion_program"
+                        string="Promotion"
+                        icon="fa-trophy"
+                        type="object"
+                        attrs="{'invisible': ['|', ('available_promotions', '=', []),
+                                                   ('state', '!=', 'draft')]}"
+                        class="oe_highlight"/>
+<!--                    <button name="btn_cancel"-->
+<!--                            string="CANCEL"-->
+<!--                            type="object"-->
+<!--                            attrs="{'invisible': [('state', '!=', 'draft')]}"-->
+<!--                            class="btn-danger"/>-->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,paid,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="btn_show_map" string="Map" type="object" icon="fa-map" class="oe_stat_button"/>
+                        <button name="btn_show_pickings"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-truck"
+                                attrs="{'invisible': [('picking_count', '=', 0)]}">
+                            <field name="picking_count" string="Delivery" widget="statinfo"/>
+                        </button>
+                        <button name="btn_show_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}" string="Customer"/>
+                            <field name="team_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="fleet_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="user_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="payment_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="property_payment_term_id"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="order_reference" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="warehouse_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="location_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="pricelist_id" domain="[('id', 'in', available_pricelist_ids)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="available_pricelist_ids" invisible="1"/>
+                            <field name="daily_sale_summary_id" invisible="1"/>
+                            <field name="available_promotions" invisible="1"/>
+                            <label for="latitude" string="Order Location"/>
+                            <div class="o_row">
+                                <field name="latitude" nolabel="1" class="oe_inline"
+                                       placeholder=".. . . . . . . .Latitude. . . . . . . ."/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                <field name="longitude" nolabel="1" class="oe_inline"
+                                       placeholder=". . . . . . . .Longitude . . . . . . ."/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="order_lines" string="Order Lines">
+                            <field name="order_line_ids" mode="tree" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                    <field name="product_uom_qty" invisible="1"/>
+                                    <field name="multi_uom_line_id" domain="[('id', 'in', multi_uom_line_ids)]"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount_type" required="0"/>
+                                    <field name="discount"/>
+                                    <field name="tax_ids" widget="many2many_tags"/>
+                                    <field name="is_foc" attrs="{'readonly':[('is_foc', '!=', True)]}"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="price_untaxed" optional="hide"/>
+                                    <field name="multi_uom_line_ids" invisible="1"/>
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="order_id" invisible="1"/>
+                                    <field name="refund_line_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <div class="ks_container">
+                                <label for="global_discount_type" string="Global Discount Type"/>
+                                <field name="global_discount_type"
+                                       required="1"
+                                       class="oe_inline"
+                                       attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            </div>
+                            <div class="ks_container">
+                                <label for="global_discount_rate" string="Global Discount"/>
+                                <field name="global_discount_rate" class="oe_inline" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            </div>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="order_total">
+                                <field name="amount_untaxed" widget="monetary" readonly="1"/>
+                                <field name="amount_tax" widget="monetary" readonly="1"/>
+                                <field name="global_discount_amt" widget="monetary" readonly="1"/>
+                                <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary" readonly="1"/>
+                            </group>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page name="payments" string="Payments">
+                            <field name="payment_ids" mode="tree" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="payment_method_id"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id"/>
+                                    <field name="journal_id" invisible="1"/>
+                                    <field name="order_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="note" string="Internal Note">
+                            <field name="remarks" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </page>
+                        <page string="Slip">
+                            <field name="slip_image" widget="image"/>
+                        </page>
+                        <page string="Signature">
+                            <field name="signature" widget="image"/>
+                        </page>
+                        <page name="promotion" string="Promotions">
+                            <group>
+                                 <field name="promotion_ids" widget="many2many_tags" string="Promotions"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_van_order_tree" model="ir.ui.view">
+        <field name="name">van.order.tree</field>
+        <field name="model">van.order</field>
+        <field name="arch" type="xml">
+            <tree default_order="date desc">
+                <field name="name"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="date"/>
+                <field name="location_id"/>
+                <field name="fleet_id"/>
+                <field name="team_id"/>
+                <field name="user_id"/>
+                <field name="pricelist_id"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'invoice'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancel'" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_van_order" model="ir.actions.act_window">
+        <field name="name">Field Sale Orders</field>
+        <field name="res_model">van.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="xml">
+            <p class="o_view_nocontent_smiling_face">
+                Create a van order here.
+            </p>
+            <p>
+                You'll be able to manage your van orders here.
+            </p>
+        </field>
+    </record>
+    <record id="base_field_sale.saleorder" model="ir.ui.menu">
+        <field name="action" ref="action_van_order"/>
+    </record>
+    <record id="view_van_order_payment_tree" model="ir.ui.view">
+        <field name="name">van.order.payment.tree</field>
+        <field name="model">van.order.payment</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="date"/>
+                <field name="payment_method_id"/>
+                <field name="amount" sum="Total"/>
+                <field name="currency_id"/>
+                <field name="journal_id" invisible="1"/>
+                <field name="order_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_van_order_payment_form" model="ir.ui.view"> 
+        <field name="name">van.order.payment.form</field>
+        <field name="model">van.order.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                <field name="date"/>
+                <field name="payment_method_id"/>
+            </group>
+            <group>
+                <field name="amount"/>
+                <field name="currency_id"/>
+            </group>
+                <field name="journal_id" invisible="1"/>
+                <field name="order_id" invisible="1"/>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_van_order_payment" model="ir.actions.act_window">
+        <field name="name">Field Sale Orders Payment</field>
+        <field name="res_model">van.order.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="xml">
+            <p class="o_view_nocontent_smiling_face">
+                Create a van order here.
+            </p>
+            <p>
+                You'll be able to manage your van orders here.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

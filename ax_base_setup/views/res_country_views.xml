@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_country_tree_create" model="ir.ui.view">
+            <field name="name">res.country.tree.create</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">1</attribute>
+                    <attribute name="delete">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_country_form_create" model="ir.ui.view">
+            <field name="name">res.country.form.create</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">1</attribute>
+                    <attribute name="delete">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

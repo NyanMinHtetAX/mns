@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.ProductList" t-inherit-mode="extension">
+        <xpath expr="//t[@t-foreach='props.products']" position="replace">
+            <t t-foreach="props.products" t-as="product" t-key="product.id">
+                <t t-set="config" t-value="product.get_config()"/>
+                <t t-set="onhand" t-value="product.get_qty_onhand()"/>
+                <t t-set="check_onhand" t-value="False"/>
+                <t t-if="config.location_only and config.hide_product">
+                   <t t-if="product.onhand_qty">
+                       <ProductItem product="product" onhand="product.onhand_qty"/>
+                   </t>
+                    <t t-else="">
+                        <t t-if="onhand &gt; 0">
+
+                             <ProductItem product="product" onhand="onhand"/>
+
+                        </t>
+                      </t>
+                </t>
+                <t t-else="">
+                    <t t-if="product.onhand_qty">
+                        <t t-set="check_onhand" t-value="True"/>
+                        <ProductItem product="product" onhand="product.onhand_qty"/>
+                   </t>
+                    <t t-else="">
+                        <t t-if="product.is_check">
+                              <ProductItem product="product" onhand="product.onhand_qty"/>
+                        </t>
+                        <t t-else="">
+                             <ProductItem product="product" onhand="onhand"/>
+                        </t>
+
+                     </t>
+                </t>
+            </t>
+        </xpath>
+    </t>
+</templates>

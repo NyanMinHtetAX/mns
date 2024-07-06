@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="index" inherit_id='point_of_sale.index' name="POS Stock Realtime Index">
+        &lt;!DOCTYPE html&gt;
+        <xpath expr="//link[1]" position="before">
+            <link rel="stylesheet" href="/pos_stock_realtime/static/src/css/styles.css" />
+        </xpath>
+    </template>
+    <template id="assets_pos_stock_realtime" inherit_id="point_of_sale.assets_common">
+       <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_stock_realtime/static/src/js/models.js" />
+            <script type="text/javascript" src="/pos_stock_realtime/static/src/js/Screens/PaymentScreen.js"/>
+            <script type="text/javascript" src="/pos_stock_realtime/static/src/js/Screens/ProductScreen.js" />
+        </xpath>
+    </template>
+</odoo>

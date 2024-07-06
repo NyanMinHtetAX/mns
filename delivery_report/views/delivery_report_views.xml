@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_delivery_report_tree" model="ir.ui.view">
+            <field name="name">delivery.report.tree</field>
+            <field name="model">stock.picking.report</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Report" create="0">
+                    <field name="assign_date"/>
+                    <field name="delivery_date"/>
+                    <field name="picking_no"/>
+                    <field name="sale_customer"/>
+                    <field name="delivery_address"/>
+                    <field name="product"/>
+                    <field name="assign_qty"/>
+                    <field name="uom_assign"/>
+                    <field name="delivery_qty"/>
+                    <field name="uom_delivery"/>
+                    <field name="return_qty"/>
+                    <field name="uom_return"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="search_delivery_report_tree" model="ir.ui.view">
+            <field name="name">delivery.report.tree.search</field>
+            <field name="model">stock.picking.report</field>
+            <field name="arch" type="xml">
+                <search string="Delivery Report">
+                    <field name="picking_no"/>
+                    <field name="sale_customer"/>
+                    <field name="delivery_address"/>
+                    <field name="product"/>
+
+                    <group>
+                        <filter string="Assigned Date" name="group_by_assigned_date" context="{'group_by':'assign_date'}"/>
+                        <filter string="Delivery Date" name="group_by_delivery_date" context="{'group_by':'delivery_date'}"/>
+                        <filter string="Picking No" name="group_by_picking_no" context="{'group_by':'picking_no'}"/>
+                        <filter string="Sale Customer" name="group_by_sale_customer" context="{'group_by':'sale_customer'}"/>
+                        <filter string="Product" name="group_by_product" context="{'group_by':'product'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_delivery_report_tree" model="ir.actions.act_window">
+            <field name="name">Delivery Report</field>
+            <field name="res_model">stock.picking.report</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="delivery_report"
+                  name="Delivery Report"
+                  parent="base_delivery_man.menu_delivery_man"
+                  action="action_delivery_report_tree"
+                  sequence="200"/>
+    </data>
+</odoo>

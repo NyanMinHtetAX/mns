@@ -1,0 +1,25 @@
+.multi-uom-table th{
+    text-align:left;
+    padding: 5px;
+    background: #6c7ae0;
+    color: #ffffff;
+}
+
+.multi-uom-table tr td {
+    padding: 3px 5px;
+}
+
+.multi-uom-btn{
+    background: #6c7ae0 !important;
+    border-radius: 15px !important;
+}
+
+.odd-line-multi-uom{
+    color: #808080;
+    background: #f8f6ff;
+}
+
+.even-line-multi-uom{
+    color: #808080;
+    background: #ffffff;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_consignee_sale" 
+              name="Consignee" 
+              parent="base_field_sale.menu_master_data_id" 
+              action="action_consignee" 
+              sequence="1000"/>
+    
+    <menuitem id="menu_consignment_fs_root" 
+              name="Consignment" 
+              parent="base_field_sale.menu_mobile_field_sale_root" 
+              sequence="4"/>
+    <menuitem id="menu_consignee_fs" 
+              name="Consignee" 
+              parent="menu_consignment_fs_root" 
+              action="action_consignee" 
+              sequence="5"/>
+    <menuitem id="menu_consignment_requisition_fs"
+              name="Requisition"
+              parent="menu_consignment_fs_root" 
+              action="action_consignment_requisition" 
+              sequence="10"/>
+
+    <menuitem id="menu_consignment_stock_root" 
+              name="Consignment" 
+              parent="stock.menu_stock_root" 
+              sequence="95"/>
+    <menuitem id="menu_consignee_stock" 
+              name="Consignee" 
+              parent="menu_consignment_stock_root" 
+              action="action_consignee" 
+              sequence="5"/>
+    <menuitem id="menu_consignment_requisition"
+              name="Requisition"
+              parent="menu_consignment_stock_root" 
+              action="action_consignment_requisition" 
+              sequence="10"/>
+</odoo>

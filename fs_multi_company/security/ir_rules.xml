@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--  Field Sale Models  -->
+    <record id="rule_multi_company_daily_sale_summary" model="ir.rule">
+        <field name="name">Daily Sale Summary Multi-Company</field>
+        <field name="model_id" ref="daily_sale_summary.model_daily_sale_summary"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_van_order" model="ir.rule">
+        <field name="name">Van Order Multi-Company</field>
+        <field name="model_id" ref="daily_sale_summary.model_van_order"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_payment_method" model="ir.rule">
+        <field name="name">Payment Method Multi-Company</field>
+        <field name="model_id" ref="fs_payment_method.model_fieldsale_payment_method"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_payment_collection" model="ir.rule">
+        <field name="name">Payment Collection Multi-Company</field>
+        <field name="model_id" ref="fs_payment_collection.model_payment_collection"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_promotion_program" model="ir.rule">
+        <field name="name">Promotion Program Multi-Company</field>
+        <field name="model_id" ref="fs_sale_promotion.model_promotion_program"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_route_plan" model="ir.rule">
+        <field name="name">Route Plan Multi-Company</field>
+        <field name="model_id" ref="fs_route_plan.model_route_plan"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_multi_company_visit_report" model="ir.rule">
+        <field name="name">Visit Report Multi-Company</field>
+        <field name="model_id" ref="fs_visit_report.model_visit_report"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_multi_company_mobile_device" model="ir.rule">
+        <field name="name">Mobile Device Company</field>
+        <field name="model_id" ref="base_field_sale.model_mobile_device"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!--  Inventory Models  -->
+    <record id="rule_multi_company_stock_multi_scrap" model="ir.rule">
+        <field name="name">Multi Scrap Multi-Company</field>
+        <field name="model_id" ref="stock_multi_scrap.model_stock_multi_scrap"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

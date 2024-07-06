@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="access_price_fields" model="res.groups">
+            <field name="name">Disallow Sale Price Unit</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_res_township_group_all,All access for Township,model_res_township,base.group_user,1,0,0,0
+access_res_city_group_all,All access for City,model_res_city,base.group_user,1,0,0,0
+access_res_religion_group_all,All access for Religion,model_res_religion,base.group_user,1,1,1,1
+access_res_country_group_all,All access for Country,model_res_country,base.group_user,1,0,0,0
+
+access_res_township_group_manager,All access for Township,model_res_township,base.group_partner_manager,1,1,1,1
+access_res_city_group_manager,All access for City,model_res_city,base.group_partner_manager,1,1,1,1
+access_res_country_group_manager,All access for Country,model_res_country,base.group_partner_manager,1,1,1,1
+
+access_generate_partner_code_all,All access for Generate Seq Wizard,model_generate_partner_code,,1,1,1,1
+access_mail_mail,Mail Mail,mail.model_mail_mail,,1,1,1,1
+
+

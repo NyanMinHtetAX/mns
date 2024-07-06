@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension">
+        <xpath expr="//span[hasclass('price-tag')]" position="before">
+            <t t-if="props.product.pos.config.show_qty_available">
+                <t t-if="props.onhand &gt; 0">
+                    <span class="on-hand-tag">
+                        <t t-esc="props.onhand"/>
+                    </span>
+                </t>
+                <t t-else="">
+                    <span class="on-hand-tag-out-of-stock">
+                        <t t-esc="props.onhand"/>
+                    </span>
+                </t>
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_payment_collection_form" model="ir.ui.view">
+        <field name="name">payment.collection.form</field>
+        <field name="model">payment.collection</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="btn_confirm"
+                            string="Confirm"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="btn_approve_real"
+                            string="Approve"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="invoice_address_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="sale_man_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="team_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="mobile_ref" />
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="to_collect_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="collection_lines" string="Invoices">
+                            <field name="line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="invoice_id"
+                                           domain="[('partner_id', '=', parent.partner_id),
+                                                    ('state', '=', 'posted'),
+                                                    ('move_type', '=', 'out_invoice'),
+                                                    ('payment_state', 'in', ['not_paid', 'partial'])]"/>
+                                    <field name="invoice_date"/>
+                                    <field name="due_date"/>
+                                    <field name="amount_total"/>
+                                    <field name="amount_residual" optional="hide"/>
+                                    <field name="last_payment_date" optional="hide"/>
+                                    <field name="amount_last_paid" optional="hide"/>
+                                    <field name="amount_paid"/>
+                                    <field name="payment_state"
+                                           readonly="1"
+                                           force_save="1"
+                                           widget="badge"
+                                           decoration-danger="payment_state == 'not_paid'"
+                                           decoration-info="payment_state == 'partial'"
+                                           decoration-success="payment_state == 'received'"/>
+                                    <field name="collection_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="payments" string="Payments">
+                            <field name="payment_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="payment_method_id"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id"/>
+                                    <field name="payment_collection_id" invisible="1"/>
+                                    <field name="journal_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Customer Signature" name="customer_signature">
+                            <group>
+                                <field name="signed_by"/>
+                                <field name="signed_on"/>
+                                <field name="signature" widget="image"/>
+                            </group>
+                        </page>
+                        <page string="Salesman Signature" name="salesman_signature">
+                            <group>
+                                <field name="salesman_signed_by"/>
+                                <field name="salesman_signed_on"/>
+                                <field name="salesman_signature" widget="image"/>
+                            </group>
+                        </page>
+                        <page string="Slip">
+                            <field name="slip_image" widget="image"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                    <field name="activity_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--Group By-->
+    <record id="view_payment_collection_search" model="ir.ui.view">
+        <field name="name">payment.collection.tree</field>
+        <field name="model">payment.collection</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="sale_man_id"/>
+                <field name="team_id"/>
+                <field name="date"/>
+                <field name="to_collect_date"/>
+                <filter name="to_approve" string="To Approve" domain="[('state', 'in', ['draft', 'confirm'])]"/>
+                <separator/>
+                <filter name="group_by_state" string="State" domain="[]" context="{'group_by':'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_payment_collection_tree" model="ir.ui.view">
+        <field name="name">payment.collection.tree</field>
+        <field name="model">payment.collection</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="sale_man_id" optional="show"/>
+                <field name="team_id" optional="show"/>
+                <field name="date" optional="show"/>
+                <field name="to_collect_date" optional="show"/>
+                <field name="company_id" optional="hide"/>
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state == 'confirm'"
+                       decoration-success="state == 'approve'"/>
+            </tree>
+        </field>
+    </record>
+
+<record id="view_cash_collection_payment_tree" model="ir.ui.view">
+        <field name="name">payment.collection.payment.tree</field>
+        <field name="model">payment.collection.payment.line</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="payment_method_id"/>
+                <field name="partner_id"/>
+                <field name="journal_id"/>
+                <field name="amount"/>
+                <field name="date"/>
+                <field name="currency_id"/>
+                <field name="payment_collection_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_cash_collection_payment_form" model="ir.ui.view">
+        <field name="name">payment.collection.payment.form</field>
+        <field name="model">payment.collection.payment.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                <field name="payment_method_id"/>
+                <field name="partner_id"/>
+                <field name="journal_id"/>
+                <field name="amount"/>
+            </group>
+            <group>
+                <field name="date"/>
+                <field name="currency_id"/>
+                <field name="payment_collection_id"/>
+            </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payment_collection" model="ir.actions.act_window">
+        <field name="name">Cash Collection</field>
+        <field name="res_model">payment.collection</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cash collection here.
+            </p>
+            <p>
+                You'll be able to manage your cash collections here.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_cash_collection_line" model="ir.actions.act_window">
+        <field name="name">Cash Collection Payment Line</field>
+        <field name="res_model">payment.collection.payment.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cash collection line here.
+            </p>
+            <p>
+                You'll be able to manage your cash collections line here.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_payment_collection_to_approve" model="ir.actions.act_window">
+        <field name="name">Cash Collection</field>
+        <field name="res_model">payment.collection</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'confirm')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cash collection here.
+            </p>
+            <p>
+                You'll be able to manage your cash collections here.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_payment_collection"
+              name="Cash Collection"
+              parent="base_field_sale.menu_operation_id"
+              action="action_payment_collection"
+              sequence="15"/>
+    <!--    <menuitem id="menu_payment_collection_all_accounting"-->
+    <!--              name="Payment Collection"-->
+    <!--              parent="menu_payment_collection_accounting"-->
+    <!--              action="action_payment_collection"-->
+    <!--              sequence="5"/>-->
+  
+</odoo>

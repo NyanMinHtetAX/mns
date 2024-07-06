@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_inquiry_report_wizard_view" model="ir.ui.view">
+        <field name="name">stock.inquiry.report.wizard.form</field>
+        <field name="model">stock.inquiry.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="company_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="product_id" options="{'no_create': True}" />
+                            <field name="product_categ_id"
+                                options="{'no_create': True}" />
+                            <field name="warehouse_id" options="{'no_create': True}"
+                                domain="[('company_id', '=', company_id)]" />
+                            <!-- <field name="in_total"/>
+                            <field name="out_total"/> -->
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end" />
+                            <field name="location_id" options="{'no_create': True}"
+                                domain="[('company_id', '=', company_id)]" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <button name="action_compute_lines"
+                                type="object" string="Refresh"
+                                default_focus="1" class="btn-primary" />
+                            <button name="action_export_excel"
+                                type="object" string="Export Excel"
+                                class="btn-primary"
+                                style="margin-left:10px;"/>
+                            <field name="line_ids" nolable="1">
+                                <tree>
+                                    <field name="date" />
+                                    <field name="reference" />
+                                    <field name="session_id" />
+                                    <field name="description" />
+                                    <field name="partner_id"/>
+                                    <field name="sale_customer_id"/>
+                                    <field name="in_qty" />
+                                    <field name="out_qty" />
+                                    <field name="balance" />
+<!--                                    <field name="cost_price" />-->
+                                    <field name="price_unit"/>
+                                    <field name="sale_price" />
+                                    <field name="amount" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                        </group>
+                        <group>
+                            <group></group>
+                            <group>
+                                <field name="in_total"/>
+                                <field name="out_total"/>
+                            </group>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_inquiry_report_wizard" model="ir.actions.act_window">
+        <field name="name">Stock Inquiry Wizard</field>
+        <field name="res_model">stock.inquiry.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_inquiry_report_wizard_view" />
+        <field name="context">{}</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_stock_inquiry_report_wizard" name="Stock Inquiry Report"
+        action="action_stock_inquiry_report_wizard" parent="stock.menu_warehouse_report" 
+        sequence="111"/>
+
+    <record model="ir.ui.view" id="stock_inquiry_excel_output_form">
+        <field name="name">stock.inquiry.excel.output.form</field>
+        <field name="model">stock.inquiry.excel.output</field>
+        <field name="arch" type="xml">
+            <form string="Report">
+                <group>
+                    <field name="filename" filename="name" />
+                    <field name="name" invisible="1" />
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_inquiry_excel_output" model="ir.actions.act_window">
+        <field name="name">Report</field>
+        <field name="res_model">stock.inquiry.excel.output</field>
+        <!-- <field name="src_model">stock.inquiry.excel.output</field> -->
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

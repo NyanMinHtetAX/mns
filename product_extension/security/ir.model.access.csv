@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_internal_reference_code","internalreference.code","model_internal_reference_code",,1,1,1,1
+"access_product_brand_inventory","product.brand","model_product_brand",base.group_user,1,1,1,1
+"access_product_sequence_inventory","product.sequence","model_product_sequence",base.group_user,1,1,1,1
+

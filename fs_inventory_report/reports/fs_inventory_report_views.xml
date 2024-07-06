@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fs_inventory_pdf_report" model="ir.actions.report">
+        <field name="name">FS Inventory Report PDF</field>
+        <field name="model">fs.inventory.report</field>
+        <field name="report_name">fs_inventory_report.fs_inventory_report_pdf</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">fs_inventory_report</field>
+        <field name="py3o_template_fallback">reports/inventory_report.odt</field>
+        <field name="print_report_name">'Inventory Report PDF'</field>
+    </record>
+    <record id="fs_inventory_xlsx_report" model="ir.actions.report">
+        <field name="name">FS Inventory Report XLSX</field>
+        <field name="model">fs.inventory.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fs_inventory_report.fs_inventory_report_xlsx</field>
+        <field name="report_file">fs_inventory_report.fs_inventory_report_xlsx</field>
+        <field name="print_report_name">'Inventory Report XLSX'</field>
+    </record>
+    <record id="action_fs_inventory_report" model="ir.actions.client">
+        <field name="name">FS Inventory Report</field>
+        <field name="tag">FsInventoryReport</field>
+    </record>
+    <menuitem id="menu_fs_inventory_report"
+              name="Inventory Report"
+              parent="base_field_sale.menu_report_id"
+              action="action_fs_inventory_report"
+              sequence="15"/>
+</odoo>

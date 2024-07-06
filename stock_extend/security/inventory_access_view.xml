@@ -1,0 +1,18 @@
+<odoo>
+    <record model="ir.module.category" id="module_category_inventory">
+        <field name="name">Inventory Setting</field>
+        <field name="sequence">203</field>
+    </record>
+    <record id="group_product_cost" model="res.groups">
+        <field name="name">Show Product Cost?</field>
+        <field name="category_id" ref="stock_extend.module_category_inventory"/>
+    </record>
+    <record id="group_hide_unlock_button" model="res.groups">
+        <field name="name">Hide Unlock</field>
+        <field name="category_id" ref="stock_extend.module_category_inventory"/>
+    </record>
+    <record id="group_readonly_onhand_qty" model="res.groups">
+        <field name="name">Disallow On Hand Quantity</field>
+        <field name="category_id" ref="stock_extend.module_category_inventory"/>
+    </record>
+</odoo>

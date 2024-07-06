@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="SaleDetailsReportCP">
+        <!-- Report By Modal -->
+        <div id="sale-details-report-by-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Report By</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0">
+                        <table class="sale-details-report-table w-100"
+                               data-modal="#sale-details-report-by-modal"
+                               data-field="report_by"
+                               data-btn="#btn-report-by-wizard">
+                            <colgroup>
+                                <col style="width:5%"/>
+                                <col style="width:95%"/>
+                            </colgroup>
+                            <tr>
+                                <th>No.</th>
+                                <th>Report By</th>
+                            </tr>
+                            <tr class="select-report-handler" data-value="sale_team" data-label="Sales Team">
+                                <td>1.</td>
+                                <td>Sales Team</td>
+                            </tr>
+                            <tr class="select-report-handler" data-value="sale_man" data-label="Sales Man">
+                                <td>2.</td>
+                                <td>Sales Man</td>
+                            </tr>
+                            <tr t-if="data.options.report_of != 'product_category'" class="select-report-handler" data-value="category" data-label="Product Category">
+                                <td>3.</td>
+                                <td>Product Category</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="sale-details-report-of-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Report Of</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0">
+                        <table class="sale-details-report-table w-100"
+                               data-modal="#sale-details-report-of-modal"
+                               data-field="report_of"
+                               data-btn="#btn-report-of-wizard">
+                            <colgroup>
+                                <col style="width:5%"/>
+                                <col style="width:95%"/>
+                            </colgroup>
+                            <tr>
+                                <th>No.</th>
+                                <th>Report Of</th>
+                            </tr>
+                            <tr class="select-report-handler" data-value="product" data-label="Product">
+                                <td>1.</td>
+                                <td>Product</td>
+                            </tr>
+                            <tr class="select-report-handler" data-value="product_group" data-label="Product Group">
+                                <td>2.</td>
+                                <td>Product Group</td>
+                            </tr>
+                            <tr t-if="data.options.report_by != 'category'" class="select-report-handler" data-value="product_category" data-label="Product Category">
+                                <td>3.</td>
+                                <td>Product Category</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sale-details-cp-container">
+            <div class="cp-btns-container">
+                <div>
+                    <div class="sale-details-date d-inline-block">
+                        <div class="custom-date">
+                            <div class='o_datepicker js_account_reports_datetimepicker'>
+                                <input id="sale-details-date-from" type='text' class="o_datepicker_input" name="date_from" />
+                                <span class="o_datepicker_button"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sale-details-date d-inline-block ml-3">
+                        <div class="custom-date">
+                            <div class='o_datepicker js_account_reports_datetimepicker'>
+                                <input id="sale-details-date-to" type='text' class="o_datepicker_input" name="date_to" />
+                                <span class="o_datepicker_button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sale-details-report-handler-container">
+                    <div class="sale-details-report-by">
+                        <div id="sale-details-report-by" class="sale-details-option-selector d-inline-block mr-3">
+                            <button id="btn-report-by-wizard"
+                                    type="button"
+                                    class="btn sale-details-btn sale-details-cp-btn"
+                                    data-toggle="modal"
+                                    data-target="#sale-details-report-by-modal"
+                                    data-callback="resetReportByOptions">
+                                <t t-if="data.options.report_by == 'sale_team'">
+                                    Sales Team
+                                </t>
+                                <t t-elif="data.options.report_by == 'sale_man'">
+                                    Sales Man
+                                </t>
+                                <t t-else="">
+                                    Category
+                                </t>
+                            </button>
+                        </div>
+                        <div t-if="data.options.report_by == 'sale_team'" class="sale-details-option-selector d-inline-block">
+                            <button type="button"
+                                    class="btn sale-details-btn sale-details-cp-btn"
+                                    data-title="Select Sales Team"
+                                    data-res-model="crm.team"
+                                    data-option-key="team_ids">
+                                Select Sales Team
+                                <i class="fa fa-pencil ml-1"></i>
+                            </button>
+                        </div>
+                        <div t-elif="data.options.report_by == 'sale_man'" class="sale-details-option-selector d-inline-block">
+                            <button type="button"
+                                    class="btn sale-details-btn sale-details-cp-btn"
+                                    data-title="Select Sales Man"
+                                    data-res-model="res.users"
+                                    data-option-key="sale_man_ids">
+                                Select Sales Man
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                        <div t-else="" class="sale-details-option-selector d-inline-block">
+                            <button type="button"
+                                    class="btn sale-details-btn sale-details-cp-btn"
+                                    data-title="Select Product Category"
+                                    data-res-model="product.category"
+                                    data-option-key="category_ids">
+                                Select Category
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                        <div class="sale-details-option-selector d-inline-block ml-3">
+                            <button id="btn-report-of-wizard"
+                                    type="button"
+                                    class="btn sale-details-btn sale-details-cp-btn"
+                                    data-toggle="modal"
+                                    data-target="#sale-details-report-of-modal">
+                                <t t-if="data.options.report_of == 'product'">
+                                    Product
+                                </t>
+                                <t t-elif="data.options.report_of == 'product_group'">
+                                    Product Group
+                                </t>
+                                <t t-else="">
+                                    Product Category
+                                </t>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="sale-details-excel-download d-inline-block">
+                        <button class="btn sale-details-btn sale-details-download-report" data-report-type="xlsx">
+                            Excel
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="sale-details-pdf-download d-inline-block ml-3">
+                        <button class="btn sale-details-btn sale-details-download-report" data-report-type="pdf">
+                            PDF
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SaleDetailsReportOfProduct">
+        <table class="sale-details-main-table mt-5">
+            <colgroup>
+                <col style="width:5%"/>
+                <col style="width:40%"/>
+                <col style="width:10%"/>
+                <col style="width:15%"/>
+                <col style="width:15%"/>
+                <col style="width:15%"/>
+            </colgroup>
+            <thead>
+                <tr class="text-center">
+                    <td>No.</td>
+                    <td>Item</td>
+                    <td>Qty</td>
+                    <td>UOM</td>
+                    <td>Unit Price</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="data.records" t-as="record">
+                    <tr class="sale-details-main-table-header">
+                        <td colspan="2">
+                            <t t-esc="record.parent"/>
+                        </td>
+                        <td class="text-center">
+                            <t t-esc="record.total_qty"/>
+                        </td>
+                        <td colspan="2"/>
+                        <td class="text-right">
+                            <t t-esc="record.total_amt_display"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="1"/>
+                    <t t-foreach="record.lines" t-as="line">
+                        <t t-set="line" t-value="record.lines[line]"/>
+                        <tr t-attf-class="{{ no % 2 == 0 ? 'sale-details-tr-even' : 'sale-details-tr-odd' }}">
+                            <td>
+                                <t t-esc="no"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.report_of_item"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="line.qty"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="line.uom"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="line.price_unit_display"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="line.price_subtotal_display"/>
+                            </td>
+                        </tr>
+                        <t t-set="no" t-value="no + 1"/>
+                    </t>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="SaleDetailsReportOfProductGroupAndCategory">
+        <table class="sale-details-main-table mt-5">
+            <colgroup>
+                <col style="width:5%"/>
+                <col style="width:60%"/>
+                <col style="width:15%"/>
+                <col style="width:20%"/>
+            </colgroup>
+            <thead>
+                <tr class="text-center">
+                    <td>No.</td>
+                    <td>
+                        <t t-if="data.options.report_of == 'product_group'">
+                            Product Group
+                        </t>
+                        <t t-else="">
+                            Product Category
+                        </t>
+                    </td>
+                    <td>Qty</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="data.records" t-as="record">
+                    <tr class="sale-details-main-table-header">
+                        <td colspan="2">
+                            <t t-esc="record.parent"/>
+                        </td>
+                        <td class="text-center">
+                            <t t-esc="record.total_qty"/>
+                        </td>
+                        <td class="text-right">
+                            <t t-esc="record.total_amt_display"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="1"/>
+                    <t t-foreach="record.lines" t-as="line">
+                        <t t-set="line" t-value="record.lines[line]"/>
+                        <tr t-attf-class="{{ no % 2 == 0 ? 'sale-details-tr-even' : 'sale-details-tr-odd' }}">
+                            <td>
+                                <t t-esc="no"/>
+                            </td>
+                            <td>
+                                <t t-esc="line.report_of_item"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-esc="line.qty"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="line.price_subtotal_display"/>
+                            </td>
+                        </tr>
+                        <t t-set="no" t-value="no + 1"/>
+                    </t>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="SaleDetailsReport">
+        <div class="sales-details-header-label mt-3 mb-5">
+            Sales Details Report
+        </div>
+        <t t-call="SaleDetailsReportCP"/>
+        <t t-if="data.options.report_of == 'product'">
+            <t t-call="SaleDetailsReportOfProduct"/>
+        </t>
+        <t t-else="">
+            <t t-call="SaleDetailsReportOfProductGroupAndCategory"/>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,73 @@
+<odoo>
+    <record id="product_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="after">
+                <field name="zawgyi_product_name" style="letter-spacing:10px" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherirt</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='variants']" position="after">
+                <page name="pricelist_line" string="Pricelist" invisible="1">
+                    <field name="pricelist_line_ids" widget="one2many" context="{'show_attribute': False}"/>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='multi_uom']" position="after">
+                <page string="Pricelist" invisible="1">
+                   <field name="pricelist_line_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_pricelist_view_shelve" model="ir.ui.view">
+        <field name="name">product.pricelist.form.shelve</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='pricelist_settings']" position="after">
+                <group name="shelved_tags">
+                    <field name="shelved_tags"/>
+                    <field name="is_field_sale"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="product.product_pricelist_action2" model="ir.actions.act_window">
+            <field name="name">Pricelists</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pricelist</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="product.product_pricelist_view_search" />
+            <field name="domain">[('is_field_sale', '=', False)]</field>
+            <field name="context">{"default_base":'list_price',"default_is_field_sale": False}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new pricelist
+              </p><p>
+                A price is a set of sales prices or rules to compute the price of sales order lines based on products, product categories, dates and ordered quantities.
+                This is the perfect tool to handle several pricings, seasonal discounts, etc.
+              </p><p>
+                You can assign pricelists to your customers or select one when creating a new sales quotation.
+              </p>
+            </field>
+        </record>
+    <record id="product_template_form_inherit_1" model="ir.ui.view">
+        <field name="name">product.template.form.inherirt.1</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='detailed_type']" position="before">
+                   <field name="shelve_name"/>
+                   <field name="zawgyi_shelve_name" invisible="True" style="letter-spacing:10px"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

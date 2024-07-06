@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="multi_uom.view_purchase_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='multi_qty_invoiced']" position="before">
+                    <field name="purchase_return_qty" readonly="1" sum="Return Qty" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_report_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line.report.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0" import="0">
+                    <field name="order_id" string="Reference" readonly="1" options="{'no_open': True}"/>
+                    <field name="partner_id" string="Vendor" readonly="1" options="{'no_open': True}"/>
+                    <field name="city_id" readonly="1" options="{'no_open': True}" optional="show"/>
+                    <field name="picking_type_id" readonly="1" options="{'no_open': True}" invisible="1"/>
+                    <field name="warehouse_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                    <field name="product_id" readonly="1" options="{'no_open': True}"/>
+                    <field name="date_planned" optional="hide" force_save="1" readonly="1"/>
+                    <field name="account_analytic_id" optional="hide" options="{'no_open': True}"
+                           groups="analytic.group_analytic_accounting" readonly="1"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                    <field name="analytic_tag_ids" optional="hide"
+                           groups="analytic.group_analytic_tags" readonly="1"
+                           widget="many2many_tags" options="{'color_field': 'color', 'no_open': True}"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                    <field name="purchase_uom_qty" readonly="1" sum="Purchase UOM Qty"/>
+<!--                    <field name="purchase_backorder_qty" readonly="1"/>-->
+                    <field name="backorder_qty" readonly="1" sum="Backorder Qty"/>
+                    <field name="multi_qty_received" string="Received" optional="show" readonly="1"
+                           sum="Multi Qty Received"/>
+                    <field name="purchase_return_qty" readonly="1" sum="Return Qty" force_save="1"/>
+                    <field name="multi_qty_invoiced" string="Billed" optional="show" readonly="1"
+                           sum="Multi Qty Invoiced"/>
+                    <field name="multi_uom_line_id" string="UoM" groups="uom.group_uom" force_save="1" optional="show"
+                           readonly="1"/>
+                    <field name="multi_price_unit" readonly="1"/>
+                    <field name="discount_type" readonly="1" optional="hide"/>
+                    <field name="multi_uom_discount" readonly="1" optional="hide"/>
+                    <field name="discount_amount" readonly="1" optional="hide"/>
+                    <field name="taxes_id" readonly="1" widget="many2many_tags" options="{'no_open': True}"
+                           domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                           context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                           optional="show"/>
+                    <field name="price_subtotal" widget="monetary" readonly="1"/>
+                    <field name="state" optional="show" string="Status"/>
+                    <field name="date_order" widget="date" string="Order Date"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_form3" model="ir.ui.view">
+            <field name="name">purchase.order.line.form2</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Purchase Order Line" create="false" edit="false">
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="order_id" readonly="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="partner_id" string="Vendor" readonly="1" options="{'no_open': True}"/>
+                                    <field name="product_id" readonly="1" options="{'no_open': True}"/>
+                                    <field name="date_planned" force_save="1" readonly="1"/>
+                                    <field name="account_analytic_id" options="{'no_open': True}"
+                                           groups="analytic.group_analytic_accounting" readonly="1"/>
+                                    <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" readonly="1"
+                                           widget="many2many_tags" options="{'color_field': 'color', 'no_open': True}"/>
+                                    <field name="picking_type_id" readonly="1" invisible="1"/>
+                                    <field name="warehouse_id" readonly="1"/>
+                                </group>
+                                <group>
+
+                                    <field name="purchase_uom_qty" readonly="1"/>
+<!--                                    <field name="purchase_backorder_qty" readonly="1"/>-->
+                                    <field name="backorder_qty" readonly="1"/>
+                                    <field name="multi_qty_received" string="Received" readonly="1"/>
+                                    <field name="multi_qty_invoiced" string="Billed" readonly="1"/>
+                                    <field name="multi_uom_line_id" string="UoM" groups="uom.group_uom" force_save="1"
+                                           readonly="1"/>
+                                    <field name="multi_price_unit" readonly="1"/>
+                                    <field name="discount_type" readonly="1"/>
+                                    <field name="multi_uom_discount" readonly="1"/>
+                                    <field name="discount_amount" readonly="1"/>
+                                    <field name="taxes_id" readonly="1" widget="many2many_tags"
+                                           options="{'no_open': True}"/>
+                                    <field name="price_subtotal" widget="monetary" readonly="1"/>
+                                    <field name="state" optional="show" string="Status"/>
+                                    <field name="date_order" widget="date" string="Order Date"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_report_pivot" model="ir.ui.view">
+            <field name="name">purchase.order.line.report.pivot</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="purchase_uom_qty" type="measure"/>
+                    <field name="multi_price_unit" type="measure"/>
+<!--                    <field name="date_order" type="measure"/>-->
+<!--                    <field name="state" type="measure"/>-->
+
+                </pivot>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_report_action" model="ir.actions.act_window">
+            <field name="name">Purchase Details Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="view_id" ref="purchase_order_line_report_tree"/>
+            <field name="domain">[('product_id.type', '=', 'product')]</field>
+            <field name="context">{'search_default_group_by_order_id': 1}</field>
+        </record>
+
+        <record id="purchase_order_line_report_search" model="ir.ui.view">
+            <field name="name">Purchase Details Line</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Purchase Details Line">
+                    <filter string="Status" name="quotes" domain="[('state','in',('draft','sent','to approve','purchase','done','cancel'))]"/>
+                    <field name="product_id"/>
+                    <field name="order_id"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Product' name="group_by_product_id" context="{'group_by': 'product_id'}"/>
+                        <filter string='Reference' name="group_by_order_id" context="{'group_by': 'order_id'}"/>
+                        <filter string='Partner' name="group_by_partner_id" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Cities" name="cities" domain="[]" context="{'group_by': 'city_id'}"/>
+                        <filter string='Order Date' name="group_by_date_order" context="{'group_by': 'date_order'}"/>
+                        <filter string='Status' name="group_by_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_purchase_order_line"
+                  name="Purchase Detail Line Report"
+                  parent="purchase.purchase_report_main"
+                  sequence="110"
+                  groups="purchase.group_purchase_manager"
+                  action="purchase_order_line_report_action"/>
+    </data>
+</odoo>

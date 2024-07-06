@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_product_image_form">
+            <field name="name">report.visit.image.form</field>
+            <field name="model">visit.report.image</field>
+            <field name="arch" type="xml">
+                <form string="Product Images">
+                    <div class="row o_website_sale_image_modal">
+                        <div class="col-md-6 col-xl-5">
+                            <div class="oe_title">
+                                <label class="small text-muted" for="name" string="Image Name"/>
+                                <h2><field name="name" placeholder="Image Name" required="True"/></h2>
+                                <field name="image_id" invisible="1"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                            <field name="image" widget="image"/>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_visit_repot_reason_type_form" model="ir.ui.view">
+            <field name="name">visit.report.reason.type.form</field>
+            <field name="model">visit.report.reason.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_visit_repot_reason_type_tree" model="ir.ui.view">
+            <field name="name">visit.report.reason.type.tree</field>
+            <field name="model">visit.report.reason.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_visit_report_reason_type" model="ir.actions.act_window">
+            <field name="name">Reason Types</field>
+            <field name="res_model">visit.report.reason.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_no_content_smiling_face">
+                    Create a new reason type here.
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_visit_report_reason_type"
+                  name="Reason Type"
+                  parent="base_field_sale.menu_others_fieldsale"
+                  action="action_visit_report_reason_type"
+                  sequence="100"/>
+    </data>
+</odoo>

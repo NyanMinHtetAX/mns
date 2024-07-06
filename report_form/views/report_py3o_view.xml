@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_invoice_a4_pdf_report" model="ir.actions.report">
+            <field name="name">SGT Sale Invoice(A4)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.invoice_pdf</field>
+            <field name="report_file">report_form.invoice_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/invoice_a4.odt</field>
+        </record>
+        <record id="action_invoice_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">SGT Sale Invoice(A4)</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_invoice_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!--        26th branch-->
+        <record id="action_26th_invoice_a4_pdf_report" model="ir.actions.report">
+            <field name="name">26th Branch Sale Invoice(A4)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.26th_invoice_pdf</field>
+            <field name="report_file">report_form.26th_invoice_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/26th_invoice_a4.odt</field>
+        </record>
+        <record id="action_26th_invoice_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">26th Branch Sale Invoice(A4)</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_26th_invoice_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--        26th branch-->
+        <!--        cherry branch-->
+        <record id="action_cherry_invoice_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Cherry Branch Sale Invoice(A4)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.cherry_invoice_pdf</field>
+            <field name="report_file">report_form.cherry_invoice_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/cherrry_invoice_a4.odt</field>
+        </record>
+        <record id="action_cherry_invoice_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Cherry Branch Sale Invoice(A4)</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_cherry_invoice_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--        cherry branch-->
+
+        <record id="action_sale_marketing_invoice_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Sales &amp; Marketing Invoice( A4 )</field>
+            <field name="model">account.move</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.sale_marketing_invoice_pdf</field>
+            <field name="report_file">report_form.sale_marketing_invoice_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/sale_marketing_invoice_a4.odt</field>
+        </record>
+        <record id="action_sale_marketing_invoice_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Sales &amp; Marketing Invoice( A4 )</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_sale_marketing_invoice_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_local_po_agreement_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Local Purchase Order( A4 )</field>
+            <field name="model">purchase.requisition</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.local_po_agreement_pdf</field>
+            <field name="report_file">report_form.local_po_agreement_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/local_po_agreement_a4.odt</field>
+        </record>
+        <record id="action_local_po_agreement_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Local Purchase Order( A4 )</field>
+            <field name="model_id" ref="model_purchase_requisition"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_local_po_agreement_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_purchase_requisition"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_foreign_po_agreement_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Foreign Purchase Order( A4 )</field>
+            <field name="model">purchase.requisition</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.foreign_po_agreement_pdf</field>
+            <field name="report_file">report_form.foreign_po_agreement_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/foreign_po_agreement_a4.odt</field>
+        </record>
+        <record id="action_foreign_po_agreement_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Foreign Purchase Order( A4 )</field>
+            <field name="model_id" ref="model_purchase_requisition"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_foreign_po_agreement_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_purchase_requisition"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!--Production Order Summary Report - 21 Aug 2023 - MPP-->
+        <record id="action_production_order_summary_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Production Order Summary Report( A4 )</field>
+            <field name="model">production.order.summary</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.production_order_summary_pdf</field>
+            <field name="report_file">report_form.production_order_summary_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/production_order_summary_a4.odt</field>
+        </record>
+        <record id="action_local_production_order_summary_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Production Order Summary Report( A4 )</field>
+            <field name="model_id" ref="model_production_order_summary"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_production_order_summary_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_production_order_summary"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--Production Order Summary Report - 21 Aug 2023 - MPP-->
+
+        <!--Summary Report - 21 Aug 2023 - MPP-->
+        <record id="action_summary_a4_pdf_report" model="ir.actions.report">
+            <field name="name">Summary Report( A4 )</field>
+            <field name="model">summary.report</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.summary_report_pdf</field>
+            <field name="report_file">report_form.summary_report_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/summary_report_a4.odt</field>
+        </record>
+        <record id="action_summary_report_a4_pdf_report_server" model="ir.actions.server">
+            <field name="name">Summary Report( A4 )</field>
+            <field name="model_id" ref="model_summary_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_summary_a4_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_summary_report"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--Production Order Summary Report - 21 Aug 2023 - MPP-->
+
+        <record id="a4_paper_format_customize_report" model="report.paperformat">
+            <field name="name">A4 Customize Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">98</field>
+            <field name="report_ids"
+                   eval="[(6, 0, [ref('report_form.action_invoice_a4_pdf_report'),
+                                  ref('report_form.action_26th_invoice_a4_pdf_report'),
+                                  ref('report_form.action_cherry_invoice_a4_pdf_report'),
+                                  ref('report_form.action_sale_marketing_invoice_a4_pdf_report'),
+                                  ref('report_form.action_local_po_agreement_a4_pdf_report'),
+                                  ref('report_form.action_production_order_summary_a4_pdf_report'),
+                                  ref('report_form.action_foreign_po_agreement_a4_pdf_report'),
+                                  ref('report_form.action_summary_a4_pdf_report')])]"/>
+        </record>
+
+        <record id="action_qc_pdf" model="ir.actions.report">
+            <field name="name">Quality Control( A4 )</field>
+            <field name="model">mrp.quality.control</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.action_qc_pdf</field>
+            <field name="report_file">report_form.action_qc_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/qc_pdf.odt</field>
+        </record>
+        <record id="action_qc_pdf_server" model="ir.actions.server">
+            <field name="name">Quality Control( A4 )</field>
+            <field name="model_id" ref="model_mrp_quality_control"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_mc_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_mrp_quality_control"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_cost_calculation_pdf" model="ir.actions.report">
+            <field name="name">Cost Calculation And Sale Pricing (AC)</field>
+            <field name="model">cost.calculation.sale.pricing</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.action_cost_calculation_pdf</field>
+            <field name="report_file">report_form.action_cost_calculation_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/cost_calculation_sale_pricing_pdf.odt</field>
+        </record>
+        <record id="action_cost_calculation_pdf_server" model="ir.actions.server">
+            <field name="name">Cost တွက်ချက်မှုနှင့် အရောင်းတန်ဖိုးပြဇယား (AC)</field>
+            <field name="model_id" ref="model_cost_calculation_sale_pricing"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_cost_calculation_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_cost_calculation_sale_pricing"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="action_cost_calculation_plc_pdf" model="ir.actions.report">
+            <field name="name">Cost Calculation And Sale Pricing (PLC)</field>
+            <field name="model">cost.cal.sale.pricing.pl</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.action_cost_calculation_plc_pdf</field>
+            <field name="report_file">report_form.action_cost_calculation_plc_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/cost_calculation_sale_pricing_plc_pdf.odt</field>
+        </record>
+        <record id="action_cost_calculation_plc_pdf_server" model="ir.actions.server">
+            <field name="name">Cost တွက်ချက်မှုနှင့် အရောင်းတန်ဖိုးပြဇယား (PLC)</field>
+            <field name="model_id" ref="model_cost_cal_sale_pricing_pl"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.get_cost_calculation_plc_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_cost_cal_sale_pricing_pl"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_mrp_ac_finish_cost_pdf" model="ir.actions.report">
+            <field name="name">Finished Goods Cost(AC) Report (A4)</field>
+            <field name="model">mrp.raw.material.average.cost</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.action_mrp_ac_finish_cost_pdf</field>
+            <field name="report_file">report_form.action_mrp_ac_finish_cost_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/mrp_finished_goods_cost_ac_pdf.odt</field>
+        </record>
+        <record id="action_mrp_ac_finish_cost_pdf_server" model="ir.actions.server">
+            <field name="name">Finished Goods Cost(AC) PDF</field>
+            <field name="model_id" ref="model_mrp_raw_material_average_cost"/>
+            <field name="state">code</field>
+            <field name="sequence">1</field>
+            <field name="code">
+                action = records.get_raw_ac_finish_cost_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_mrp_raw_material_average_cost"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_mrp_ac_packing_pdf" model="ir.actions.report">
+            <field name="name">Packing Cost(AC) PDF</field>
+            <field name="model">mrp.raw.material.average.cost</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.action_mrp_ac_packing_pdf</field>
+            <field name="report_file">report_form.action_mrp_ac_packing_pdf</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/mrp_packing_cost_ac_report.odt</field>
+        </record>
+        <record id="action_mrp_ac_packing_pdf_server" model="ir.actions.server">
+            <field name="name">Packing Cost(AC) PDF</field>
+            <field name="model_id" ref="model_mrp_raw_material_average_cost"/>
+            <field name="state">code</field>
+            <field name="sequence">2</field>
+            <field name="code">
+                action = records.get_raw_ac_packing_pdf()
+            </field>
+            <field name="binding_model_id" ref="model_mrp_raw_material_average_cost"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Cost for 1kg ( Average Cost ) -->
+        <record id="action_mrp_raw_material_cost_for_1kg_average_cost_pdf_a4_server" model="ir.actions.server">
+            <field name="name">Cost for 1 KG(AC) PDF</field>
+            <field name="model_id" ref="cost_calculation_sale_pricing.model_mrp_raw_material_average_cost"/>
+            <field name="state">code</field>
+            <field name="sequence">3</field>
+            <field name="code">
+                action = records.get_raw_material_average_cost_pdf_report('cost_for_1kg')
+            </field>
+            <field name="binding_model_id" ref="cost_calculation_sale_pricing.model_mrp_raw_material_average_cost"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="action_mrp_raw_material_cost_for_1kg_average_cost_pdf_a4_report" model="ir.actions.report">
+            <field name="name">Cost for 1 KG(AC) Report (A4)</field>
+            <field name="model">mrp.raw.material.average.cost</field>
+            <field name="report_type">py3o</field>
+            <field name="report_name">report_form.mrp_raw_material_cost_for_1kg_average_cost_pdf_report_a4</field>
+            <field name="report_file">report_form.mrp_raw_material_cost_for_1kg_average_cost_pdf_report_a4</field>
+            <field name="py3o_filetype">pdf</field>
+            <field name="module">report_form</field>
+            <field name="py3o_template_fallback">reports/mrp_cost_for_1kg_ac_report.odt</field>
+        </record>
+    </data>
+</odoo>

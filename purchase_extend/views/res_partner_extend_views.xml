@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    # For PO Register Payment Button Warning Message (26 Oct 2022) MPP-->
+    <data>
+        <record id="res_partner_view_purchase_register_payment_buttons" model="ir.ui.view">
+            <field name="name">res.partner.view.purchase.register.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='internal_notes']" position="inside">
+                    <group colspan="2" col="2" groups="purchase.group_warning_purchase">
+                        <separator string="Alert Message on Vendor Bill and Register Payment" colspan="4"/>
+                        <field name="register_warn" nolabel="1"/>
+                        <field name="register_warn_msg" colspan="3" nolabel="1"
+                               attrs="{'required':[('register_warn','!=', False), ('register_warn','!=','no-message')], 'invisible':[('register_warn','in',(False,'no-message'))]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <!--    # For PO Register Payment Button Warning Message (26 Oct 2022) MPP-->
+
+
+        <!--Adding Credit Limit in List Views By ETK-->
+        <record id="res_partner_purchase_views" model="ir.ui.view">
+            <field name="name">res.partner.purchase.views</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state_id']" position="after">
+                    <field name="credit_limit" optional="hide"/>
+                    <field name="property_payment_term_id" optional="hide"/>
+                    <field name="v_credit_limit" optional="hide"/>
+                    <field name="property_supplier_payment_term_id" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+        <!--Adding Credit Limit in List Views By ETK-->
+
+        <!--Adding Purchaser By ETK-->
+        <record id="res_partner_views_inherit" model="ir.ui.view">
+            <field name="name">res.partner.views.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='sales_purchases']//group[@name='purchase']//field[@name='property_supplier_payment_term_id']" position="before">
+                    <field name="purchaser_id"/>
+                </xpath>
+            </field>
+        </record>
+        <!--Adding Credit Limit in List Views By ETK-->
+    </data>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_invoice_form_payment_collection">
+            <field name="name">Account Invoice</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="sale.account_invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                        <field name="is_reset" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_invoice_form_remark_confirm">
+            <field name="name">Account Invoice Remark</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="analytic_accounting.view_move_form_inherit"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='analytic_account_id']" position="after">
+                        <field name="confirm_remark"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="stock_multi_scrap_tree_view_field_sale" model="ir.ui.view">
+            <field name="name">stock.multi.scrap.tree</field>
+            <field name="model">stock.multi.scrap</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'draft'" default_order="excepted_date desc">
+                    <field name="name"/>
+                    <field name="excepted_date"/>
+                    <field name="sale_man_id"/>
+                    <field name="team_id"/>
+                    <field name="document_number"/>
+                    <field name="state"
+                           widget="badge"
+                           decoration-info="state == 'draft'"
+                           decoration-success="state == 'done'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_multi_scrap_tree_view" model="ir.ui.view">
+            <field name="name">stock.multi.scrap.tree</field>
+            <field name="model">stock.multi.scrap</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'draft'">
+                    <field name="name"/>
+                    <field name="excepted_date"/>
+                    <field name="document_number"/>
+                    <field name="state"
+                           widget="badge"
+                           decoration-info="state == 'draft'"
+                           decoration-success="state == 'done'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="stock_multi_scrap_form_view_field_sale" model="ir.ui.view">
+            <field name="name">stock.multi.scrap.form</field>
+            <field name="model">stock.multi.scrap</field>
+            <field name="arch" type="xml">
+                <form string="Multi Scrap">
+                    <header>
+                        <button name="action_validate" states="draft" string="Validate" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button class="oe_stat_button"
+                                    type="object"
+                                    name="btn_show_product_moves"
+                                    icon="fa-exchange"
+                                    attrs="{'invisible': [('state', '!=', 'done')]}"
+                                    string="Product Moves"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="document_number"/>
+                                <field name="excepted_date"/>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="sale_man_id"/>
+                                <field name="team_id"/>
+                                <field name="is_van_scrap" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="scrap_line" string="Scrap Lines">
+                                <field name="line_ids" widget="one2many_list">
+                                    <tree editable="bottom" string="Scrap Lines">
+                                        <field name="date" invisible="1"/>
+                                        <field name="analytic_account_id" invisible="1"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="lot_id" options="{'no_create': True, 'no_create_edit': True}" groups="stock.group_production_lot"/>
+                                        <field name="multi_uom_qty" string="Qty"/>
+                                        <field name="scrap_qty" invisible="1"/>
+                                        <field name="multi_uom_line_id"
+                                               domain="[('id', 'in', multi_uom_line_ids)]"
+                                               options="{'no_create': True, 'no_create_edit': True}"
+                                               string="UoM"
+                                               groups="uom.group_uom"/>
+                                        <field name="product_uom_id" invisible="1"/>
+                                        <field name="multi_uom_line_ids" invisible="1"/>
+                                        <field name="van_location_id" invisible="1"/>
+                                        <field name="location_id"
+                                               domain="[('id', '=', van_location_id)]"
+                                               options="{'no_create': True, 'no_create_edit': True}"
+                                               groups="stock.group_stock_multi_locations"/>
+                                        <field name="scrap_location_id" options="{'no_create': True, 'no_create_edit': True}" groups="stock.group_stock_multi_locations"/>
+                                        <field name="remark"/>
+                                        <button class="oe_stat_button" name="action_get_stock_move_lines"
+                                            string="Product Move" type="object"
+                                            attrs="{'invisible':[('move_id','=',False)]}"
+                                            icon="fa-arrows-v"/>
+                                        <field name="move_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_multi_scrap_form_view" model="ir.ui.view">
+            <field name="name">stock.multi.scrap.form</field>
+            <field name="model">stock.multi.scrap</field>
+            <field name="arch" type="xml">
+                <form string="Multi Scrap">
+                    <header>
+                        <button name="action_validate" states="draft" string="Validate" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button class="oe_stat_button"
+                                    type="object"
+                                    name="btn_show_product_moves"
+                                    icon="fa-exchange"
+                                    attrs="{'invisible': [('state', '!=', 'done')]}"
+                                    string="Product Moves"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="document_number"/>
+                            </group>
+                            <group>
+                                <field name="excepted_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="scrap_line" string="Scrap Lines">
+                                <field name="line_ids" widget="one2many_list">
+                                    <tree editable="bottom" string="Scrap Lines">
+                                        <field name="date" invisible="1"/>
+                                        <field name="analytic_account_id" invisible="1"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="lot_id" options="{'no_create': True, 'no_create_edit': True}" groups="stock.group_production_lot"/>
+                                        <field name="multi_uom_qty" string="Qty"/>
+                                        <field name="scrap_qty" invisible="1"/>
+                                        <field name="multi_uom_line_id"
+                                               domain="[('id', 'in', multi_uom_line_ids)]"
+                                               options="{'no_create': True, 'no_create_edit': True}"
+                                               string="UoM"
+                                               groups="uom.group_uom"/>
+                                        <field name="product_uom_id" invisible="1"/>
+                                        <field name="multi_uom_line_ids" invisible="1"/>
+                                        <field name="van_location_id" invisible="1"/>
+                                        <field name="location_id"
+                                               options="{'no_create': True, 'no_create_edit': True}"
+                                               groups="stock.group_stock_multi_locations"/>
+                                        <field name="scrap_location_id" options="{'no_create': True, 'no_create_edit': True}" groups="stock.group_stock_multi_locations"/>
+                                        <field name="remark"/>
+<!--                                        <button class="oe_stat_button" name="action_get_stock_move_lines"-->
+<!--                                            string="Product Move" type="object"-->
+<!--                                            attrs="{'invisible':[('move_id','=',False)]}"-->
+<!--                                            icon="fa-arrows-v"/>-->
+                                        <field name="move_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_stock_multi_scrap_damage_field_sale" model="ir.actions.act_window">
+            <field name="name">Stock Scrap</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.multi.scrap</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('is_van_scrap', '=', True)]</field>
+            <field name="context">{'default_is_van_scrap': True}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Multi Scrap products
+              </p><p>
+                Scrapping a product will remove it from your stock. The product will
+                end up in a scrap location that can be used for reporting purpose.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_stock_multi_scrap_damage" model="ir.actions.act_window">
+            <field name="name">Stock Scrap</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.multi.scrap</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('is_van_scrap', '!=', True)]</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Multi Scrap products
+              </p><p>
+                Scrapping a product will remove it from your stock. The product will
+                end up in a scrap location that can be used for reporting purpose.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_view_multi_scrap_tree_field_sale" model="ir.actions.act_window.view">
+            <field name="sequence">5</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock_multi_scrap_tree_view_field_sale"/>
+            <field name="act_window_id" ref="action_stock_multi_scrap_damage_field_sale"/>
+        </record>
+        <record id="action_view_multi_scrap_form_field_sale" model="ir.actions.act_window.view">
+            <field name="sequence">10</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_multi_scrap_form_view_field_sale"/>
+            <field name="act_window_id" ref="action_stock_multi_scrap_damage_field_sale"/>
+        </record>
+
+        <record id="action_view_multi_scrap_tree" model="ir.actions.act_window.view">
+            <field name="sequence">5</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock_multi_scrap_tree_view"/>
+            <field name="act_window_id" ref="action_stock_multi_scrap_damage"/>
+        </record>
+        <record id="action_view_multi_scrap_form" model="ir.actions.act_window.view">
+            <field name="sequence">10</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_multi_scrap_form_view"/>
+            <field name="act_window_id" ref="action_stock_multi_scrap_damage"/>
+        </record>
+
+        <record id="base_field_sale.menu_stock_damage_id" model="ir.ui.menu">
+            <field name="action" ref="action_stock_multi_scrap_damage_field_sale"/>
+        </record>
+
+        <menuitem id="menu_stock_multi_scrap"
+                  name="Stock Scrap"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  action="action_stock_multi_scrap_damage"
+                  sequence="100"/>
+    </data>
+</odoo>

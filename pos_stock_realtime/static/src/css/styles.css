@@ -1,0 +1,37 @@
+.pos .product .on-hand-tag {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #00cc00;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+
+
+.pos .product .on-hand-tag-out-of-stock{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    /*background: #e60000;*/
+    background:#B22222;
+    padding: 2px 5px;
+    border-radius: 2px;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.pos .product{
+    transition: all 1s ease;
+}
+
+.pos .qty-tag.sold-out{
+    background: #EF5350;
+}
+

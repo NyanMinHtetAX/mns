@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="adjustment_seq" model="ir.sequence">
+            <field name="name">Adjustment Sequence</field>
+            <field name="code">adjustment.seq</field>
+            <field name="prefix">ADJ</field>
+            <field name="padding">4</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

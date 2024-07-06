@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="res_partner_fleet_driver">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page name="fleet_driver" string="Fleet">
+                        <group name="container_row_2">
+                            <group string="Driver" name="driver">
+                                <field name="is_driver"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_view_form_driver" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form.driver</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <field name="driver_id" position="attributes">
+                    <attribute name="domain">[('is_driver', '=', True)]</attribute>
+                </field>
+                <field name="future_driver_id" position="attributes">
+                    <attribute name="domain">[('is_driver', '=', True)]</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_picking_form_driver" model="ir.ui.view">
+            <field name="name">stock.picking.form.driver</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="sale_extend.view_stock_picking_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fleet_id']" position="after">
+                    <field name="driver_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

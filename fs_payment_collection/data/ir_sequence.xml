@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="cash_collection_sequence" model="ir.sequence">
+            <field name="name">Cash Collection Sequence</field>
+            <field name="code">cash.collection.seq</field>
+            <field name="prefix">FSCASH</field>
+            <field name="padding">4</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="pay_collection_sequence" model="ir.sequence">
+            <field name="name">Payment Collection Sequence</field>
+            <field name="code">pay.collection.seq</field>
+            <field name="prefix">FSPY</field>
+            <field name="padding">4</field>
+            <field name="number_next" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

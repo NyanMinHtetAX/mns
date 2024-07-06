@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_visit_report_user,visit.report.user,model_visit_report,base.group_user,1,1,1,1
+access_visit_report_image,visit.report.image,model_visit_report_image,base.group_user,1,1,1,1
+access_visit_report_reson_type_user,visit.report.reaosn.type.user,model_visit_report_reason_type,base.group_user,1,1,1,1
+access_visit_report_map_user,visit.report.map.user,model_visit_report_map,base.group_user,1,1,1,1
+access_visit_attendance_user,visit.attendance.user,model_fs_visit_attendance,base.group_user,1,1,1,1

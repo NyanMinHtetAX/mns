@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_form_inherit" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='destination_journal_id']" position="after">
+                <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'draft')],
+                                                          'invisible': [('is_internal_transfer', '=', True)]}"/>
+                <field name="collector"/>
+                <field name="branch"/>
+                <field name="report_template_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_bank_statement_form_inherit" model="ir.ui.view">
+        <field name="name">account.bank.statement.form.inherit</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_bank_statement_tree_inherit" model="ir.ui.view">
+        <field name="name">account.bank.statement.tree.inherit</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="analytic_account_id" attrs="{'readonly': [('state', '!=', 'open')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

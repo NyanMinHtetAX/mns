@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_valuation_layer_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree.inherit</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="replace">
+                <field name="date"/>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="description"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_color" model="ir.ui.view">
+        <field name="name">stock.picking.form.color</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet//group//group[2]//label[@for='scheduled_date']" position="replace">
+                <label for="scheduled_date" style="color:Red;"/>
+            </xpath>
+            <xpath expr="//form//sheet//group//group[2]//field[@name='scheduled_date']" position="replace">
+                <field name="scheduled_date" attrs="{'required': [('id', '!=', False)]}" style="color:Red;"
+                    decoration-warning="state not in ('done', 'cancel') and scheduled_date &lt; now"
+                    decoration-danger="state not in ('done', 'cancel') and scheduled_date &lt; current_date"
+                    decoration-bf="state not in ('done', 'cancel') and (scheduled_date &lt; current_date or scheduled_date &lt; now)"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_scrap_form_inherit" model="ir.ui.view">
+        <field name="name">stock.scrap.form.inherit</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet//group//field[@name='product_id']" position="before">
+                <field name="date_expected" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

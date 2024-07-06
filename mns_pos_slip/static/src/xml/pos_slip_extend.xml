@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+	 	<xpath expr="//div[hasclass('pos-receipt')]" position="replace">
+	 		<div class="pos-receipt" style="width:width: 570px;">
+				<div class="contact" style="font-size:12px">
+
+					 <img class="pos-receipt-logo" t-att-src="env.pos.config.logo" alt="Logo"
+                          style="height:60px;width:65px"/>
+					<h3 style=" font-family: 'Times New Roman';text-align: center;">Mya Ngwe San - MNS Co., Ltd.</h3>
+					<h2 style="font-family: 'Times New Roman';text-align: center">MNS SHOP</h2>
+                    <t t-if="receipt.header">
+						<div style="white-space: pre-line;color:black;text-align:center;font-size:12px;font-family: sans-serif;;color:#575555">
+							<strong><t t-esc="receipt.header"/></strong>
+						</div>
+					</t>
+				</div>
+                <br/>
+                <table style="margin-top: 5px;font-size: 11px;width: 100%;font-family: sans-serif;color:#575555">
+					<tr>
+						<td style="width: 55%;">
+							<b>Invoice ID: </b><t t-esc="receipt.name" style="padding-top: 10px;"/>
+						</td>
+						<td style="width: 45%;">
+							<b>Date/Time: </b><t t-esc="receipt.date.localestring"/>
+						</td>
+					</tr>
+                    <tr>
+						<td  style="width: 55%;">
+							<b>Counter: </b><t t-esc="env.pos.config.name || ''"/>
+						</td>
+						<td style="width: 45%;padding-top: 10px;">
+							<b>Casher: </b><t t-esc="receipt.cashier"/>
+						</td>
+					</tr>
+				</table>
+
+                <br/>
+                <div class="page" style="width:100%">
+				<table style="font-family: sans-serif;font-size:11px;color:#575555;width:100%;">
+					<tr style="text-align:center;width:100%;border-top: 2px solid #999;
+    border-bottom: 2px solid #999;">
+						<th style='width:10%;'><strong>No</strong></th>
+                        <th style='width:32%;'><strong>Description</strong></th>
+                        <th style='width:10%;'><strong>Qty</strong></th>
+                        <th style='width:17%;'><strong>Price</strong></th>
+						<t t-foreach="receipt.orderlines" t-as="line" t-key="line.id" style="font-size: 11px">
+							<t t-set="check_dis" t-value="false"/>
+							<t t-if="line.discount">
+								<t t-if="check_dis == 'false'"></t>
+								<t t-set="check_dis" t-value="true"/>
+								<th style='width:17%;'><strong>Discount</strong></th>
+
+							</t>
+						</t>
+
+                        <th style='width:18%;' colspan="2"><strong>Amount</strong></th>
+					</tr>
+                    <t t-set="no" t-value="1"/>
+					<t t-set="total_quantity" t-value="0"/>
+                    <t t-set="total_discount_amount" t-value="0"/>
+					<t t-set="sub_t" t-value="0"/>
+                    <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id" style="font-size: 11px">
+						<t t-if="line.product_name != 'Discount'">
+						<t t-set="disc" t-value="(line.quantity * line.price) * (line.discount/100)"/>
+
+		            	<tr >
+							<td style="font-size:11px;text-align:center;line-height: 18px">
+								<t t-esc="no"/>
+							</td>
+                            <td style="font-size:11px;text-align:left;line-height: 18px">
+								<t t-esc="line.product_name"/>
+						    </td>
+                            <td style="text-align:right;line-height: 18px;padding-right:2px;font-size:11px">
+						        <t t-esc="line.quantity"/>
+						    </td>
+
+                            <td style="text-align:right;line-height: 18px;padding-right:2px;font-size:11px">
+<!--								<t t-if="line.promotion_id">-->
+<!--									 <t t-set="total_discount_amount" t-value="total_discount_amount + line.price"/>-->
+<!--								</t>-->
+<!--                                <t t-esc='line.price.toLocaleString()'/>-->
+								<t t-if="line.price_display &gt; 0">
+									<t t-set="total_price" t-value="total_price + (line.quantity * line.price)"/>
+									<t t-esc="line.price.toLocaleString()"/>
+								</t>
+							</td>
+
+
+							<t t-if="line.discount">
+							 <td style="text-align:center;line-height: 18px;font-size:11px">
+								<span t-esc="disc"/>
+							</td>
+							</t>
+<!--							<t t-else="">-->
+<!--								<span t-esc="0"/>-->
+<!--							</t>-->
+                            <td style="text-align:right;line-height: 18px;padding-right:2px;font-size:11px"
+                                colspan="2">
+<!--						        <t t-esc="(line.price * line.quantity).toLocaleString()"/>-->
+								<t t-if="line.price_display &gt; 0">
+									<t t-esc="line.price_display.toLocaleString()"/>
+								</t>
+						    </td>
+
+						</tr>
+                        <t t-set="no" t-value="no + 1"/>
+						<t t-set="sub_t" t-value="sub_t + line.price_display"/>
+						<t t-set="total_quantity" t-value="total_quantity + line.quantity"/>
+						</t>
+					   </t>
+                    <tr style="line-height: 18px;width:100%;font-size:11px;border-top: 2px solid #999;">
+						<td colspan="3" style="text-align:right;padding-right:2px;">
+							<b><t t-esc="'Total Qty ( ' + total_quantity.toLocaleString() + ' ) Items'"/></b>
+						</td>
+                        <td colspan="2" style="padding-left:2px"><strong>Subtotal</strong></td>
+                        <td style="text-align:right;padding-right:2px">
+						  <span t-esc="sub_t.toLocaleString()"/>
+						</td>
+					</tr>
+					 <tr style="line-height: 18px;width:100%;font-size:11px;">
+						<td colspan="3"></td>
+                        <td colspan="2" style="padding-left:2px"><strong>Discount</strong></td>
+                        <td style="text-align:right;padding-right:2px">
+						  <t t-esc="(sub_t - receipt.total_with_tax).toLocaleString()"/>
+						</td>
+					</tr>
+<!--                    <tr style="line-height: 18px;width:100%;font-size:11px;">-->
+<!--						<td colspan="3"></td>-->
+<!--                        <td colspan="2" style="padding-left:2px"><strong>Tax</strong></td>-->
+<!--                        <td style="text-align:right;padding-right:2px">-->
+<!--						  <span t-esc="receipt.total_tax"/>-->
+<!--						</td>-->
+<!--					</tr>-->
+
+                    <tr style="line-height: 18px;width:100%;font-size:11px;">
+						<td colspan="3"></td>
+                        <td colspan="2" style="padding-left:2px"><strong>Total</strong></td>
+                        <td style="text-align:right;padding-right:2px">
+							 <span> <span t-esc="(receipt.total_with_tax).toLocaleString()"
+                                             class="pos-receipt-right-align"/></span>
+						</td>
+					</tr>
+                    <tr style="line-height: 18px;width:100%;font-size:11px;">
+						<td colspan="3"></td>
+                        <td colspan="2" style="padding-left:2px"><strong>Cash</strong></td>
+                        <td class="pos-right-align" style="padding-right:2px">
+							 <t t-esc="receipt.total_paid.toLocaleString()"/>
+						</td>
+					</tr>
+                    <tr style="line-height: 18px;width:100%;font-size:11px;">
+						<td colspan="3"></td>
+                        <td colspan="2" style="padding-left:2px"><strong>Change</strong></td>
+                        <td class="pos-right-align" style="padding-right:2px">
+							 <t t-esc="receipt.change.toLocaleString()"/>
+						</td>
+					</tr>
+				</table>
+
+				<div class="pos-receipt-amount receipt-change" style = 'display: none;'/>
+				<div class="cashier" style = 'display: none;'/>
+
+				</div>
+
+                <br/>
+                <div class="before-footer"/>
+                <br/>
+                <div class="footer"
+                     style="white-space: pre-line;font-family: sans-serif;font-size:12px;color:#575555;text-align:center">
+					<b> <t t-esc="receipt.footer"/></b>
+				</div>
+            	<div class="pos-receipt-order-data" style = 'display: block; visibility: hidden; height: 1in;'/>
+
+			</div>
+	    </xpath>
+	</t>
+</templates>

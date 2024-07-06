@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_visit_report" name="Visit Report" parent="base_field_sale.menu_operation_id"  sequence="3" action="action_visit_report"/>
+    <menuitem id="menu_visit_attendance" 
+              name="Customer Visit" 
+              parent="base_field_sale.menu_operation_id" 
+              action="action_visit_attendance" 
+              sequence="5" />
+</odoo>

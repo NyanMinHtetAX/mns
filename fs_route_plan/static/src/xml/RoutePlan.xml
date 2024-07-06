@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="TopSellingReportNoDataAvailable">
+        <div class="rp-ts-no-data-available text-center mt-5">
+            <img src="/fs_daily_sale_report/static/src/img/no_data_available.png" width="300px" height="300px"/>
+        </div>
+    </t>
+    <t t-name="RoutePlan2">
+        <div id="rp-ts-limit-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Number of Records</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0">
+                        <table class="rp-ts-limit-table w-100 text-center">
+                            <tr data-value="5">
+                                <td>5</td>
+                            </tr>
+                            <tr data-value="10">
+                                <td>10</td>
+                            </tr>
+                            <tr data-value="20">
+                                <td>20</td>
+                            </tr>
+                            <tr data-value="30">
+                                <td>30</td>
+                            </tr>
+                            <tr data-value="50">
+                                <td>50</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </t>
+    <t t-name="RouteWebView">
+        
+        <table class="rp-ts-main-table mt-5 text-center">
+            <colgroup>
+                <col style="width: 5%"/>
+                <col style="width: 10%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Reference</th>
+                    <th>Phone</th>
+                    <th>Outlet Type</th>
+                    <th>Township</th>
+                    <th>Latitude</th>
+                    <th>Longitdue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="no" t-value="1"/>
+                <t t-foreach="data.records" t-as="record">
+                    <tr t-attf-class="{{ no % 2 === 0 ? 'rp-ts-tr-even' : 'rp-ts-tr-odd' }}">
+                        <td>
+                            <t t-out="no"/>
+                        </td>
+                        <td>
+                            <t t-out="record.name"/>
+                        </td>
+                        <td>
+                            <t t-out="record.ref"/>
+                        </td>
+                        <td>
+                            <t t-out="record.phone"/>
+                        </td>
+                        <td>
+                            <t t-out="record.outlet"/>
+                        </td>
+                        <td>
+                            <t t-out="record.township"/>
+                        </td>
+                        <td>
+                            <t t-out="record.lat"/>
+                        </td>
+                        <td>
+                            <t t-out="record.long"/>
+                        </td>
+
+                    </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="RoutePlan">
+        
+        <div class="row" style="margin-top: 10px">
+            <div class="col-md-1"></div>
+            <div class="col-md-3"><button type="button" class="fa fa-arrow-left" id="my-back-button" style="width: 60px; height: 45px; border-radius: 14px; background-color: #4E4496; color: white"></button></div>
+            <div class="col-md-7" style="color: #4E4496;font-size: 25px;font-weight: bold;margin-left: 70px"><t t-out="data.options.title"/></div>
+            <div class="col-md-1"></div>
+        </div>
+                
+       
+        <div style="overflow-y:auto">
+        <t t-call="RoutePlan2"/>
+        <t t-if="data.records.length > 0">
+            <div t-att-class="'oe_scroll'">
+                <t t-call="RouteWebView"/>
+            </div>
+        </t>
+        <t t-else="">
+            <t t-call="TopSellingReportNoDataAvailable"/>
+        </t>
+    </div>
+    </t>
+</templates>

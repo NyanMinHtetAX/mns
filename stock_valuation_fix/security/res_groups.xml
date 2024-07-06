@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_fix_valuation" model="res.groups">
+        <field name="name">Fix Valuation</field>
+    </record>
+</odoo>

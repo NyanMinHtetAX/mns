@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="backend_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/htsk_dynamic_access_rights/static/src/css/crawler.scss"/>
+            <script src="/htsk_dynamic_access_rights/static/src/js/crawler.js"></script>
+        </xpath>
+    </template>
+</odoo>

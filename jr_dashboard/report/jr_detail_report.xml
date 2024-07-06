@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="action_jr_detail_report" model="ir.actions.client">
+            <field name="name">Just Order Detail Report</field>
+            <field name="tag">JRReport</field>
+        </record>
+        <menuitem id="menu_just_order_report"
+                  name="Just Order Report"
+                  parent="base_just_order.menu_report"
+                  action="action_jr_detail_report"
+                  sequence="5"/>
+    </data>
+</odoo>

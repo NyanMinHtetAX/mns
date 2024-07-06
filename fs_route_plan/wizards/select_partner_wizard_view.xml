@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_select_partner_form" model="ir.ui.view">
+        <field name="name">select.partner.form</field>
+        <field name="model">select.partners</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Select Partners">
+                <group string="Partners">
+                    <notebook>
+                        <page name="partner_line" string="Partner Lines">
+                            <field name="company_id" invisible="1"/>
+                            <field name="partner_ids" domain="[('customer','=',True),('is_company', '=', True),('company_id','=',company_id)]">
+                                
+                            </field>
+                        </page>
+                    </notebook>
+                </group>
+                <footer>
+                    <button name="select_partners" string="Add" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_select_partner_view">
+        <field name="name">Select Partners</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">select.partners</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_open_select_partner_view_form">
+        <field name="act_window_id" ref="act_open_select_partner_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_select_partner_form"/>
+    </record>
+</odoo>

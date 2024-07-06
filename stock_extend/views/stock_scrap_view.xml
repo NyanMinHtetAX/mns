@@ -1,0 +1,15 @@
+<odoo>
+    <record id="stock_scrap_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.scrap.form</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_row')]" position="after">
+                <field name="reason"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="product_unit_cost" readonly="1" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

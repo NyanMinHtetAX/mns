@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="daily_sale_summary_pdf_report" model="ir.actions.report">
+        <field name="name">Daily Sale Summary Report PDF</field>
+        <field name="model">daily.sale.summary.report</field>
+        <field name="report_name">fs_daily_sale_report.daily_sale_report_pdf</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">fs_daily_sale_report</field>
+        <field name="py3o_template_fallback">reports/daily_sale_summary.odt</field>
+        <field name="print_report_name">'Daily Sale Summary Report'</field>
+    </record>
+    <record id="daily_sale_summary_xlsx_report" model="ir.actions.report">
+        <field name="name">Daily Sale Summary Report XLSX</field>
+        <field name="model">daily.sale.summary.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fs_daily_sale_report.daily_sale_report_xlsx</field>
+        <field name="report_file">fs_daily_sale_report.daily_sale_report_xlsx</field>
+        <field name="print_report_name">'Daily Sale Summary Report'</field>
+    </record>
+    <template id="daily_sale_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <style type="text/css">
+                        h2, h4{
+                            color: #000766;
+                        }
+                        .dailySaleSummary-table{
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        .dailySaleSummary-table td, th{
+                            padding: 5px;
+                            border: 1px solid #cecece;
+                        }
+                        .dailySaleSummary-table thead tr th{
+                            color: #ffffff;
+                            background: #000766;
+                        }
+                        .item-summary-footer{
+                            color: #ffffff;
+                            background: #000766;
+                        }
+                        .item-summary {
+                            text-align: center;
+                        }
+                        .item-summary tbody tr td:nth-child(2){
+                            text-align: left;
+                        }
+                        .item-summary tbody tr td:last-child{
+                            text-align: right;
+                        }
+                        .payment-summary {
+                            text-align: center;
+                        }
+                        .payment-summary tbody tr td:nth-child(2) {
+                            text-align: left;
+                        }
+                        .payment-summary tbody tr td:nth-child(3) {
+                            text-align: right;
+                        }
+                        .on-hand-summary {
+                            text-align: center;
+                        }
+                        .on-hand-summary tbody tr td:nth-child(2) {
+                            text-align: left;
+                        }
+                    </style>
+                    <h2 class="text-center">Daily Sale Summary Report</h2>
+                    <table class="dailySaleSummary-table main-info">
+                        <colgroup>
+                            <col style="width:15%"/>
+                            <col style="width:35%"/>
+                            <col style="width:35%"/>
+                            <col style="width:15%"/>
+                        </colgroup>
+                        <tr>
+                            <th>Salesman:</th>
+                            <th><t t-esc="sale_person['name']"/></th>
+                            <th>Customer Count:</th>
+                            <th class="text-center"><t t-esc="partner_count"/></th>
+                        </tr>
+                        <tr>
+                            <th>Sale Team:</th>
+                            <th><t t-esc="sale_team['name']"/></th>
+                            <th>Sale Order Count:</th>
+                            <th class="text-center"><t t-esc="order_count"/></th>
+                        </tr>
+                        <tr>
+                            <th>Route Plan:</th>
+                            <th><t t-esc="route_plan['name']"/></th>
+                            <th>Zero Sale Count:</th>
+                            <th class="text-center"><t t-esc="zero_sale_visit_count"/></th>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <th><t t-esc="date.strftime('%d/%m/%Y')"/></th>
+                            <th>New Customer:</th>
+                            <th class="text-center"><t t-esc="new_partner_count"/></th>
+                        </tr>
+                    </table>
+                    <h4 class="mt-4">Item Summary</h4>
+                    <table class="dailySaleSummary-table item-summary mt-4">
+                        <colgroup>
+                            <col style="width:5%"/>
+                            <col style="width:40%"/>
+                            <col style="width:10%"/>
+                            <col style="width:12%"/>
+                            <col style="width:15%"/>
+                            <col style="width:18%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>UOM</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="no" t-value="1"/>
+                            <t t-set="totalQty" t-value="0"/>
+                            <t t-set="totalAmount" t-value="0"/>
+                            <t t-foreach="sale_items" t-as="sale_item" t-key="sale_item['product_id']">
+                                <tr>
+                                    <td><t t-esc="no"/></td>
+                                    <td><t t-esc="sale_item['item_name']"/></td>
+                                    <td><t t-esc="int(sale_item['qty'])"/></td>
+                                    <td><t t-esc="sale_item['uom']"/></td>
+                                    <td><t t-esc="sale_item['price_unit']"/></td>
+                                    <td><t t-esc="sale_item['total']"/></td>
+                                </tr>
+                                <t t-set="no" t-value="no + 1"/>
+                                <t t-set="totalQty" t-value="totalQty + sale_item['qty']"/>
+                                <t t-set="totalAmount" t-value="totalAmount + sale_item['total']"/>
+                            </t>
+                            <tr class="item-summary-footer">
+                                <td colspan="2">Total Qty</td>
+                                <td class="text-center"><t t-esc="int(totalQty)"/></td>
+                                <td colspan="2">Total Amount</td>
+                                <td><t t-esc="totalAmount"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4 class="mt-4">Payment Summary</h4>
+                    <table class="dailySaleSummary-table payment-summary mt-4">
+                        <colgroup>
+                            <col style="width:5%"/>
+                            <col style="width:55%"/>
+                            <col style="width:20%"/>
+                            <col style="width:20%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="no" t-value="1"/>
+                            <t t-foreach="payments" t-as="payment" t-key="payment['payment_method']">
+                                <tr>
+                                    <td><t t-esc="no"/></td>
+                                    <td><t t-esc="payment['payment_method']"/></td>
+                                    <td>
+                                        <t t-if="payment['currency_position'] == 'before'" t-esc="payment['currency_symbol']"/>
+                                        <t t-esc="payment['amount']"/>
+                                        <t t-if="payment['currency_position'] == 'after'" t-esc="payment['currency_symbol']"/>
+                                    </td>
+                                    <td><t t-esc="payment['currency']"/></td>
+                                </tr>
+                                <t t-set="no" t-value="no + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+                    <h4 class="mt-4">Inventory On-Hand</h4>
+                    <table class="dailySaleSummary-table on-hand-summary mt-4">
+                        <colgroup>
+                            <col style="width:5%"/>
+                            <col style="width:55%"/>
+                            <col style="width:15%"/>
+                            <col style="width:25%"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>UOM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="no" t-value="1"/>
+                            <t t-foreach="products_on_hand" t-as="product_on_hand" t-key="product_on_hand['product']">
+                                <tr>
+                                    <td><t t-esc="no"/></td>
+                                    <td><t t-esc="product_on_hand['product']"/></td>
+                                    <td>
+                                        <t t-esc="product_on_hand['qty']"/>
+                                    </td>
+                                    <td><t t-esc="product_on_hand['uom']"/></td>
+                                </tr>
+                                <t t-set="no" t-value="no + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+                    <table class="mt-5 w-100 text-center">
+                        <colgroup>
+                            <col style="width:30%"/>
+                            <col style="width:40%%"/>
+                            <col style="width:30%"/>
+                        </colgroup>
+                        <tr>
+                            <td>----------------------------------------</td>
+                            <td/>
+                            <td>----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td>Cashier</td>
+                            <td/>
+                            <td>Salesman</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_daily_sale_summary_report" model="ir.actions.client">
+        <field name="name">Daily Sale Summary Report</field>
+        <field name="tag">DailySaleReport</field>
+    </record>
+    <menuitem id="menu_daily_sale_report"
+              name="Daily Sale Summary"
+              parent="base_field_sale.menu_report_id"
+              action="action_daily_sale_summary_report"
+              sequence="5"/>
+</odoo>

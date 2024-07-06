@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_show_route_form" model="ir.ui.view">
+        <field name="name">show.route.form</field>
+        <field name="model">show.route</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="map_widget" widget="route_"/>
+                </sheet>
+                <footer>
+                    <button special="cancel" string="Close" class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_assign_sales_teams" model="ir.actions.act_window">
+        <field name="name">Assign Sales Teams</field>
+        <field name="res_model">show.route</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

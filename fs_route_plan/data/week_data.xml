@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="week_one" model="week.week">
+            <field name="name">Week 1</field>
+        </record>
+        <record id="week_two" model="week.week">
+            <field name="name">Week 2</field>
+        </record>
+        <record id="week_three" model="week.week">
+            <field name="name">Week 3</field>
+        </record>
+        <record id="week_four" model="week.week">
+            <field name="name">Week 4</field>
+        </record>
+        <record id="week_five" model="week.week">
+            <field name="name">Week 5</field>
+        </record>
+        <record id="week_six" model="week.week">
+            <field name="name">Week 6</field>
+        </record>
+    </data>
+</odoo>

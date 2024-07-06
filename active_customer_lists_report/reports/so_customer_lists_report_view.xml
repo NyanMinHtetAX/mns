@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="active_customer_list_sql_report_form" model="ir.ui.view">
+        <field name="name">active.customer.list.sql.report.form</field>
+        <field name="model">active.customer.list.sql.report</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date_order"/>
+                            <field name="order_id"/>
+                            <field name="company_id"/>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group>
+                            <field name="to_thirty_days"/>
+                            <field name="to_sixty_days"/>
+                            <field name="to_ninety_days"/>
+                            <field name="to_one_twenty_days"/>
+                            <field name="to_older_days"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="active_customer_list_sql_report_tree" model="ir.ui.view">
+        <field name="name">active.customer.list.sql.report.tree</field>
+        <field name="model">active.customer.list.sql.report</field>
+        <field name="arch" type="xml">
+            <tree string="SO Active Customer Lists Report" create="false" edit="false" delete="false">
+                <field name="partner_id" optional="show"/>
+                <field name="date_order" optional="show"/>
+                <field name="order_id" optional="show"/>
+                <field name="user_id" optional="show"/>
+                <field name="team_id" optional="show"/>
+                <field name="to_thirty_days" optional="show"/>
+                <field name="to_sixty_days" optional="show"/>
+                <field name="to_ninety_days" optional="show"/>
+                <field name="to_one_twenty_days" optional="show"/>
+                <field name="to_older_days" optional="show"/>
+                <field name="company_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_active_customer_list_sql_report" model="ir.actions.act_window">
+        <field name="name">SO Active Customer Lists Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">active.customer.list.sql.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="view_id" ref="active_customer_list_sql_report_tree"/>
+    </record>
+
+    <menuitem
+            id="menu_active_customer_list_sql_report"
+            name="SO Active Customer Lists Report"
+            parent="sale.menu_sale_report"
+            action="action_active_customer_list_sql_report"
+            sequence="10005"/>
+</odoo>

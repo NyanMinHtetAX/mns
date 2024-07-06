@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Mobile Field Sale',
+    'version': '2.8',
+    'summary': 'Field sale management',
+    'sequence': 100,
+    'category': 'Mobile',
+    'author': 'Asia Matrix',
+    'website': 'https://www.asiamatrixsoftware.com',
+    'depends': [
+        'base',
+        'mail',
+        'contacts',
+        'sales_team',
+        'res_partner_extend',
+        'ax_base_setup',
+    ],
+    'data': [
+        'security/fieldsale_res_groups.xml',
+        'security/ir.model.access.csv',
+        'views/sale_order_view.xml',
+        'views/mobile_field_sale_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/menuitems.xml',
+        'views/product_view.xml',
+        'wizards/reject_reason_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_route_plan_form" model="ir.ui.view">
+        <field name="name">route.plan.form</field>
+        <field name="model">route.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="btn_confirm"
+                            string="CONFIRM"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                            class="oe_highlight"/>
+                    <button name="%(action_assign_sales_teams)d"
+                            string="ASSIGN TO"
+                            type="action"
+                            attrs="{'invisible': ['|', ('state', '!=', 'confirm'), ('sale_team_id', '!=', False)]}"
+                            context="{'default_route_plan_id': active_id}"
+                            class="oe_highlight"/>
+                    <button name="%(action_assign_sales_teams)d"
+                            string="RE-ASSIGN"
+                            type="action"
+                            attrs="{'invisible': ['|', ('state', '!=', 'confirm'), ('sale_team_id', '=', False)]}"
+                            context="{'default_route_plan_id': active_id}"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_route_plan_map"
+                                type="object"
+                                class="oe_stat_button"
+                                string="View Route"
+                                icon="fa-map">
+                        </button>
+                        <button name="action_view_partners"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-user">
+                            <field name="partner_count" widget="statinfo" string="Customers" force_save="1"/>
+                        </button>
+                    </div>
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field name="name"
+                                   required="1"
+                                   class="o_text_overflow"
+                                   default_focus="1"
+                                   placeholder="e.g. Monday Bahan Route Plan"/>
+                        </h1>
+                        <field name="code" required="1" placeholder="E.g. RP"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="plan_type" required="1"/>
+                            <field name="based_on" required="1"/>
+                            <field name="township_ids"
+                                   widget="many2many_tags"
+                                   attrs="{'invisible': [('based_on', '!=', 'township')],
+                                           'required': [('based_on', '=', 'township')]}"/>
+                            <field name="channel_ids"
+                                   widget="many2many_tags"
+                                   attrs="{'invisible': [('based_on', '!=', 'sale_channel')],
+                                           'required': [('based_on', 'in', ['sale_channel', 'outlet'])]}"/>
+                            <field name="outlet_ids"
+                                   widget="many2many_tags"
+                                   attrs="{'invisible': [('based_on', '!=', 'outlet')],
+                                           'required': [('based_on', '=', 'outlet')]}"/>
+                        </group>
+                        <group>
+                            <field name="write_date" readonly="1" string="Modified Date"/>
+                            <field name="week_id"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   attrs="{'invisible': [('plan_type', '!=', 'week')],
+                                           'required': [('plan_type', '=', 'week')]}"/>
+                            <field name="route_plan_date" attrs="{'invisible': [('plan_type', '!=', 'day')],
+                                           'required': [('plan_type', '=', 'day')]}"/>
+                            <field name="weekday" force_save="1"
+                                   attrs="{'invisible': [('plan_type', '!=', 'day')],
+                                           'readonly': True,
+                                           'required': [('plan_type', '=', 'day')]}"/>
+                            <field name="begin_partner_id"
+                                   attrs="{'invisible': [('plan_type', '!=', 'trip')],
+                                           'required': [('plan_type', '=', 'trip')]}"/>
+                            <field name="end_partner_id"
+                                   attrs="{'invisible': [('plan_type', '!=', 'trip')],
+                                           'required': [('plan_type', '=', 'trip')]}"/>
+                            <field name="company_id" readonly="1"/>
+                            <field name="begin_partner_lat" invisible="1"/>
+                            <field name="begin_partner_lng" invisible="1"/>
+                            <field name="end_partner_lat" invisible="1"/>
+                            <field name="end_partner_lng" invisible="1"/>
+                            <field name="sale_team_id" readonly="1"/>
+                            <field name="active" invisible="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="customers" string="Customers" autofocus="autofocus">
+                            <button name="remove_all"
+                                    string="REMOVE ALL"
+                                    type="object"
+                                    class="btn-danger"/>
+                            <button name="%(act_open_select_partner_view)d" type="action" string="Select Partners"
+                        class="oe_highlight" style="margin-left: 30px"/>
+                            <group>
+                                <field name="partner_ids" nolabel="1">
+                                    <tree limit="10" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="partner_id" domain="[('customer','=',True),('is_company', '=', True),('company_id','=',parent.company_id)]" required="1"/>
+                                        <field name="ref"/>
+                                        <field name="phone"/>
+                                        <field name="sale_channel_ids" widget="many2many_tags"/>
+                                        <field name="outlet_type"/>
+                                        <field name="township_id"/>
+                                        <field name="latitude"/>
+                                        <field name="longitude"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_route_plan_tree" model="ir.ui.view">
+        <field name="name">route.plan.tree</field>
+        <field name="model">route.plan</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="write_date" string="Modified Date"/>
+                <field name="name"/>
+                <field name="plan_type"/>
+                <field name="based_on"/>
+                <field name="sale_team_id"/>
+                <!-- <field name="partner_count"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="route_customer_map_view" model="ir.ui.view">
+        <field name="name">rout.plan.customer.map.view</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <map res_partner="id" routing="true" js_class="project_map"/>
+        </field>
+    </record>
+
+    <record id="action_route_plan" model="ir.actions.act_window">
+        <field name="name">Route Plan</field>
+        <field name="res_model">route.plan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new route plan here.
+            </p>
+            <p>
+                You'll be able to manage your route plans here.
+            </p>
+        </field>
+    </record>
+</odoo>

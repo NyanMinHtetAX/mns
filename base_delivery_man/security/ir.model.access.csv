@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_app_device_user,User Access for Device Configuration,model_delivery_app_device,base.group_user,1,1,1,1
+access_assign_delivery_user,User Access for Assign Delivery,model_assign_delivery,base.group_user,1,1,1,1
+access_alert_delivery_user,User Access for Alert Delivery Assign,model_alert_delivery,base.group_user,1,1,1,1
+access_delivery_man_picking_user,User Access for Delivery Man Picking,model_delivery_man_picking,base.group_user,1,1,1,1
+access_picking_line_user,User Access for Picking Line,model_picking_line,base.group_user,1,1,1,1
+access_back_order_line_user,User Access for Back Order Line,model_back_order_line,base.group_user,1,1,1,1
+access_product_image_user, User Access For Product Image,model_product_images,base.group_user,1,1,1,1

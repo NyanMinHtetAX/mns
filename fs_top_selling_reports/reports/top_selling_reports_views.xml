@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fs_top_selling_report_pdf" model="ir.actions.report">
+        <field name="name">FS Top Selling Report PDF</field>
+        <field name="model">top.selling.report</field>
+        <field name="report_name">fs_top_selling_reports.fs_top_selling_reports_pdf</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">fs_top_selling_reports</field>
+        <field name="py3o_template_fallback">reports/top_selling_reports.odt</field>
+        <field name="print_report_name">'Top Selling Report PDF'</field>
+    </record>
+    <record id="fs_top_selling_report_xlsx" model="ir.actions.report">
+        <field name="name">FS Top Selling Report XLSX</field>
+        <field name="model">top.selling.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fs_top_selling_reports.fs_top_selling_reports_xlsx</field>
+        <field name="report_file">fs_top_selling_reports.fs_top_selling_reports_xlsx</field>
+        <field name="print_report_name">'Top Selling Report XLSX'</field>
+    </record>
+    <record id="action_top_selling_report_by_sale_team" model="ir.actions.client">
+        <field name="name">Top Selling Report By Sale Team</field>
+        <field name="tag">TopSellingReportBySaleTeam</field>
+    </record>
+    <record id="action_top_selling_report_by_salesman" model="ir.actions.client">
+        <field name="name">Top Selling Report By Salesman</field>
+        <field name="tag">TopSellingReportBySalesman</field>
+    </record>
+    <record id="action_top_selling_report_by_customer" model="ir.actions.client">
+        <field name="name">Top Selling Report By Customer</field>
+        <field name="tag">TopSellingReportByCustomer</field>
+    </record>
+    <record id="action_top_selling_report_by_product" model="ir.actions.client">
+        <field name="name">Top Selling Report By Product</field>
+        <field name="tag">TopSellingReportByProduct</field>
+    </record>
+    <menuitem id="menu_top_selling_reports"
+              name="Top Selling Reports"
+              parent="base_field_sale.menu_report_id"
+              sequence="1000"/>
+    <menuitem id="menu_top_selling_reports_by_sale_team"
+              name="By Sale Team"
+              parent="menu_top_selling_reports"
+              action="action_top_selling_report_by_sale_team"
+              sequence="5"/>
+    <menuitem id="menu_top_selling_reports_by_salesman"
+              name="By Salesman"
+              parent="menu_top_selling_reports"
+              action="action_top_selling_report_by_salesman"
+              sequence="10"/>
+    <menuitem id="menu_top_selling_reports_by_customer"
+              name="By Customer"
+              parent="menu_top_selling_reports"
+              action="action_top_selling_report_by_customer"
+              sequence="15"/>
+    <menuitem id="menu_top_selling_reports_by_product"
+              name="By Product"
+              parent="menu_top_selling_reports"
+              action="action_top_selling_report_by_product"
+              sequence="20"/>
+</odoo>

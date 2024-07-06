@@ -1,0 +1,140 @@
+:root {
+  --rp-ts-primary: #473e8a;
+  --rp-ts-primary-light: #dad7ed;
+  --rp-ts-pdf-download-btn: #42AAB2;
+  --rp-ts-pdf-download-btn-hover: #2d838a;
+  --rp-ts-xlsx-download-btn: #EA8928;
+  --rp-ts-xlsx-download-btn-hover: #b86818;
+}
+
+.rp-ts-title{
+    color: #4E4496;
+    font-size: 25px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.rp-ts-cp-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rp-ts-download-report-btn-container{
+    display: flex;
+    align-items: center;
+}
+
+.rp-ts-date span{
+    top: 5px !important;
+    right: 8px !important;
+}
+
+.rp-ts-limit-input-container{
+    display: flex;
+    position: relative;
+}
+
+.rp-ts-limit-input-container input{
+    width: 150px;
+    border: 3px solid #43b4e6;
+    border-right: none;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    text-align: center;
+    color: #43b4e6;
+    font-weight: bold;
+}
+
+.rp-ts-limit-input-container input:focus{
+    color: #43b4e6;
+}
+
+.rp-ts-limit-input-container button {
+    width: 40px;
+    height: 38px;
+    border: 1px solid #43b4e6;
+    background: #43b4e6;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 0;
+}
+
+.rp-ts-limit-input-container button:hover {
+    color: #ffffff;
+}
+
+.rp-ts-limit-table{
+    width: 100%;
+}
+
+.rp-ts-limit-table tr{
+    padding: 8px;
+}
+
+.rp-ts-limit-table tr:hover{
+    background: #cecece;
+}
+
+.rp-ts-download-report{
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 8px 15px;
+}
+
+.btn-download-excel{
+    background: var(--rp-ts-xlsx-download-btn);
+}
+
+.btn-download-excel:hover{
+    color: #ffffff;
+    background: var(--rp-ts-xlsx-download-btn-hover);
+}
+
+.btn-download-pdf{
+    background: var(--rp-ts-pdf-download-btn);
+}
+
+.btn-download-pdf:hover{
+    color: #ffffff;
+    background: var(--rp-ts-pdf-download-btn-hover);
+}
+
+.rp-ts-main-table{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+.rp-ts-main-table tr th, td{
+    padding: 10px 8px;
+}
+
+.rp-ts-main-table thead tr:first-child{
+    color: #ffffff;
+    background: var(--rp-ts-primary);
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -4px inset;
+}
+
+.rp-ts-tr-even{
+    font-weight: 400;
+    background: #E8E8E8;
+}
+
+.rp-ts-tr-odd{
+    font-weight: 400;
+}
+
+.rp-ts-total-cell{
+    padding: 10px 12px;
+}

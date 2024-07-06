@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dynamic_button, access.dynamic.button,model_dynamic_button,htsk_dynamic_access_rights.group_dynamic_access_config,1,0,0,1
+access_dynamic_page, access.dynamic.page,model_dynamic_page,htsk_dynamic_access_rights.group_dynamic_access_config,1,0,0,1
+access_dynamic_access_config, access.dynamic.access.config,model_dynamic_access_config,htsk_dynamic_access_rights.group_dynamic_access_config,1,1,1,1
+access_dynamic_button_rule, access.dynamic.button_rule,model_dynamic_button_rule,htsk_dynamic_access_rights.group_dynamic_access_config,1,1,1,1
+access_dynamic_page_rule, access.dynamic.page_rule,model_dynamic_page_rule,htsk_dynamic_access_rights.group_dynamic_access_config,1,1,1,1
+access_res_groups_assign, access.res.groups.assign,model_res_groups_assign,htsk_dynamic_access_rights.group_dynamic_access_config,1,1,1,1
+access_dynamic_feedback_wizard, access.dynamic.feedback.wizard,model_dynamic_feedback_wizard,htsk_dynamic_access_rights.group_dynamic_access_config,1,1,1,1

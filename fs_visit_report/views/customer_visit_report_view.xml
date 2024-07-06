@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_visit_report_form" model="ir.ui.view">
+        <field name="name">visit.report.form</field>
+        <field name="model">visit.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="btn_show_map"
+                                string="Map"
+                                type="object"
+                                icon="fa-map-marker"
+                                class="oe_stat_button"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1>
+                            <field name="name"
+                                   required="1"
+                                   class="o_text_overflow"
+                                   default_focus="1"
+                                   placeholder="e.g. Sales Visit to Customer Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1" 
+                                    options="{'no_create': True, 'no_open': True}"/>
+                            <field name="sale_team" required="1" 
+                                    options="{'no_create': True, 'no_open': True}"/>
+                            <field name="sale_man" 
+                                    options="{'no_create': True, 'no_open': True}"/>
+                            <field name="reason_type_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="date" required="1"/>
+                            <field name="vehicles"/>
+                            <label for="latitude" string="Location"/>
+                            <div class="o_row">
+                                <field name="latitude" nolabel="1" class="oe_inline"
+                                       placeholder=".. . . . . . . .Latitude. . . . . . . ."/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                <field name="longitude" nolabel="1" class="oe_inline"
+                                       placeholder=". . . . . . . .Longitude . . . . . . ."/>
+                            </div>
+                            <field name="other_reason" placeholder="e.g. no shop owner"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="images" string="Images" autofocus="autofocus">
+                            <!--<group>
+                                <field name="images" nolabel="1" mode="kanban" widget="many2many_binary"
+                                    string="Add Image">
+                                </field>
+                            </group>-->
+                            <field name="image_ids" class="o_website_sale_image_list" context="{'default_name': name, 'default_product_tmpl_id': active_id}" nolabel="1">
+                                <kanban string="Images Upload" class="o_attachments_previews">
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <field name="image"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <img class="o_attachment_image" alt="Image" style="width:100px" t-att-src="kanban_image('visit.report.image', 'image', record.id.raw_value)"/>
+                                           <!-- <div class="o_attachment oe_kanban_global_click o_website_sale_image_card">
+                                                <div class="o_attachment_wrap">
+                                                    <div class="o_image_box">
+                                                        <div class="o_attachment_image" t-attf-style="background-image:url({{kanban_image('visit.report.image', 'image', record.id.raw_value)}});"/>
+                                                        <div t-attf-class="o_image_overlay" t-att-title="record.name.value"/>
+                                                        <div class="o_website_sale_image_card_title" t-att-title="record.name.value">
+                                                            <field name="name"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="Map">
+                            <field name="map_widget" widget="visit_route_map"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--<record id="visit_report_image_kanban_view" model="ir.ui.view">
+         <field name="name">visit.report.image.kanban.view</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <kanban class="o_res_partner_kanban" sample="1">
+                <field name="images"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                            <t t-set="background_image" t-value="kanban_image('visit.report', 'images', record.id.raw_value)"/>
+                            <div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{background_image}')">
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>-->
+
+    <record id="view_visit_report_tree" model="ir.ui.view">
+        <field name="name">visit.report.tree</field>
+        <field name="model">visit.report</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="partner_id"/>
+                <field name="sale_team"/>
+                <field name="sale_man"/>
+                <field name="date"/>
+                <field name="vehicles"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_visit_report" model="ir.actions.act_window">
+        <field name="name">Customer Visit Report</field>
+        <field name="res_model">visit.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new customer visit here.
+            </p>
+            <p>
+                You'll be able to manage your visit reports here.
+            </p>
+        </field>
+    </record>
+</odoo>

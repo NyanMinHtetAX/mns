@@ -1,0 +1,192 @@
+<odoo>
+    <data>
+        <record id="view_do_picking_search" model="ir.ui.view">
+            <field name="name">delivery.man.picking.search</field>
+            <field name="model">delivery.man.picking</field>
+            <field name="arch" type="xml">
+                <search string="Deliver Man Picking">
+                    <field name="reference_no"/>
+                    <!-- <field name="delivery_man_id"/> -->
+                    <field name="sale_team_id"/>
+                    <field name="picking_id"/>
+                    <field name="return_picking_id"/>
+                    <field name="sale_order_id"/>
+                    <field name="sale_customer_id"/>
+                    <field name="delivery_date"/>
+                    <field name="partial"/>
+                    <field name="assigned_date"/>
+                    <filter string="Partial" name="Partial"
+                        domain="[('partial', '=', True),('state','=','deliver')]"/>
+                        <filter string="Fully Delivered" name="fully"
+                        domain="[('partial', '=', False),('state','=','deliver')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Township" name="township_id" domain="[]" context="{'group_by': 'township_id'}"/>
+                        
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                        <filter name="customer_id" string="Customer" domain="[]" context="{'group_by': 'customer_id'}"/>
+                        <filter name="return_picking_id" string="Return Picking" domain="[]" context="{'group_by': 'return_picking_id'}"/>
+                        <!-- <filter name="delivery_man_id" string="Delivery Man" domain="[]"
+                                context="{'group_by': 'delivery_man_id'}"/> -->
+                        <filter name="sale_team_id" string="Sale Team" domain="[]"
+                                context="{'group_by': 'sale_team_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_do_picking_tree" model="ir.ui.view">
+            <field name="name">delivery.man.picking.tree</field>
+            <field name="model">delivery.man.picking</field>
+            <field name="arch" type="xml">
+                <tree string="Requestion">
+                    <field name="reference_no"/>
+                    <!-- <field name="delivery_man_id"/> -->
+                    <field name="sale_team_id"/>
+                    <field name="sale_order_id"/>
+                    <field name="sale_customer_id"/>
+                    <field name="customer_id" string="Delivery Address"/>
+                    <field name="delivery_date"/>
+                    <field name="assigned_date"/>
+                    <field name="state" optional="show" widget="badge" decoration-success="state == 'deliver'"
+                           decoration-info="state not in ('assign', 'cancel','pending')"
+                           decoration-muted="state == 'assign'"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_d_picking_form" model="ir.ui.view">
+            <field name="name">delivery.man.picking.form</field>
+            <field name="model">delivery.man.picking</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Man Picking">
+                    <header>
+                        <button name="deliver"
+                                string="Deliver"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible':[('state', 'not in', ['assign', 'pending'])]}"/>
+                        <button name="cancel"
+                                string="CANCEL"
+                                type="object"
+                                class="btn-danger"
+                                attrs="{'invisible':[('state', 'not in', ['assign', 'pending'])]}"/>
+                        <button name="pending"
+                                string="Pending"
+                                type="object"
+                                class="btn-warning"
+                                attrs="{'invisible':[('state', '!=', 'assign')]}"/>
+                        <button name="btn_return"
+                                string="Return"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible':[('state', '!=', 'cancel')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="assign,deliver,cancel,pending"/>
+                    </header>
+                    <sheet>
+                        
+                        
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_invoice" type="object" class="oe_stat_button" icon="fa-list-alt">
+                                <field name="invoice_count" widget="statinfo" string="Invoice"/>
+                            </button>
+                        </div>
+
+                        <widget name="web_ribbon" title="Fully Delivered"
+                                attrs="{'invisible': ['|',('partial', '=', True),('state','=','assign')]}"/>
+                        <widget name="web_ribbon" title="Partial Delivered"
+                                attrs="{'invisible': ['|',('partial', '=', False),('state','=','assign')]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference_no" readonly="1" string="Hello"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="picking_id" required="1" />
+                                <field name="sale_order_id" required="1"
+                                       attrs="{'readonly': [('state', '=', 'deliver')]}"/>
+                                <field name="customer_id" required="1"
+                                       attrs="{'readonly': [('state', '=', 'deliver')]}" string="Delivery Address"/>
+                                <field name="sale_customer_id" required="1"
+                                       attrs="{'readonly': [('state', '=', 'deliver')]}"/>
+                                <field name="delivery_address" attrs="{'readonly': [('state', '=', 'deliver')]}" invisible="1"/>
+                                <field name="delivery_remarks" readonly="0"/>
+                                <field name="partial" invisible='1' force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="return_picking_id" readonly="1"/>
+                                <field name="assigned_date" required="1"
+                                       attrs="{'readonly': [('state', 'in', 'deliver')]}"/>
+                                <!-- <field name="delivery_man_id" attrs="{'readonly': [('state', 'in', 'deliver')]}"/> -->
+                                <field name="sale_team_id" attrs="{'readonly': [('state', 'in', 'deliver')]}"/>
+                                <field name="delivery_date" required="1"
+                                       attrs="{'readonly': [('state', 'in', 'deliver')]}"/>
+                                <field name="is_back_order" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="delivery_line" string="Delivery Products">
+                                <field name="picking_lines" widget="section_and_note_one2many">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="description" invisible="1"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="date_deadline" invisible="1"/>
+                                        <field name="product_uom_qty" invisible="1"/>
+                                        <field name="quantity_done" string="Delivered Quantity"/>
+                                        <field name="quantity_return" string="Return Remark"/>
+                                        <field name="partial" invisible="1"/>
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="back_order_line" string="Remaining Products"
+                                  attrs="{'invisible': [('is_back_order', '!=', True)]}">
+                                <field name="back_order_lines" widget="section_and_note_one2many">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="description" invisible="1"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="date_deadline" invisible="1"/>
+                                        <field name="product_uom_qty" string="Quantity"/>
+                                        <field name="quantity_done" invisible="1"/>
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="delivery_note" string="Delivery Note">
+                                <field name="delivery_note"
+                                       attrs="{'readonly': [('state', 'not in', ['deliver', 'cancel'])]}"/>
+                            </page>
+                            <page name="signature" string="Signature">
+                                
+                                <div style="width:100%;">
+                                    <div style="width:50%;">
+                                        <label for="signature"/>
+                                        <field name="signature" widget="image" style="width:80px;height:65px"
+                                           nolabel="1"/>
+                                    </div>
+
+                                    <div style="width:50%; margin-top:6px">
+                                        <label for="received_by"/>
+                                        <field name="received_by" string="Received By" readonly="1" nolabel="1"/>
+                                    </div>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="action_delivery_picking_man" model="ir.actions.act_window">
+            <field name="name">Delivery Man Picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">delivery.man.picking</field>
+            <field name="view_id" ref="view_do_picking_tree"/>
+            <field name="search_view_id" ref="view_do_picking_search"/>
+        </record>
+    </data>
+</odoo>

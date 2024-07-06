@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_collection_all,User access for Payment Collection,model_payment_collection,base.group_user,1,1,1,1
+access_payment_collection_one_all,User access for Payment Collection One,model_payment_collection_one,base.group_user,1,1,1,1
+access_payment_collection_line_all,User access for Payment Collection Line,model_payment_collection_line,base.group_user,1,1,1,1
+access_payment_collection_payment_line_all,User access for Payment Collection Payment Line,model_payment_collection_payment_line,base.group_user,1,1,1,1
+access_payment_collection_one_payment_line_all,User access for Payment Collection One Payment Line,model_payment_collection_one_payment_line,base.group_user,1,1,1,1
+access_assign_to_cash_collector_all,User access for Assign to Cash Collector,model_assign_to_cash_collector,base.group_user,1,1,1,1

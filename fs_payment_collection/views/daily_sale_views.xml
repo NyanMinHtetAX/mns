@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="daily_sale_summary_return" model="ir.ui.view">
+            <field name="name">daily.sale.summary.return</field>
+            <field name="model">daily.sale.summary</field>
+            <field name="inherit_id" ref="daily_sale_summary.daily_sale_summary_view_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//form//sheet//div[1]//button[@name='action_view_payments']" position="after">
+               
+                      <button name="action_view_cash_payments"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-dollar">
+                            <field name="cash_payment_count" widget="statinfo" string="Cash Collection Payments"/>
+                        </button>
+                        <button name="action_view_payment_payments"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-dollar">
+                            <field name="payment_payment_count" widget="statinfo" string="Advanced Payments"/>
+                        </button>
+                   </xpath>
+        </field>
+    </record>
+</odoo>

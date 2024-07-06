@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+
+    <t t-name="fs_route_plan.google_map">
+        <div id="routePlanMap" class="route-plan-google-map">
+        </div>
+    </t>
+
+</template>

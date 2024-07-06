@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="DailySaleReportNoDataAvailable">
+        <div class="daily-sale-summary-no-data-available text-center mt-5">
+            <img src="/fs_daily_sale_report/static/src/img/no_data_available.png" width="300px" height="300px"/>
+        </div>
+    </t>
+    <t t-name="DailySaleReport">
+        <!-- Sale Team Modal -->
+        <div id="sale-team-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Select Sales Team</h4>
+                    </div>
+                    <div class="modal-body">
+                        <t t-set="no" t-value="1"/>
+                        <t t-foreach="data.sale_teams" t-as="team" t-key="team.id">
+                            <div class="selector-item sale-team-item"
+                                 t-attf-id="sale-team-{{ team.id }}"
+                                 t-att-data-id="team.id"
+                                 t-att-data-name="team.name">
+                                <span class="ml-3"><t t-esc="no"/>.</span>
+                                <span><t t-esc="team.name"/></span>
+                            </div>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Route Plan Modal -->
+        <div id="route-plan-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Select Route Plan</h4>
+                    </div>
+                    <div class="modal-body">
+                        <t t-set="no" t-value="1"/>
+                        <t t-foreach="data.route_plans" t-as="route_plan" t-key="route_plan.id">
+                            <div class="selector-item route-plan-item"
+                                 t-attf-id="route-plan-{{ route_plan.id }}"
+                                 t-att-data-id="route_plan.id"
+                                 t-att-data-name="route_plan.name">
+                                <span class="ml-3"><t t-esc="no"/>.</span>
+                                <span><t t-esc="route_plan.name"/></span>
+                            </div>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sale Man Modal -->
+        <div id="sale-man-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Select Sale Man</h4>
+                    </div>
+                    <div class="modal-body">
+                        <t t-set="no" t-value="1"/>
+                        <t t-foreach="data.sale_persons" t-as="sale_person" t-key="sale_person.id">
+                            <div class="selector-item sale-man-item"
+                                 t-attf-id="sale-man-{{ sale_person.id }}"
+                                 t-att-data-id="sale_person.id"
+                                 t-att-data-name="sale_person.name">
+                                <span class="ml-3"><t t-esc="no"/>.</span>
+                                <span><t t-esc="sale_person.name"/></span>
+                            </div>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="daily-sale-summary-header-label mt-3 mb-3">
+            Daily Sale Summary Report
+        </div>
+        <div class="daily-sale-summary-header mt-3">
+            <div class="cp-container">
+                <div class="daily-sale-summary-date">
+                    <div class="form-group custom-date">
+                        <div class='o_datepicker js_account_reports_datetimepicker'>
+                            <input id="daily_sale_summary_date_picker" type='text' class="o_datepicker_input" name="date" />
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="daily-sale-summary-option-selector">
+                    <button id="sale-team-btn" type="button" class="btn daily-sale-summary-btn" data-toggle="modal" data-target="#sale-team-modal">
+                        <i class="fa fa-users mr-2"></i>
+                        <t t-esc="data.sale_team.name"/>
+                        <span class="ds-down-arrow"></span>
+                    </button>
+                </div>
+                <div class="daily-sale-summary-option-selector">
+                    <button id="route-plan-btn" type="button" class="btn daily-sale-summary-btn" data-toggle="modal" data-target="#route-plan-modal">
+                        <i class="fa fa-map-marker mr-2"></i>
+                        <t t-esc="data.route_plan.name"/>
+                        <span class="ds-down-arrow"></span>
+                    </button>
+                </div>
+                <div class="daily-sale-summary-option-selector">
+                    <button id="sale-man-btn" type="button" class="btn daily-sale-summary-btn" data-toggle="modal" data-target="#sale-man-modal">
+                        <i class="fa fa-user mr-2"></i>
+                        <t t-esc="data.sale_person.name"/>
+                        <span class="ds-down-arrow"></span>
+                    </button>
+                </div>
+                <div class="daily-sale-xlsx-download">
+                    <button class="btn daily-sale-summary-btn ds-download-btn" data-report-type="xlsx">
+                        Excel
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+                <div class="daily-sale-pdf-download">
+                    <button class="btn daily-sale-summary-btn ds-download-btn" data-report-type="pdf">
+                        PDF
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div t-if="data.data_available" class="daily-sale-summary-body">
+            <div class="daily-sale-counts-container mt-5 mb-5">
+                <div class="daily-sale-card customer-count">
+                    <div class="daily-sale-count-container">
+                        <t t-esc="data.partner_count"/>
+                    </div>
+                    <div class="daily-sale-count-label">Total Customer</div>
+                </div>
+                <div class="daily-sale-card sale-order-count">
+                    <div class="daily-sale-count-container">
+                        <t t-esc="data.order_count"/>
+                    </div>
+                    <div class="daily-sale-count-label">Sale Order</div>
+                </div>
+                <div class="daily-sale-card zero-sale-visit-count">
+                    <div class="daily-sale-count-container">
+                        <t t-esc="data.zero_sale_visit_count"/>
+                    </div>
+                    <div class="daily-sale-count-label">Zero Sale Visit</div>
+                </div>
+                <div class="daily-sale-card new-customer-count">
+                    <div class="daily-sale-count-container">
+                        <t t-esc="data.new_partner_count"/>
+                    </div>
+                    <div class="daily-sale-count-label">New Customer</div>
+                </div>
+            </div>
+            <div class="daily-sale-item-summary">
+                <div class="daily-sale-summary-table-title mt-3 mb-3">
+                        Item Summary
+                    <button id="hide-item-summary"
+                            class="btn btn-primary float-right btn-toggle"
+                            data-toggle="#item-summary"
+                            data-to-hide="#hide-item-summary"
+                            data-to-show="#show-item-summary">
+                        Hide
+                        <i class="fa fa-eye-slash"></i>
+                    </button>
+                    <button id="show-item-summary"
+                            class="btn btn-primary float-right btn-toggle d-none"
+                            data-toggle="#item-summary"
+                            data-to-hide="#show-item-summary"
+                            data-to-show="#hide-item-summary">
+                        Show
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+                <table id="item-summary" class="daily-sale-summary-table text-center">
+                    <colgroup>
+                        <col style="width:5%"/>
+                        <col style="width:35%"/>
+                        <col style="width:15%"/>
+                        <col style="width:15%"/>
+                        <col style="width:15%"/>
+                        <col style="width:15%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>UOM</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="no" t-value="1"/>
+                        <t t-set="total_qty" t-value="0"/>
+                        <t t-set="total_amount" t-value="0"/>
+                        <t t-foreach="data.sale_items" t-as="sale_item" t-key="sale_item.product_id">
+                            <tr>
+                                <td>
+                                    <t t-esc="no"/>
+                                </td>
+                                <td class="text-left">
+                                    <t t-esc="sale_item.item_name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="sale_item.qty.toLocaleString()"/>
+                                </td>
+                                <td>
+                                    <t t-esc="sale_item.uom"/>
+                                </td>
+                                <td>
+                                    <t t-esc="sale_item.price_unit.toLocaleString()"/>
+                                </td>
+                                <td class="text-right" style="padding-right: 15px">
+                                    <t t-esc="sale_item.total.toLocaleString()"/>
+                                </td>
+                            </tr>
+                            <t t-set="no" t-value="no + 1"/>
+                            <t t-set="total_qty" t-value="total_qty + sale_item.qty"/>
+                            <t t-set="total_amount" t-value="total_amount + sale_item.total"/>
+                        </t>
+                    </tbody>
+                    <tr>
+                        <th colspan="2">Total Qty</th>
+                        <th><t t-esc="total_qty.toLocaleString()"/></th>
+                        <th colspan="2">Total Amount</th>
+                        <th class="text-right" style="padding-right: 15px"><t t-esc="total_amount.toLocaleString()"/></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="daily-sale-payment-summary">
+                <div class="daily-sale-summary-table-title mt-3 mb-3">
+                        Payment Summary
+                    <button id="hide-payment-summary"
+                            class="btn btn-primary float-right btn-toggle"
+                            data-toggle="#payment-summary"
+                            data-to-hide="#hide-payment-summary"
+                            data-to-show="#show-payment-summary">
+                        Hide
+                        <i class="fa fa-eye-slash"></i>
+                    </button>
+                    <button id="show-payment-summary"
+                            class="btn btn-primary float-right btn-toggle d-none"
+                            data-toggle="#payment-summary"
+                            data-to-hide="#show-payment-summary"
+                            data-to-show="#hide-payment-summary">
+                        Show
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+                <table id="payment-summary" class="daily-sale-summary-table text-center">
+                    <colgroup>
+                        <col style="width:5%"/>
+                        <col style="width:55%"/>
+                        <col style="width:20%"/>
+                        <col style="width:20%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Payment Method</th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="no" t-value="1"/>
+                        <t t-foreach="data.payments" t-as="payment" t-key="payment.name">
+                            <tr>
+                                <td>
+                                    <t t-esc="no"/>
+                                </td>
+                                <td class="text-left">
+                                    <t t-esc="payment.payment_method"/>
+                                </td>
+                                <td>
+                                    <t t-if="payment.currency_position == 'before'" t-esc="payment.currency_symbol"/>
+                                    <t t-esc="payment.amount.toLocaleString()"/>
+                                    <t t-if="payment.currency_position == 'after'" t-esc="payment.currency_symbol"/>
+                                </td>
+                                <td>
+                                    <t t-esc="payment.currency"/>
+                                </td>
+                            </tr>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+            <div class="daily-sale-onhand-summary">
+                <div class="daily-sale-summary-table-title mt-3 mb-3">
+                        Inventory On Hand
+                    <button id="hide-on-hand-summary"
+                            class="btn btn-primary float-right btn-toggle"
+                            data-toggle="#product-on-hand"
+                            data-to-hide="#hide-on-hand-summary"
+                            data-to-show="#show-on-hand-summary">
+                        Hide
+                        <i class="fa fa-eye-slash"></i>
+                    </button>
+                    <button id="show-on-hand-summary"
+                            class="btn btn-primary float-right btn-toggle d-none"
+                            data-toggle="#product-on-hand"
+                            data-to-hide="#show-on-hand-summary"
+                            data-to-show="#hide-on-hand-summary">
+                        Show
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+                <table id="product-on-hand" class="daily-sale-summary-table text-center">
+                    <colgroup>
+                        <col style="width:5%"/>
+                        <col style="width:55%"/>
+                        <col style="width:20%"/>
+                        <col style="width:20%"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>UOM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="no" t-value="1"/>
+                        <t t-foreach="data.products_on_hand" t-as="product_on_hand" t-key="product_on_hand.name">
+                            <tr>
+                                <td>
+                                    <t t-esc="no"/>
+                                </td>
+                                <td class="text-left">
+                                    <t t-esc="product_on_hand.product"/>
+                                </td>
+                                <td>
+                                    <t t-esc="product_on_hand.qty.toLocaleString()"/>
+                                </td>
+                                <td>
+                                    <t t-esc="product_on_hand.uom"/>
+                                </td>
+                            </tr>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <t t-if="!data.data_available" t-call="DailySaleReportNoDataAvailable"/>
+    </t>
+</templates>

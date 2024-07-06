@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_res_users_inherit_backdate" model="ir.ui.view">
+            <field name="name">res.users.inherit.backdate</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[2]" position="before">
+                    <page string="Backdate Settings">
+                        <group>
+                            <group string="Sale Order">
+                                <field name="so_allow_back_date"/>
+                                <field name="so_back_days"
+                                       attrs="{'invisible' : [('so_allow_back_date', '!=', True)],
+                                               'required' : [('so_allow_back_date', '=', True)]}"/>
+                            </group>
+                            <group string="Purchase Order">
+                                <field name="po_allow_back_date"/>
+                                <field name="po_back_days"
+                                       attrs="{'invisible' : [('po_allow_back_date', '!=', True)],
+                                               'required' : [('po_allow_back_date', '=', True)]}"/>
+                            </group>
+                            <group string="Invoice">
+                                <field name="invoice_allow_back_date"/>
+                                <field name="invoice_back_days"
+                                       attrs="{'invisible' : [('invoice_allow_back_date', '!=', True)],
+                                               'required' : [('invoice_allow_back_date', '=', True)]}"/>
+                            </group>
+                            <group string="Inventory">
+                                <field name="inventory_allow_back_date"/>
+                                <field name="inventory_back_days"
+                                       attrs="{'invisible' : [('inventory_allow_back_date', '!=', True)],
+                                               'required' : [('inventory_allow_back_date', '=', True)]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

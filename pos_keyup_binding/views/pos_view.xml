@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem action="purchase.purchase_form_action" id="menu_purchase_form_action_on_pos" parent="point_of_sale.menu_point_of_sale" sequence="10"/>
+        <menuitem action="stock.action_picking_tree_all" id="menu_transfer_form_action_on_pos" parent="point_of_sale.menu_point_of_sale" sequence="11"/>
+    </data>
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_cus_reports_form" model="ir.ui.view">
+        <field name="name">sale.cus.report.form</field>
+        <field name="model">sale.cus.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="date"/>
+                            <field name="partner_id"/>
+                            <field name="product_id"/>
+                            <field name="qty_order"/>
+                            <field name="uom_id"/>
+                            <field name="team_id"/>
+                            <field name="user_id"/>
+                            <field name="warehouse_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="amount_order"/>
+                            <field name="deliver_qty"/>
+                            <field name="deliver_amount"/>
+                            <field name="return_qty"/>
+                            <field name="return_amount"/>
+                            <field name="invoice_qty"/>
+                            <field name="invoice_amount"/>
+                            <field name="qty_to_deliver"/>
+                            <field name="amount_to_deliver"/>
+                            <field name="qty_to_invoice"/>
+                            <field name="amount_to_invoice"/>
+                            <field name="discount_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale_cus_reports_tree" model="ir.ui.view">
+        <field name="name">sale.report.view.tree</field>
+        <field name="model">sale.cus.report</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Report">
+                <field name="order_id" optional="show"/>
+                <field name="date" optional="hide"/>
+                <field name="partner_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="qty_order" optional="show"/>
+                <field name="uom_id" optional="show"/>
+                <field name="amount_order" optional="show"/>
+                <field name="deliver_qty" optional="show"/>
+                <field name="deliver_amount" optional="show"/>
+                <field name="return_qty" optional="hide"/>
+                <field name="return_amount" optional="hide"/>
+                <field name="invoice_qty" optional="show"/>
+                <field name="invoice_amount" optional="show"/>
+                <field name="qty_to_deliver" optional="show"/>
+                <field name="amount_to_deliver" optional="show"/>
+                <field name="qty_to_invoice" optional="show"/>
+                <field name="amount_to_invoice" optional="show"/>
+                <field name="discount_amount" optional="show"/>
+                <field name="team_id" optional="hide"/>
+                <field name="warehouse_id" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="company_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_sale_cus_report" model="ir.actions.act_window">
+        <field name="name">Sale Reports</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.cus.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sale_cus_reports_tree"/>
+    </record>
+
+    <menuitem
+            id="menu_sale_cus_report"
+            name="Sale Reports"
+            parent="sale.menu_sale_report"
+            action="action_sale_cus_report"
+            sequence="300"/>
+</odoo>

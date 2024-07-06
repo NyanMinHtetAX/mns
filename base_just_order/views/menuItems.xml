@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="menu_just_order_root"
+              name="justOrder"
+              web_icon="base_just_order,static/description/icon.png"
+              sequence="37"/>
+
+    <menuitem id="menu_just_order_order" name="Order" parent="menu_just_order_root" action="" sequence="0"/>
+    <menuitem id="menu_wishlist"
+        name="Wishlists"
+        parent="menu_just_order_root"
+        action="action_wishlist"
+        sequence="1"/>
+    <menuitem id="menu_sale_quotations_jr"
+              action="action_sale_quotation_inherit"
+              parent="base_just_order.menu_just_order_order"
+              sequence="1" groups="sales_team.group_sale_salesman"/>
+    <menuitem id="menu_sale_order_jr"
+              action="action_sale_order_inherit"
+              parent="base_just_order.menu_just_order_order"
+              sequence="2" groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="menu_master_data" name="Master Data" parent="menu_just_order_root" sequence="2"/>
+    <menuitem id="menu_new_customer_id"
+        name="New Customers"
+        parent="menu_master_data"
+        action="action_new_customer_form"
+        sequence="10"/>
+
+    <menuitem id="menu_point_of_sale_customer"
+        name="Customers"
+        parent="menu_master_data"
+        action="action_mobile_partner_form"
+        sequence="20"/>
+
+    <menuitem id="menu_product" name="Products" parent="menu_master_data" action="just_order_product_action" sequence="30"/>
+
+    <menuitem id="menu_category" name="Categories" parent="menu_master_data" action="just_order_category_action" sequence="40"/>
+
+    <menuitem id="menu_pricelist"
+        name="Pricelist"
+        parent="menu_master_data"
+        action="product.product_pricelist_action2"
+        sequence="50"/>
+
+    <menuitem id="menu_report" name="Reports" parent="menu_just_order_root" action="just_order_report_action" sequence="4"/>
+
+    <menuitem id="menu_configuration" name="Configuration" parent="menu_just_order_root" action="just_order_report_action" sequence="5"/>
+    <menuitem id="menu_setting"
+        name="Settings"
+        parent="menu_configuration"
+        action="just_order_action"
+        sequence="1"/>
+    <menuitem id="menu_delivery"
+        name="Delivery Method"
+        parent="menu_configuration"
+        action="delivery.action_delivery_carrier_form"
+        sequence="2"/>
+
+</odoo>

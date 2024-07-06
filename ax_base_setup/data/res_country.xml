@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="base.mm" model="res.country">
+            <field name="name">Myanmar</field>
+            <field name="code">mm</field>
+            <field name="currency_id" ref="base.MMK" />
+            <field eval="95" name="phone_code" />
+            <field eval="'%(street)s\n%(street2)s\n%(township_name)s %(city)s\n%(state_name)s %(country_name)s'" name="address_format" />
+        </record>
+    </data>
+</odoo>

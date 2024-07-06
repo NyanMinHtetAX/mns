@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+         <record id="vpicktree_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref='stock.vpicktree'/>
+            <field name="arch" type="xml">
+                <xpath expr="//header//button[@name='do_unreserve']" position="before">
+
+                     <button name="assign_delivery_man" string="Assign To Sale Team" type="object"
+                            class="oe_highlight ml16" />
+<!--                     <button name="re_assign_delivery_man" string="Reassign" type="object" class="oe_highlight ml16"-->
+<!--                           />-->
+                </xpath>
+                <!-- <xpath expr="//field[@name='name']" position="after" >
+                    <field name="delivery_man_id" />
+                </xpath> -->
+                <xpath expr="//field[@name='name']" position="after" >
+                    <field name="team_id" />
+                </xpath>
+                <xpath expr="//field[@name='priority']" position="before">
+                    <field name="is_assigned" invisible="1" />
+                </xpath>
+            </field>
+         </record>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref='stock.view_picking_form'/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_stock_valuation_layers']" position="after">
+                    <button name="action_show_delivery_man_pickings"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            attrs="{'invisible': [('delivery_man_picking_count', '=', 0)]}">
+                        <field name="delivery_man_picking_count" widget="statinfo" string="Delivery Pickings"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="is_requisition" invisible="1"/>
+                    <field name="is_fs_return" invisible="1"/>
+                    <!-- <field name="delivery_man_id" attrs="{'invisible':[('is_requisition', '=', True)]}" readonly="1"/> -->
+                    <field name="sale_team_id" attrs="{'invisible':[('is_requisition', '=', True)]}" readonly="1"/>
+                    <field name="vehicle_no" attrs="{'invisible': [('is_requisition', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_customer_id"/>
+                    <field name="is_assigned" invisible="1"/>
+                    <field name="delivery_man_picking_ids" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="assign_to_delivery_man" string="Assign To Sale Team" type="object"
+                            class="oe_highlight" groups="stock.group_stock_user" attrs="{'invisible':['|',('is_assigned','=',True),'|',('state','!=','done'),'|',('is_requisition','=',True),('is_fs_return','=',True)]}"/>
+                     <button name="re_assign_to_delivery_man" string="Reassign" type="object"
+                            class="oe_highlight" attrs="{'invisible':['|',('is_assigned','=',False),'|',('is_requisition','=',True),('is_fs_return','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="before">
+                    <field name="delivery_remarks" readonly="1" attrs="{'invisible':[('is_requisition', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="views_transfer_tree" model="ir.ui.view">
+            <field name="name">inventory.transfer.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after" >
+                    <field name="sale_customer_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

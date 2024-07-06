@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="date_update_generate_view" model="ir.ui.view">
+        <field name="name">stock.valuation.update.form</field>
+        <field name="model">stock.valuation.update</field>
+        <field name="arch" type="xml">
+            <form string="Write Date">
+                <p class="oe_grey">
+                   Please write your date.
+                </p>
+                <div style="width:100%;">
+                    <div style="width:50%;">
+                        <label for="date"/>
+                        <field name="date"/>
+                    </div>
+                    <div style="width:50%;"/>
+                </div>
+                <footer>
+                    <button string="Apply Date" name="apply_update_date" type="object" default_focus="1" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_assign_date" model="ir.actions.act_window">
+        <field name="name">Update Valuation Date</field>
+        <field name="res_model">stock.valuation.update</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="date_update_generate_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock_account.model_stock_valuation_layer"/>
+        <field name="binding_view_types">list</field>
+        <field name="groups_id" eval="[(6, 0, [ref('database_update.group_update_date_access')])]"/>
+    </record>
+</odoo>

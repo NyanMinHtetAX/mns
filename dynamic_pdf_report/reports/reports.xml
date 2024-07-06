@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_purchase_order_pdf_report" model="ir.actions.report">
+        <field name="name">Purchase Order (B5)</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">dynamic_pdf_report.purchase_order_pdf_report</field>
+        <field name="report_file">dynamic_pdf_report.purchase_order_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">dynamic_pdf_report</field>
+        <field name="py3o_template_fallback">reports/purchase_order_b5.odt</field>
+    </record>
+    <record id="action_purchase_order_pdf_server" model="ir.actions.server">
+        <field name="name">Purchase Order (B5)</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_purchase_order_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_vendor_bill_pdf_report" model="ir.actions.report">
+        <field name="name">Vendor Bill (B5)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">dynamic_pdf_report.vendor_bill_pdf_report</field>
+        <field name="report_file">dynamic_pdf_report.vendor_bill_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">dynamic_pdf_report</field>
+        <field name="py3o_template_fallback">reports/vendor_bill_b5.odt</field>
+    </record>
+    <record id="action_account_move_pdf_server" model="ir.actions.server">
+        <field name="name">Vendor Bill (B5)</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_vendor_bill_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_sale_order_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Sale Order (B5)</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">dynamic_pdf_report.sale_order_pdf_report</field>
+        <field name="report_file">dynamic_pdf_report.sale_order_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">dynamic_pdf_report</field>
+        <field name="py3o_template_fallback">reports/sale_order_b5.odt</field>
+    </record>
+    <record id="action_sale_order_b5_server" model="ir.actions.server">
+        <field name="name">Sale Order (B5)</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_sale_order_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_invoice_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Invoice (B5)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">dynamic_pdf_report.invoice_pdf_report</field>
+        <field name="report_file">dynamic_pdf_report.invoice_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">dynamic_pdf_report</field>
+        <field name="py3o_template_fallback">reports/invoice_b5.odt</field>
+    </record>
+    <record id="action_invoice_b5_pdf_server" model="ir.actions.server">
+        <field name="name">Invoice (B5)</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_invoice_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

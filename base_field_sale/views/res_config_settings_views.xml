@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.field.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="80"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Field Sale" string="Field Sale" data-key="base_field_sale">
+                    <h2>App Usage Status</h2>
+                    <div class="row mt16 o_settings_container" name="fs_usage_status">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set usage status.">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="fs_usage_status" string="Usage Status"/>
+                                <div class="text-muted">
+                                    Define whether you want to use field sale app online or offline.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="fs_usage_status" class="o_light_label" widget="radio" options="{'horizontal': true}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>App Theme</h2>
+                    <div class="row mt16 o_settings_container" name="fs_app_theme">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set app theme colors.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Primary Color</span>
+                                <div class="text-muted">
+                                    <field name="fs_primary_color" widget="colorpicker"/>
+                                </div>
+                                <span class="o_form_label">Secondary Color</span>
+                                <div class="text-muted">
+                                    <field name="fs_secondary_color" widget="colorpicker"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Van Order Storage Setting</h2>
+                    <div class="row mt16 o_settings_container" name="fs_app_theme">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set app theme colors.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Please Choose Van Order Storage</span>
+                                <div class="text-muted">
+                                    <field name="fs_van_storage" class="o_light_label" widget="radio" options="{'horizontal': true}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>API Keys</h2>
+                    <div class="row mt16 o_settings_container" name="fs_api_keys">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set Mapbox API Key here.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Map API Key</span>
+                                <div class="text-muted">
+                                    <field name="fs_map_api_key"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set max distance in map.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Map Max Distance</span>
+                                <div class="text-muted">
+                                    <field name="fs_map_max_distance"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set SMS API Key here.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">SMS API Key</span>
+                                <div class="text-muted">
+                                    <field name="fs_sms_api_key"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set Onesignal API Key here.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Onesignal App ID</span>
+                                <div class="text-muted">
+                                    <field name="fs_onesignal_app_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Payment Collection</h2>
+                    <div class="row mt16 o_settings_container" name="fs_app_theme">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set payment collection assigned type.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Assigned Type</span>
+                                <div class="text-muted">
+                                    <field name="fs_payment_collection_assigned_type" required="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Taxes</h2>
+                    <div class="row mt16 o_settings_container" name="fs_default_taxes">
+                        <div class="col-12 col-lg-6 o_setting_box" id="fs_default_taxes" title="These taxes are set in any new product created.">
+                            <div class="o_setting_left_pane">
+                                <field name="fs_use_tax"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Use Tax</span><br/>
+                                <span class="o_form_label" attrs="{'invisible': [('fs_use_tax', '!=', True)]}">Default Taxes</span>
+                                <span attrs="{'invisible': [('fs_use_tax', '!=', True)]}" class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                <div class="text-muted" attrs="{'invisible': [('fs_use_tax', '!=', True)]}">
+                                    Default taxes applied to local transactions
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('fs_use_tax', '!=', True)]}">
+                                    <div class="row mt16">
+                                        <label string="Sales Tax" for="sale_tax_id" class="col-lg-3 o_light_label"/>
+                                        <field name="sale_tax_id" domain="[('type_tax_use', 'in', ('sale', 'all')), ('company_id', '=', company_id)]"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Data Storage</h2>
+                    <div class="row mt16 o_settings_container" name="fs_data_storage">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Set data storage days here.">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Storage Period in Days</span>
+                                <div class="text-muted">
+                                    <field name="fs_data_storage_period"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_field_sale_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'base_field_sale', 'bin_size': False}</field>
+    </record>
+</odoo>

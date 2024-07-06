@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sale_details_report_pdf" model="ir.actions.report">
+        <field name="name">Sale Details Report PDF</field>
+        <field name="model">van.sale.details.report</field>
+        <field name="report_name">fs_sale_details_report.sales_details_report_pdf</field>
+        <field name="report_type">py3o</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">fs_sale_details_report</field>
+        <field name="py3o_template_fallback">reports/sale_details_report.odt</field>
+        <field name="print_report_name">'Sales Details Report'</field>
+    </record>
+    <record id="sale_details_report_xlsx" model="ir.actions.report">
+        <field name="name">Sale Details Report XLSX</field>
+        <field name="model">van.sale.details.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fs_sale_details_report.sales_details_report_xlsx</field>
+        <field name="report_file">fs_sale_details_report.sales_details_report_xlsx</field>
+        <field name="print_report_name">'Sales Details Report'</field>
+    </record>
+    <template id="sale_details_report_of_product">
+        <table class="sale-details-main-table mt-5">
+            <colgroup>
+                <col style="width:5%"/>
+                <col style="width:40%"/>
+                <col style="width:10%"/>
+                <col style="width:15%"/>
+                <col style="width:15%"/>
+                <col style="width:15%"/>
+            </colgroup>
+            <thead>
+                <tr class="text-center">
+                    <td>No.</td>
+                    <td>Item</td>
+                    <td>Qty</td>
+                    <td>UOM</td>
+                    <td>Unit Price</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="records" t-as="record">
+                    <tr class="sale-details-main-table-header">
+                        <td colspan="2">
+                            <t t-out="record['parent']"/>
+                        </td>
+                        <td class="text-center">
+                            <t t-out="record['total_qty']"/>
+                        </td>
+                        <td colspan="2"/>
+                        <td class="text-right">
+                            <t t-out="record['total_amt_display']"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="1"/>
+                    <t t-foreach="record['lines']" t-as="line">
+                        <t t-set="line" t-value="record['lines'][line]"/>
+                        <tr t-attf-class="{{ 'sale-details-tr-even' if no % 2 == 0  else 'sale-details-tr-odd' }}">
+                            <td>
+                                <t t-out="no"/>
+                            </td>
+                            <td>
+                                <t t-out="line['report_of_item']"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-out="line['qty']"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-out="line['uom']"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-out="line['price_unit_display']"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-out="line['price_subtotal_display']"/>
+                            </td>
+                        </tr>
+                        <t t-set="no" t-value="no + 1"/>
+                    </t>
+                </t>
+            </tbody>
+        </table>
+    </template>
+    <template id="sale_details_report_of_product_group_and_category">
+        <table class="sale-details-main-table mt-5">
+            <colgroup>
+                <col style="width:5%"/>
+                <col style="width:60%"/>
+                <col style="width:15%"/>
+                <col style="width:20%"/>
+            </colgroup>
+            <thead>
+                <tr class="text-center">
+                    <td>No.</td>
+                    <td>
+                        <t t-if="options['report_of'] == 'product_group'">
+                            Product Group
+                        </t>
+                        <t t-else="">
+                            Product Category
+                        </t>
+                    </td>
+                    <td>Qty</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="records" t-as="record">
+                    <tr class="sale-details-main-table-header">
+                        <td colspan="2">
+                            <t t-out="record['parent']"/>
+                        </td>
+                        <td class="text-center">
+                            <t t-out="record['total_qty']"/>
+                        </td>
+                        <td class="text-right">
+                            <t t-out="record['total_amt_display']"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="1"/>
+                    <t t-foreach="record['lines']" t-as="line">
+                        <t t-set="line" t-value="record['lines'][line]"/>
+                        <tr t-attf-class="{{ 'sale-details-tr-even' if no % 2 == 0 else 'sale-details-tr-odd' }}">
+                            <td>
+                                <t t-out="no"/>
+                            </td>
+                            <td>
+                                <t t-out="line['report_of_item']"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-out="line['qty']"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-out="line['price_subtotal_display']"/>
+                            </td>
+                        </tr>
+                        <t t-set="no" t-value="no + 1"/>
+                    </t>
+                </t>
+            </tbody>
+        </table>
+    </template>
+    <template id="sales_details_report_pdf">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <style type="text/css">
+
+                        .sale-details-report-by-table{
+                            border-collapse: collapse;
+                        }
+
+                        .sale-details-report-table tr:first-child{
+                            color: #ffffff;
+                            font-weight: bold;
+                            background: #4E4496;
+                            height: 50px;
+                        }
+
+                        .sale-details-report-table tr th, td{
+                            padding: 10px 8px;
+                        }
+
+                        .sale-details-report-table tr:not(:first-child):hover {
+                            color: #ffffff;
+                            background: #6456c4;
+                        }
+
+                        .sales-details-header-label{
+                            margin: auto;
+                            text-align: center;
+                            font-size: 28px;
+                            font-weight: bold;
+                            color: #4E4496;
+                        }
+
+                        .cp-btns-container{
+                            display: flex;
+                            margin: auto;
+                            width: 85%;
+                            align-items: center;
+                            justify-content: space-between;
+                        }
+
+                        .custom-date input{
+                            text-align: center;
+                            height: 35px;
+                            background: #4E4496;
+                            color: white;
+                            font-weight: bold;
+                            border-radius: 15px;
+                        }
+
+                        .sale-details-btn{
+                            background: #4E4496;
+                            color: white;
+                            font-weight: bold;
+                            border-radius: 15px;
+                            padding: 8px 15px;
+                        }
+
+                        .sale-details-btn:hover{
+                            background: #6456c4;
+                            color: white;
+                        }
+
+                        .sale-details-main-table{
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+
+                        .sale-details-main-table thead tr{
+                            color: #ffffff;
+                            background: #4E4496;
+                            font-size: 14px;
+                            font-weight: bold;
+                                box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -4px inset;
+
+                        }
+
+                        .sale-details-main-table-header {
+                            color: white;
+                            background: #6456c4;
+                            font-weight: bold;
+                        }
+
+                        .sale-details-tr-even{
+                            font-weight: 400;
+                            background: #cecece;
+                        }
+
+                        .sale-details-tr-odd{
+                            font-weight: 400;
+                        }
+                        .text-left{
+                            text-align: left;
+                        }
+                        .text-center{
+                            text-align: center;
+                        }
+                        .text-center{
+                            text-align: center;
+                        }
+                    </style>
+                    <div class="sales-details-header-label mt-3 mb-5">
+                        Sales Details Report
+                    </div>
+                    <t t-if="options['report_of'] == 'product'">
+                        <t t-call="fs_sale_details_report.sale_details_report_of_product"/>
+                    </t>
+                    <t t-else="">
+                        <t t-call="fs_sale_details_report.sale_details_report_of_product_group_and_category"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_sale_details_report" model="ir.actions.client">
+        <field name="name">Sale Details Report</field>
+        <field name="tag">SaleDetailsReport</field>
+    </record>
+    <menuitem id="menu_sale_details_report"
+              name="Sale Details"
+              parent="base_field_sale.menu_report_id"
+              action="action_sale_details_report"
+              sequence="10"/>
+</odoo>

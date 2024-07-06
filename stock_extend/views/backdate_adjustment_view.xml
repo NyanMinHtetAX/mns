@@ -1,0 +1,12 @@
+<odoo>
+     <record id="view_stock_adjustment_line_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.adjustment.line.tree.inherit</field>
+        <field name="model">stock.adjustment.line</field>
+        <field name="inherit_id" ref="stock_adjustment_backdate.view_stock_adjustment_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='theoretical_qty']" position="after">
+                <field name="standard_price" optional="show" groups="stock_extend.group_product_cost"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

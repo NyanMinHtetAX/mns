@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="just_order_category_action" model="ir.actions.act_window">
+        <field name="name">Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">jr.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first category!
+            </p>
+        </field>
+    </record>
+
+    <record id="jr_category_form_view" model="ir.ui.view">
+        <field name="name">jr.category.form</field>
+        <field name="model">jr.category</field>
+        <field name="arch" type="xml">
+            <form string="Just Order Categories">
+                <sheet>
+                    <field name="image_128" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" class="o_text_overflow" placeholder="e.g. Soft Drinks" required="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="parent_id" class="o_text_overflow"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="jr_category_tree_view" model="ir.ui.view">
+        <field name="name">jr.category.tree</field>
+        <field name="model">jr.category</field>
+        <field name="field_parent" eval="False"/>
+        <field name="arch" type="xml">
+            <tree string="Just Order Categories">
+                <field name="name" string="Category Name"/>
+                <field name="parent_id" string="Parent Category"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

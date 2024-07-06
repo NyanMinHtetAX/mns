@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+         <record id="action_partner_delivery_man_form" model="ir.actions.act_window">
+            <field name="name">Delivery Man</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain">[('is_delivery_man','=',1)]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="base.res_partner_kanban_view"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                  Create a new delivery man in your address book
+              </p><p>
+                 Odoo helps you easily track all activities related to a customer.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_delivery_man" name="Delivery" parent="stock.menu_stock_root"  sequence="2"/>
+        <menuitem id="menu_delivery_picking" name="All Picking" parent="menu_delivery_man"  action="action_delivery_picking_man" sequence="20"/>
+
+        <menuitem id="fs_menu_delivery_man" name="Delivery" parent="base_field_sale.menu_mobile_field_sale_root"  sequence="4"/>
+        <menuitem id="fs_menu_delivery_picking" name="All Picking" parent="fs_menu_delivery_man"  action="action_delivery_picking_man" sequence="20"/>
+    </data>
+</odoo>

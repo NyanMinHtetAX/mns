@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="city_id" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+            <xpath expr="//group[@name='sale_shipping']//field[@name='warehouse_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='partner_details']//field[@name='partner_id']" position="attributes">
+               <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sales_person']//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sales_person']//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <field name="partner_class_id" readonly="1"/>
+                <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
+                <field name="payment_type"/>
+                <field name="team_id" kanban_view_ref="%(sales_team.crm_team_view_kanban)s" options="{'no_create': True}"/>
+                <field name="warehouse_id" options="{'no_create': True}" groups="stock.group_stock_multi_warehouses" force_save="1"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="fleet_id"/>
+                <field name="license_plate"/>
+                <field name = "remark" force_save="1" store="1"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+               <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//group[@name='note_group']" position="before">
+                <group name="foc_group" col="5" class="mt-2 mt-md-0">
+                    <group colspan="2" class=""/>
+                    <group colspan="2">
+                        <field name="foc_amount"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//notebook//page[last()]" position="after">
+                <page name="delivery_note" string="Delivery Note">
+                    <group>
+                        <group>
+                            <field name="delivery_type"/>
+                        </group>
+                    </group>
+                    <field name="delivery_note" placeholder="Delivery Note..." nolabel="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sale_order_form_inherit_1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.1</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="ax_base_setup.view_order_form_customer"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='total_due']" position="after">
+                <field name="real_due_amount"/>
+                <field name="payment_due_amount"/>
+                <field name="payment_return_due_amount"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sales_order_filter_cities" model="ir.ui.view">
+        <field name="name">sale.order.list.select.cities</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <group expand="1" string="Group By">
+                    <filter string="Cities" name="cities" domain="[]" context="{'group_by': 'city_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

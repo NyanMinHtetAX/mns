@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consignment_requisition_all,All access for Consignment Requisition,model_consignment_requisition,base.group_user,1,1,1,1
+access_consignment_line_all,All access for Consignment Line,model_consignment_line,base.group_user,1,1,1,1
+

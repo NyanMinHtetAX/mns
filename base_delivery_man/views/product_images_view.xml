@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_product_image_form" model="ir.ui.view">
+        <field name="name">product.images.view.form</field>
+        <field name="model">product.images</field>
+        <field name="arch" type="xml">
+            <form string="Product Images">
+                <field name="sequence" invisible="1"/>
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-4text-center o_website_sale_image_modal_container">
+                        <div class="row">
+                            <div class="col" style="width:160px;height:90px">
+                                <field name="image_1920" widget="image"
+                                       options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="product_image_view_kanban" model="ir.ui.view">
+        <field name="name">product.images.view.kanban</field>
+        <field name="model">product.images</field>
+        <field name="arch" type="xml">
+            <kanban string="Product Images" default_order="sequence">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image_1920"/>
+                <field name="sequence" widget="handle"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="card oe_kanban_global_click p-0">
+                            <div class="o_squared_image">
+                                <img class="o_kanban_image_inner_pic"
+                                     t-att-src="kanban_image('product.images', 'image_1920', record.id.raw_value)"
+                                     t-att-alt="record.name.value"/>
+                            </div>
+                            <div class="card-body p-0">
+                                <h4 class="card-title p-2 m-0 bg-200">
+                                    <small>
+                                        <field name="name"/>
+                                    </small>
+                                </h4>
+                            </div>
+                            <!-- below 100 Kb: good -->
+                            <t t-if="record.image_1920.raw_value.length &lt; 100*1000">
+                                <t t-set="size_status" t-value="'badge-success'"/>
+                                <t t-set="message">Acceptable file size</t>
+                            </t>
+                            <!-- below 1000 Kb: decent -->
+                            <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">
+                                <t t-set="size_status" t-value="'badge-warning'"/>
+                                <t t-set="message">Huge file size. The image should be optimized/reduced.</t>
+                            </t>
+                            <!-- above 1000 Kb: bad -->
+                            <t t-else="1">
+                                <t t-set="size_status" t-value="'badge-danger'"/>
+                                <t t-set="message">Optimization required! Reduce the image size or increase your
+                                    compression settings.
+                                </t>
+                            </t>
+                            <span t-attf-class="badge #{size_status} o_product_image_size"
+                                  t-esc="record.image_1920.value" t-att-title="message"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="product_image_action" model="ir.actions.act_window">
+        <field name="name">Products Image</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.images</field>
+        <field name="view_mode">form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first product!
+            </p>
+        </field>
+    </record>
+</odoo>

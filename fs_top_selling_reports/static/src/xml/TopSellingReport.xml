@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="TopSellingReportCP">
+        <div id="rp-ts-limit-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Number of Records</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 0">
+                        <table class="rp-ts-limit-table w-100 text-center">
+                            <tr data-value="5">
+                                <td>5</td>
+                            </tr>
+                            <tr data-value="10">
+                                <td>10</td>
+                            </tr>
+                            <tr data-value="20">
+                                <td>20</td>
+                            </tr>
+                            <tr data-value="30">
+                                <td>30</td>
+                            </tr>
+                            <tr data-value="50">
+                                <td>50</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rp-ts-cp-container">
+            <div class="rp-ts-report-handlers-container d-flex">
+                <div class="rp-ts-date d-inline-block">
+                    <div class="custom-date">
+                        <div class='o_datepicker js_account_reports_datetimepicker'>
+                            <input id="rp-ts-date-from" type='text' class="o_datepicker_input" name="date_from" />
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="rp-ts-date d-inline-block ml-3">
+                    <div class="custom-date">
+                        <div class='o_datepicker js_account_reports_datetimepicker'>
+                            <input id="rp-ts-date-to" type='text' class="o_datepicker_input" name="date_to" />
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="rp-ts-limit-input-container ml-5">
+                    <input id="rp-ts-limit-input"
+                           type="text"
+                           placeholder="Limit"
+                           onkeypress="return /[0-9]/i.test(event.key)"
+                           t-att-value="data.options.limit"/>
+                    <button class="btn" type="submit" data-toggle="modal" data-target="#rp-ts-limit-modal">
+                        <i class="fa fa-bars"></i>
+                    </button>
+               </div>
+                <div class="d-inline-block ml-5">
+                    <button class="btn rp-s-btn rp-ts-download-report btn-download-excel" data-report-type="xlsx">
+                        Excel
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+                <div class="d-inline-block ml-3">
+                    <button class="btn rp-s-btn rp-ts-download-report btn-download-pdf" data-report-type="pdf">
+                        PDF
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="TopSellingReportNoDataAvailable">
+        <div class="rp-ts-no-data-available text-center mt-5">
+            <img src="/fs_daily_sale_report/static/src/img/no_data_available.png" width="300px" height="300px"/>
+        </div>
+    </t>
+    <t t-name="TopSellingReportBySaleTeam">
+        <table class="rp-ts-main-table mt-5 text-center">
+            <colgroup>
+                <col style="width: 5%"/>
+                <col style="width: 45%"/>
+                <col style="width: 25%"/>
+                <col style="width: 25%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Sales Team</th>
+                    <th>Invoicing Target</th>
+                    <th>Total Sale Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="no" t-value="1"/>
+                <t t-foreach="data.records" t-as="record">
+                    <tr t-attf-class="{{ no % 2 === 0 ? 'rp-ts-tr-even' : 'rp-ts-tr-odd' }}">
+                        <td>
+                            <t t-out="no"/>
+                        </td>
+                        <td class="text-left">
+                            <t t-out="record.name"/>
+                        </td>
+                        <td>
+                            <t t-out="data.currency_before"/>
+                            <t t-out="record.invoiced_target.toLocaleString('en-US', precision)"/>
+                            <t t-out="data.currency_after"/>
+                        </td>
+                        <td class="text-right rp-ts-total-cell">
+                            <t t-out="data.currency_before"/>
+                            <t t-out="record.total.toLocaleString('en-US', precision)"/>
+                            <t t-out="data.currency_after"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="TopSellingReportByCustomer">
+        <table class="rp-ts-main-table mt-5 text-center">
+            <colgroup>
+                <col style="width: 5%"/>
+                <col style="width: 25%"/>
+                <col style="width: 45%"/>
+                <col style="width: 25%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Customer Code</th>
+                    <th class="text-left">Customer Name</th>
+                    <th>Total Sale Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="no" t-value="1"/>
+                <t t-foreach="data.records" t-as="record">
+                    <tr t-attf-class="{{ no % 2 === 0 ? 'rp-ts-tr-even' : 'rp-ts-tr-odd' }}">
+                        <td>
+                            <t t-out="no"/>
+                        </td>
+                        <td>
+                            <t t-out="record.ref"/>
+                        </td>
+                        <td class="text-left">
+                            <t t-out="record.name"/>
+                        </td>
+                        <td class="text-right rp-ts-total-cell">
+                            <t t-out="data.currency_before"/>
+                            <t t-out="record.total.toLocaleString('en-US', precision)"/>
+                            <t t-out="data.currency_after"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="TopSellingReportBySalesman">
+        <table class="rp-ts-main-table mt-5 text-center">
+            <colgroup>
+                <col style="width: 5%"/>
+                <col style="width: 30%"/>
+                <col style="width: 35%"/>
+                <col style="width: 30%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Salesman</th>
+                    <th>Sales Team</th>
+                    <th>Total Sale Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="no" t-value="1"/>
+                <t t-foreach="data.records" t-as="record">
+                    <tr t-attf-class="{{ no % 2 === 0 ? 'rp-ts-tr-even' : 'rp-ts-tr-odd' }}">
+                        <td>
+                            <t t-out="no"/>
+                        </td>
+                        <td>
+                            <t t-out="record.name"/>
+                        </td>
+                        <td>
+                            <t t-out="record.team"/>
+                        </td>
+                        <td class="text-right rp-ts-total-cell" style="padding-right: 15px">
+                            <t t-out="data.currency_before"/>
+                            <t t-out="record.total.toLocaleString('en-US', precision)"/>
+                            <t t-out="data.currency_after"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="TopSellingReportByProduct">
+        <table class="rp-ts-main-table mt-5 text-center">
+            <colgroup>
+                <col style="width: 5%"/>
+                <col style="width: 20%"/>
+                <col style="width: 30%"/>
+                <col style="width: 20%"/>
+                <col style="width: 25%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Code</th>
+                    <th class="text-left">Item</th>
+                    <th>Qty</th>
+                    <th>UOM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="no" t-value="1"/>
+                <t t-foreach="data.records" t-as="record">
+                    <tr t-attf-class="{{ no % 2 === 0 ? 'rp-ts-tr-even' : 'rp-ts-tr-odd' }}">
+                        <td>
+                            <t t-out="no"/>
+                        </td>
+                        <td>
+                            <t t-out="record.code"/>
+                        </td>
+                        <td class="text-left">
+                            <t t-out="record.name"/>
+                        </td>
+                        <td class="rp-ts-total-cell">
+                            <t t-out="record.qty.toLocaleString('en-US', precision)"/>
+                        </td>
+                        <td>
+                            <t t-out="record.uom"/>
+                        </td>
+                    </tr>
+                    <t t-set="no" t-value="no + 1"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="TopSellingReport">
+        <div class="rp-ts-title mt-5 mb-5">
+            <t t-out="data.options.title"/>
+        </div>
+        <t t-call="TopSellingReportCP"/>
+        <t t-if="data.records.length > 0">
+            <t t-if="data.options.report_by == 'sale_team'">
+                <t t-call="TopSellingReportBySaleTeam"/>
+            </t>
+            <t t-elif="data.options.report_by == 'customer'">
+                <t t-call="TopSellingReportByCustomer"/>
+            </t>
+            <t t-elif="data.options.report_by == 'salesman'">
+                <t t-call="TopSellingReportBySalesman"/>
+            </t>
+            <t t-elif="data.options.report_by == 'product'">
+                <t t-call="TopSellingReportByProduct"/>
+            </t>
+        </t>
+        <t t-else="">
+            <t t-call="TopSellingReportNoDataAvailable"/>
+        </t>
+    </t>
+</templates>

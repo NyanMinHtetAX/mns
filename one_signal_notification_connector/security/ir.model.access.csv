@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_one_signal_notification_user_account,one.signal.notification.user.account.user,model_one_signal_notification_user_account,base.group_user,1,1,1,1
+access_one_signal_notification_apps,one.signal.notification.apps.user,model_one_signal_notification_apps,base.group_user,1,1,1,1
+access_one_signal_notification_messages,one.signal.notification.messages.user,model_one_signal_notification_messages,base.group_user,1,1,1,1
+access_one_signal_notification_users_device,one.signal.notification.users.device.user,model_one_signal_notification_users_device,base.group_user,1,1,1,1

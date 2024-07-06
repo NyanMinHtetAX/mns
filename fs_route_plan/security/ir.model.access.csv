@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_route_plan_user,route.plan.user,model_route_plan,base.group_user,1,1,1,1
+access_route_plan_custom_user,route.plan.custom.user,model_route_plan_custom,base.group_user,1,1,1,1
+access_week_week_user,week.week.user,model_week_week,base.group_user,1,1,1,1
+access_assign_sales_teams_user,assign.sales.teams.user,model_assign_sales_teams,base.group_user,1,1,1,1
+access_select_partners_user,select.partners.user,model_select_partners,base.group_user,1,1,1,1

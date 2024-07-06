@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_active_supplier_list_sql_report,Access PO Active Supplier Lists Report,model_active_supplier_list_sql_report,base.group_user,1,1,1,1

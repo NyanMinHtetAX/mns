@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_order_multi_uom_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.multi.uom.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="multi_uom.view_sale_order_form_inherit"/>
+        <field name="groups_id" eval="[(6, 0, [ref('sale_extend.access_price_fields')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='multi_price_unit']" position="attributes">
+               <attribute name="attrs">{'readonly': [('product_type','!=','service')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

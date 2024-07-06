@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ChangeUomPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-selection">
+                    <input id="selectedId" t-att-value="props.list[0].id" type="hidden" />
+                    <div class="selection scrollable-y" style="border-top: none">
+                        <t t-set="no" t-value="0"/>
+                        <table class="client-list table multi-uom-table" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Unit of Measure</th>
+                                    <th style="text-align: center">Ratio</th>
+                                    <th style="text-align: center">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody class="client-list-contents">
+                                <t t-set="no" t-value="1"/>
+                                <t t-foreach="props.list" t-as="item" t-key="item.id">
+                                    <t t-if="no % 2 == 0">
+                                        <t t-set="class" t-value="'even-line-multi-uom'"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-set="class" t-value="'odd-line-multi-uom'"/>
+                                    </t>
+                                    <t t-if="no == 1">
+                                        <tr class="line-index client-line" t-attf-id="multi-uom-{{item.id}}" t-on-click="selectItem(item.id)" style="background: #b7bded; color: #ffffff">
+                                            <td style="text-align:left">
+                                                <t t-esc="item.uom_id[1]" />
+                                            </td>
+                                            <td style="text-align:center">
+                                                 <t t-esc="item.ratio" />
+                                            </td>
+                                            <td class="text-center">
+                                                <t t-esc="item.price"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-else="">
+                                        <tr class="line-index client-line"
+                                            t-att-class="class"
+                                            t-attf-id="multi-uom-{{item.id}}"
+                                            t-on-click="selectItem(item.id)">
+                                            <td style="text-align:left">
+                                                <t t-esc="item.uom_id[1]" />
+                                            </td>
+                                            <td style="text-align:center">
+                                                 <t t-esc="item.ratio" />
+                                            </td>
+                                            <td class="text-center">
+                                                <t t-esc="item.price"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-set="no" t-value="no + 1"/>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="footer" style="color: #ffffff">
+                        <div class="multi-uom-btn button" t-on-click="confirm">
+                            <t t-esc="props.confirmText" />
+                        </div>
+                        <div class="multi-uom-btn button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText" />
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

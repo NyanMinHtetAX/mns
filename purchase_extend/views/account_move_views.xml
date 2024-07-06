@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_move_form_hide_price" model="ir.ui.view">
+            <field name="name">account.move.form.hide.price</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="multi_uom.view_account_move_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='multi_price_unit']"
+                       position="replace">
+                    <field name="multi_price_unit" string="Price"
+                           attrs="{'readonly': [('parent.move_type', 'in', ('in_invoice', 'in_refund','in_receipt'))]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!--         # For PO Register Payment Button Warning Message 26 Oct 2022 MPP-->
+        <record id="view_account_move_form_inherit_warn" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.warn</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//group" position="before">
+                    <group>
+                        <field name="warning_message" decoration-bf="1" readonly="1" style="font-weight: bold;"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <!--         # For PO Register Payment Button Warning Message 26 Oct 2022 MPP-->
+    </data>
+</odoo>

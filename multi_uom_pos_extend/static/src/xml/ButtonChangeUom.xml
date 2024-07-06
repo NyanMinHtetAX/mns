@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ButtonChangeUom" owl="1">
+        <div class="control-button">
+            <i class="fa fa-exchange" role="img" aria-label="Change UoM" title="Change UoM" />
+            Change UoM
+        </div>
+    </t>
+</templates>

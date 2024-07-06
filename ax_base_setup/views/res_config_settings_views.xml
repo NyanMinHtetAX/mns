@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.base.setup</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='show_margins']" position="before">
+                <div class="col-12 col-lg-6 o_setting_box" title="The margin is computed as the sum of product sales prices minus the cost set in their detail form.">
+                    <div class="o_setting_left_pane">
+                        <field name="is_foc"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="is_foc"/>
+                        <div class="text-muted">
+                            Show Foc Discount Account
+                        </div>
+                        <div class="content-group" attrs="{'invisible': [('is_foc','=',False)]}">
+                            <div class="row mt16">
+                                <label for="foc_discount_account_id" class="col-lg-4 o_light_label"/>
+                                <field name="foc_discount_account_id" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

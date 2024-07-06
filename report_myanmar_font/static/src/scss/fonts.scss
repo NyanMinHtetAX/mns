@@ -1,0 +1,16 @@
+
+@font-face {
+    font-family: 'Zawgyi';
+    src: url("/report_myanmar_font/static/src/fonts/zawgyi_4.30.ttf");
+}
+
+.page,
+.header,
+.footer,
+.address {
+	font-family: Zawgyi;
+}
+
+.mmFont {
+  font-family: Zawgyi;
+}

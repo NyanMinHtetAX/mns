@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <menuitem id="menu_route_plan"
+                  name="Route Plan"
+                  parent="base_field_sale.menu_operation_id"
+                  action="action_route_plan"
+                  sequence="1"/>
+</odoo>

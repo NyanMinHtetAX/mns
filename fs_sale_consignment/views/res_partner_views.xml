@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//group[@name='container_row_2']//group[last()]" position="after">
+                <group string="Sale Consignment">
+                    <field name="consignee"/>
+                    <field name="consignee_location_id" string="Location"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_consignee" model="ir.actions.act_window">
+        <field name="name">Consignees</field> 
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('consignee', '=', True)]</field>
+        <field name="context">{'default_customer': True, 'default_consignee': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new consignee here.
+            </p>
+            <p>
+                You'll be able to manage your consignees here.
+            </p>
+        </field>
+    </record>
+</odoo>

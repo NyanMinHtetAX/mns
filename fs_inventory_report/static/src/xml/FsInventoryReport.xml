@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="FsInventoryReportCP">
+        <div class="rp-iv-cp-handler-container d-flex">
+            <div>
+                <div class="rp-iv-date d-inline-block">
+                    <div class="custom-date">
+                        <div class='o_datepicker js_account_reports_datetimepicker'>
+                            <input id="rp-iv-date" type='text' class="o_datepicker_input" name="date" />
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="rp-iv-sale-team-container d-inline-block ml-5">
+                    <button class="btn rp-iv-btn rp-iv-m2x-btn"
+                            type="submit"
+                            data-res-model="crm.team"
+                            data-option-key="team_ids">
+                        <i class="mr-1 fa fa-users"></i>
+                        Sale Team
+                        <span class="rp-iv-down-arrow"></span>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="d-inline-block ml-5">
+                    <button class="btn rp-iv-btn btn-download-excel" data-report-type="xlsx">
+                        Excel
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+                <div class="d-inline-block ml-3">
+                    <button class="btn rp-iv-btn btn-download-pdf" data-report-type="pdf">
+                        PDF
+                        <i class="fa fa-download ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="FsInventoryReportTable">
+        <div class="rp-iv-main-table-container">
+            <table class="rp-iv-main-table mt-5 text-center">
+                <colgroup>
+                    <col style="width: 5%"/>
+                    <col style="width: 14%"/>
+                    <col style="width: 14%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 1%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                    <col style="width: 6%"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th rowspan="2">No.</th>
+                        <th rowspan="2">Code</th>
+                        <th rowspan="2">Item</th>
+                        <th colspan="2">Opening</th>
+                        <th colspan="2">Sale</th>
+                        <th colspan="2">Sale Return</th>
+                        <th colspan="2">Transfer</th>
+                        <th colspan="2">Scrap</th>
+                        <th colspan="2">Closing</th>
+                    </tr>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th colspan="2">Qty</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="teams" t-as="team">
+                        <t t-set="no" t-value="1"/>
+                        <t t-set="record" t-value="transactions[team.location_id] || {}"/>
+                        <t t-set="products" t-value="record.lines || []"/>
+                        <tr class="sale-team-header">
+                            <td colspan="3">
+                                <t t-out="team.name"/>
+                                -
+                                <t t-out="team.location"/>
+                            </td>
+                            <td>
+                                <t t-out="record.opening_qty"/>
+                            </td>
+                            <td>
+                                <t t-out="record.opening_value"/>
+                            </td>
+                            <td>
+                                <t t-out="record.sale_qty"/>
+                            </td>
+                            <td>
+                                <t t-out="record.sale_value"/>
+                            </td>
+                            <td>
+                                <t t-out="record.sale_return_qty"/>
+                            </td>
+                            <td>
+                                <t t-out="record.sale_return_value"/>
+                            </td>
+                            <td colspan="2">
+                                <t t-out="record.transfer_qty"/>
+                            </td>
+<!--                            <td>-->
+<!--                                <t t-out="record.transfer_value"/>-->
+<!--                            </td>-->
+                            <td>
+                                <t t-out="record.scrap_qty"/>
+                            </td>
+                            <td>
+                                <t t-out="record.scrap_value"/>
+                            </td>
+                            <td>
+                                <t t-out="record.closing_qty"/>
+                            </td>
+                            <td>
+                                <t t-out="record.closing_value"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="products" t-as="product">
+                            <tr t-attf-class="{{ no % 2 === 0 ? 'rp-iv-tr-even' : 'rp-iv-tr-odd' }}">
+                                <td>
+                                    <t t-out="no"/>
+                                </td>
+                                <td class="text-left">
+                                    <t t-out="product.code || ''"/>
+                                </td>
+                                <td class="text-left">
+                                    <t t-out="product.product || ''"/>
+                                </td>
+                                <td>
+                                     <t t-esc="product.opening_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.opening_value.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.sale_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.sale_value.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.sale_return_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.sale_return_value.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td colspan="2">
+                                    <t t-out="product.transfer_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+<!--                                <td>-->
+<!--                                    <t t-out="product.transfer_value"/>-->
+<!--                                </td>-->
+                                <td>
+                                    <t t-out="product.scrap_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.scrap_value.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.closing_qty.toLocaleString('en-US', precision)"/>
+                                </td>
+                                <td>
+                                    <t t-out="product.closing_value.toLocaleString('en-US', precision)"/>
+                                </td>
+                            </tr>
+                            <t t-set="no" t-value="no + 1"/>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FsInventoryReport">
+        <div class="sales-details-header-label rp-ts-title mt-3 mb-3">
+            Inventory Report
+        </div>
+        <t t-call="FsInventoryReportCP"/>
+        <t t-call="FsInventoryReportTable"/>
+    </t>
+</templates>

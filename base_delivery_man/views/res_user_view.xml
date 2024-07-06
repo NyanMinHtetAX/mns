@@ -1,0 +1,46 @@
+<odoo>
+<!--    <record id="view_users_form_inherit1" model="ir.ui.view">-->
+<!--        <field name="name">res.users.form</field>-->
+<!--        <field name="model">res.users</field>-->
+<!--        <field name="inherit_id" ref="base.view_users_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--           <xpath expr="//field[@name='sel_groups_1_9_10']" position="after">-->
+<!--               <field name="is_delivery_man" widget="boolean_toggle" attrs="{'invisible': [('sel_groups_1_9_10', '!=', 9)]}"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="action_delivery_man_user" model="ir.actions.act_window">
+        <field name="name">Delivery Men</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="base.view_users_tree"/>
+        <field name="search_view_id" ref="base.view_users_search"/>
+        <field name="domain">[('is_portal_user', '=', True), ('is_delivery_man', '=', True)]</field>
+        <field name="context">{'default_is_delivery_man': True, 'auto_select_portal': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new delivery man here.
+            </p>
+            <p>
+                You'll be able to manage delivery men here.
+            </p>
+        </field>
+    </record>
+    <record id="action_delivery_man_user_tree_view" model="ir.actions.act_window.view">
+        <field eval="10" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="base.view_users_tree"/>
+        <field name="act_window_id" ref="action_delivery_man_user"/>
+    </record>
+    <record id="action_delivery_man_user_form_view" model="ir.actions.act_window.view">
+        <field eval="20" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="base.view_users_form"/>
+        <field name="act_window_id" ref="action_delivery_man_user"/>
+    </record>
+    <menuitem id="menu_delivery_man_user"
+              name="Delivery Man"
+              parent="base.menu_users"
+              action="action_delivery_man_user"
+              sequence="100"/>
+</odoo>

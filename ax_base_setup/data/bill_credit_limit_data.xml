@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="email_template_edi_bill_credit_limit" model="mail.template">
+            <field name="name">Over Credit Limit..!!</field>
+            <field name="subject">Over limit payable{{object.partner_id.name or ''}} !</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="email_from">{{ (object.user_id.partner_id.email)}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Over Credit Limit...!</p>
+                    <p> Vendor, <strong t-out="object.partner_id.name or ''"></strong> is over credit limit!</p>
+                    <p> Vendor form exceed amount, <strong t-out="object.partner_id.v_credit_limit or ''"></strong> !</p>
+                    <br/>
+                    <p><t t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

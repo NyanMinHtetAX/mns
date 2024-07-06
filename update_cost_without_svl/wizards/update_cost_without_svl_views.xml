@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_update_cost_without_svl_form" model="ir.ui.view">
+        <field name="name">update.cost.without.svl.form</field>
+        <field name="model">update.cost.without.svl</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="cost"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button special="cancel" string="CANCEL" class="btn-danger"/>
+                    -
+                    <button name="update_cost_without_svl" string="Update" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_update_cost_without_svl" model="ir.actions.act_window">
+        <field name="name">Update Cost Without GL</field>
+        <field name="res_model">update.cost.without.svl</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

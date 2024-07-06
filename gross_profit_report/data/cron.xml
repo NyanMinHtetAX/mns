@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_auto_record_current_user" model="ir.cron">
+        <field name="name">Current User, For Right Gross Profit Access</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')" />
+        <field name="doall" eval="True"/>
+        <field name="priority">1</field>
+        <field name="model_id" ref="model_gross_profit_report_gross_profit_sql_report"/>
+        <field name="code">model._current_user_for_gp_report()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

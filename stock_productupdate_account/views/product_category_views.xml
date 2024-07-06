@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_category_property_form_counter-part" model="ir.ui.view">
+            <field name="name">product.category.property.form.counter-part</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <group name="account_property" position="after">
+                    <group name="counter_part" string="Counter Part Account">
+                        <field name="property_counter_part_account_id"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

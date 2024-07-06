@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="daily_sale_summary_view_form" model="ir.ui.view">
+        <field name="name">daily.sale.summary.form</field>
+        <field name="model">daily.sale.summary</field>
+        <field name="arch" type="xml">
+            <form string="Sale Summary">
+                <header>
+                    <button name="action_post"
+                            class="oe_highlight"
+                            type="object"
+                            string="POST"
+                            attrs="{'invisible': [('state', '!=', 'close')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_orders"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-shopping-basket">
+                            <field name="order_count" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button name="action_view_pickings"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-truck">
+                            <field name="picking_count" widget="statinfo" string="Pickings"/>
+                        </button>
+                        <button name="action_view_payments"
+                                class="oe_stat_button"
+                                type="object"
+                                icon="fa-dollar">
+                            <field name="payment_count" widget="statinfo" string="Payments"/>
+                        </button>
+                        <button name="action_view_move_lines"
+                                class="oe_stat_button"
+                                icon="fa-bars"
+                                type="object"
+                                string="Journal Items">
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" class="oe_inline" readonly="1"/></h1>
+                    </div>
+                    <group name="Sale Summary">
+                        <group>
+                            <field name="team_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="route_plan_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="sales_man" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="analytic_account_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="daily_sale_summary_view_tree" model="ir.ui.view">
+        <field name="name">daily.sale.summary.tree</field>
+        <field name="model">daily.sale.summary</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Summary">
+                <field name="name"/>
+                <field name="team_id"/>
+                <field name="sales_man"/>
+                <field name="date"/>
+                <field name="state"
+                       string="Status"
+                       widget="badge"
+                       decoration-info="state == 'in_progress'"
+                       decoration-success="state == 'posted'" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="daily_sale_summary_view_search" model="ir.ui.view">
+        <field name="name">daily.sale.search.view</field>
+        <field name="model">daily.sale.summary</field>
+        <field name="arch" type="xml">
+            <search string="sale summarys">
+                <field name="sales_man"/>
+                <field name="team_id"/>
+                <field name="date"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_by_sales_man" string="Salesman" domain="[]"  context="{'group_by':'sales_man'}"/>
+                    <filter name="group_by_sales_team" string="Sale Team" domain="[]"  context="{'group_by':'team_id'}"/>
+                    <separator/>
+                    <filter name="group_by_date" string="Date" domain="[]"  context="{'group_by':'date'}"/>
+                    <filter name="group_by_state" string="Status" domain="[]"  context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_daily_sale_summary_form" model="ir.actions.act_window">
+        <field name="name">Daily Sale Session</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">daily.sale.summary</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="daily_sale_summary_view_tree"/>
+        <field name="search_view_id" ref="daily_sale_summary_view_search"/>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new summary
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_daily_sale_summary" parent="base_field_sale.fieldsaleorder" action="action_daily_sale_summary_form" sequence="10"/>
+</odoo>

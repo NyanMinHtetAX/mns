@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t t-name="fs_visit_report.visit_google_map">
+        <section class="map_box_container" style="height: 70vh; width: 100%">
+            <!--MAP-->
+            <div id="visitReportMap" class="visit-report-google-map" style="width: 100%; height: 100%; position: absolute; top: 0; bottom: 0;"/>
+        </section>
+    </t>
+</template>

@@ -1,0 +1,98 @@
+:root {
+  --sale-details-primary: #473e8a;
+  --sale-details-primary-light: #dad7ed;
+}
+
+.sale-details-report-by-table{
+    border-collapse: collapse;
+}
+
+.sale-details-report-table tr:first-child{
+    color: #ffffff;
+    font-weight: bold;
+    background: var(--sale-details-primary);
+    height: 50px;
+}
+
+.sale-details-report-table tr th, td{
+    padding: 10px 8px;
+}
+
+.sale-details-report-table tr:not(:first-child):hover {
+    color: #000000;
+    background: var(--sale-details-primary-light);
+}
+
+.sales-details-header-label{
+    margin: auto;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--sale-details-primary);
+}
+
+.cp-btns-container{
+    display: flex;
+    margin: auto;
+    width: 85%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-date input{
+    text-align: center;
+    height: 35px;
+    background: var(--sale-details-primary);
+    color: white;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.sale-details-btn{
+    background: var(--sale-details-primary);
+    color: white;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 8px 15px;
+}
+
+.sale-details-btn:hover{
+    background: var(--sale-details-primary-light);
+    color: #000000;
+}
+
+.sale-details-main-table{
+    width: 85%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sale-details-main-table thead tr{
+    color: #ffffff;
+    background: var(--sale-details-primary);
+    font-size: 14px;
+    font-weight: bold;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px -4px inset;
+
+}
+
+.sale-details-main-table-header {
+    color: black;
+    background: var(--sale-details-primary-light);
+    font-weight: bold;
+}
+
+.sale-details-tr-even{
+    font-weight: 400;
+    background: #E8E8E8;
+}
+
+.sale-details-tr-odd{
+    font-weight: 400;
+}
+
+.sale-details-date span{
+    top: 5px !important;
+    right: 8px !important;
+}

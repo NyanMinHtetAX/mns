@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_expense_sheet_form_view_inherit_expense" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.form.inherit.expense</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_mode']" position="after">
+                <field name="is_approve"/>
+                <field name="limit_user_ids" widget="many2many_tags" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='approve_expense_sheets']" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_approve','=', False)] }</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', limit_user_ids)]</attribute>
+                <attribute name="options">{'no_open': 1,'no_create_edit': 1}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_payment_receipt_a4_pdf_report" model="ir.actions.report">
+        <field name="name">Cash Receipt PDF</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">payment_receipt_report.cash_receipt_pdf_report</field>
+        <field name="report_file">payment_receipt_report.cash_receipt_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">payment_receipt_report</field>
+        <field name="py3o_template_fallback">reports/payment_receipt.odt</field>
+    </record>
+    <record id="action_payment_receipt_a4_pdf_report_server" model="ir.actions.server">
+        <field name="name">Cash Receipt PDF</field>
+        <field name="model_id" ref="model_account_payment"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_cash_receipt()
+        </field>
+        <field name="binding_model_id" ref="model_account_payment"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

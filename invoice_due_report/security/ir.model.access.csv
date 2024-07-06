@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_invoice_due_report_invoice_due_sql_report,Access for Invoice Due Date Report,model_invoice_due_sql_view,base.group_user,1,1,1,1
+access_invoice_due_report_invoice_due_sql_report,Access for Invoice Due Date Report,model_invoice_due_sql_view,base.group_user,1,1,1,1

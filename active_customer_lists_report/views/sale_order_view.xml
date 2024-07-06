@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_order_form_inherit_supplier_report" model="ir.ui.view">
+        <field name="name">sale.order.form.supplier_report</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group//group[@name='order_details']" position="inside">
+                <field name="to_thirty_days" invisible="1"/>
+                <field name="to_sixty_days" invisible="1"/>
+                <field name="to_ninety_days" invisible="1"/>
+                <field name="to_one_twenty_days" invisible="1"/>
+                <field name="to_older_days" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

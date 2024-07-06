@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_stock_return_image_form" model="ir.ui.view">
+        <field name="name">sale.stock.return.image.form</field>
+        <field name="model">sale.stock.return.image</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <div class="oe_title">
+                            <label class="small text-muted" for="name"/>
+                            <h2><field name="name" placeholder="Description" required="True"/></h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                        <field name="image" widget="image"/>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_sale_stock_return_image_kanban" model="ir.ui.view">
+        <field name="name">sale.stock.return.image.kanban</field>
+        <field name="model">sale.stock.return.image</field>
+        <field name="arch" type="xml">
+            <kanban class="o_attachments_previews">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <img class="o_attachment_image"
+                             style="width:100px"
+                             alt="Image"
+                             t-att-src="kanban_image('sale.stock.return.image', 'image', record.id.raw_value)"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

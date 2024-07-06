@@ -1,0 +1,13 @@
+<odoo>
+    <record id="crm_team_view_form_inherit" model="ir.ui.view">
+    <field name="name">crm.team.form.view.inherit</field>
+    <field name="model">crm.team</field>
+    <field name="mode">primary</field>
+    <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//page[@name='members_users']//field[@name='member_ids']" position="attributes">
+            <attribute name="domain">[('is_delivery_man','=',False)]</attribute>
+        </xpath>
+    </field>
+    </record>
+</odoo>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="multi_uom.view_sale_order_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='multi_qty_invoiced']" position="before">
+                <field name="sale_return_qty" readonly="1" sum="Return Qty" />
+            </xpath>
+
+        </field>
+        </record>
+        <record id="sale_order_line_report_tree" model="ir.ui.view">
+            <field name="name">sale.order.line.report.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0" import="0">
+                    <field name="order_id" string="Reference" readonly="1" options="{'no_open': True}"/>
+                    <field name="order_partner_id" string="Customer" readonly="1" options="{'no_open': True}"/>
+                    <field name="city_id" readonly="1" options="{'no_open': True}" optional="show"/>
+                    <field name="warehouse_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                    <field name="product_id" readonly="1" options="{'no_open': True}"/>
+                    <field name="salesman_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                    <field name="team_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+                    <field name="analytic_tag_ids" optional="hide"
+                           groups="analytic.group_analytic_tags" readonly="1"
+                           widget="many2many_tags" options="{'color_field': 'color', 'no_open': True}"/>
+                    <field name="multi_uom_qty" readonly="1" sum="Multi UOM Qty"/>
+                    <field name="multi_qty_delivered" string="Received" optional="show" readonly="1" sum="Multi Qty Delivered"/>
+                    <field name="sale_return_qty" readonly="1" sum="Return Qty"/>
+                    <field name="multi_qty_invoiced" string="Billed" optional="show" readonly="1" sum="Multi Qty Invoiced"/>
+                    <field name="multi_uom_line_id" string="UoM" groups="uom.group_uom" force_save="1" optional="show" readonly="1"/>
+                    <field name="multi_price_unit" readonly="1"/>
+                    <field name="discount_type" readonly="1" optional="hide"/>
+                    <field name="multi_uom_discount" readonly="1" optional="hide"/>
+                    <field name="discount_amount" readonly="1" optional="hide"/>
+                    <field name="tax_id" readonly="1" widget="many2many_tags" options="{'no_open': True}"
+                           domain="[('type_tax_use','=','sale'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" context="{'default_type_tax_use': 'sale', 'search_view_ref': 'account.account_tax_view_search'}" optional="show"/>
+                    <field name="price_subtotal" widget="monetary" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_order_line_view_form_readonly1" model="ir.ui.view">
+            <field name="name">sale.order.line.form.readonly1</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Sales Order Item">
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="display_name" readonly="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="order_id" readonly="1"/>
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="multi_uom_qty" readonly="1"/>
+                                    <field name="multi_qty_delivered" readonly="1"/>
+                                    <field name="multi_qty_invoiced"/>
+                                    <field name="multi_uom_line_id" readonly="1"/>
+                                    <field name="order_partner_id" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="salesman_id" readonly="1"/>
+                                    <field name="team_id" readonly="1"/>
+                                    <field name="warehouse_id" readonly="1"/>
+                                    <field name="multi_price_unit" readonly="1"/>
+                                    <field name="price_subtotal" widget="monetary"/>
+                                    <field name="tax_id" widget="many2many_tags" readonly="1"/>
+                                    <field name="price_tax" widget="monetary"/>
+                                    <field name="price_total" widget="monetary"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_line_report_pivot" model="ir.ui.view">
+            <field name="name">sale.order.line.report.pivot</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="multi_uom_qty" type="measure"/>
+                    <field name="multi_price_unit" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="sale_order_line_report_action" model="ir.actions.act_window">
+            <field name="name">Sale Details Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="view_id" ref="sale_order_line_report_tree"/>
+            <field name="domain">[('product_id.type', '=', 'product')]</field>
+            <field name="context">{'search_default_group_by_order_id': 1}</field>
+        </record>
+
+        <record id="sale_order_line_report_search" model="ir.ui.view">
+            <field name="name">Sale Details Line</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Sale Details Line">
+                    <field name="product_id"/>
+                    <field name="order_id"/>
+                    <field name="order_partner_id"/>
+                    <field name="salesman_id"/>
+                    <field name="team_id"/>
+                    <separator/>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Product' name="group_by_product_id" context="{'group_by': 'product_id'}"/>
+                        <filter string='Reference' name="group_by_order_id" context="{'group_by': 'order_id'}"/>
+                        <filter string='Partner' name="group_by_partner_id" context="{'group_by': 'order_partner_id'}"/>
+                        <filter string="Cities" name="cities" domain="[]" context="{'group_by': 'city_id'}"/>
+                        <filter string="Sale Team" name="team_id" domain="[]" context="{'group_by': 'team_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_sale_order_line"
+                  name="Sale Detail Line Report"
+                  parent="sale.menu_sale_report"
+                  sequence="110"
+                  action="sale_order_line_report_action"/>
+
+        
+        <!-- For Quotation Report -->
+        <!-- Tree View -->
+        <record id="sale_quotation_report_tree" model="ir.ui.view">
+            <field name="name">sale.quotation.report.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0" import="0" >
+                    <field name="order_id" string="Reference" readonly="1" options="{'no_open': True}"/>
+                    <field name="order_partner_id" string="Customer" readonly="1" options="{'no_open': True}"/>
+                                        
+                    <field name="city_id" readonly="1" options="{'no_open': True}" optional="show"/>
+                    <field name="warehouse_id" readonly="1" options="{'no_open': True}" optional="hide"/>
+
+                    <field name="product_id" readonly="1" options="{'no_open': True}"/>
+                    
+                    <field name="analytic_tag_ids" optional="hide"
+                           groups="analytic.group_analytic_tags" readonly="1"
+                           widget="many2many_tags" options="{'color_field': 'color', 'no_open': True}"/>
+                    <field name="multi_uom_qty" readonly="1" sum="Multi UOM Qty"/>
+                    <field name="multi_qty_delivered" string="Received" optional="show" readonly="1" sum="Multi Qty Delivered"/>
+                    <field name="sale_return_qty" readonly="1" sum="Return Qty"/>
+                    <field name="multi_qty_invoiced" string="Billed" optional="show" readonly="1" sum="Multi Qty Invoiced"/>
+                    <field name="multi_uom_line_id" string="UoM" groups="uom.group_uom" force_save="1" optional="show" readonly="1"/>
+                    <field name="multi_price_unit" readonly="1"/>
+                    <field name="discount_type" readonly="1" optional="hide"/>
+                    <field name="multi_uom_discount" readonly="1" optional="hide"/>
+                    <field name="discount_amount" readonly="1" optional="hide"/>
+                    <field name="tax_id" readonly="1" widget="many2many_tags" options="{'no_open': True}"
+                           domain="[('type_tax_use','=','sale'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" context="{'default_type_tax_use': 'sale', 'search_view_ref': 'account.account_tax_view_search'}" optional="show"/>
+                    <field name="price_subtotal" widget="monetary" readonly="1"/>
+                    <!-- <field name="state" readonly="1"/> -->
+                    
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Search View -->
+        <record id="sale_quotation_report_search" model="ir.ui.view">
+            <field name="name">Sale Quotation Line</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Sale Quotation Line">
+                    <field name="product_id"/>
+                    <field name="order_id"/>
+                    <field name="order_partner_id"/>
+                    <separator/>
+                    <group expand='0' string='Group by...'>
+                        <filter string='Product' name="group_by_product_id" context="{'group_by': 'product_id'}"/>
+                        <filter string='Order' name="group_by_order_id" context="{'group_by': 'order_id'}"/>
+                        <filter string='Partner' name="group_by_partner_id" context="{'group_by': 'order_partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action Window -->
+        <record id="sale_quotation_report_action" model="ir.actions.act_window">
+            <field name="name">Sale Quotation Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale_quotation_report_tree"/>
+            <field name='search_view_id' ref = 'sale_quotation_report_search' />
+            <!-- Order State in Quotation, Quotation Sent  -->
+            <field name="domain">[('state', 'in', ['draft', 'send']),('product_id', '!=', False)]</field>
+            <field name="context">
+                {
+                    'search_default_group_by_product_id': 1, 
+                    'form_view_ref': 'sale_detail_line_report.sale_order_line_view_form_readonly1'
+                }
+            </field>
+        </record>
+
+        <!-- Menu ITem -->
+        <menuitem id="menu_sale_quotation_report"
+                  name="Sale Quotation Report"
+                  parent="sale.menu_sale_report"
+                  sequence="120"
+                  action="sale_quotation_report_action"/>
+    </data>
+</odoo>

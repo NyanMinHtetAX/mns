@@ -1,0 +1,105 @@
+:root {
+    --rp-iv-selection-btn: #1EA6CF;
+    --rp-iv-primary: #473e8a;
+    --rp-iv-primary-light: #dad7ed;
+    --rp-iv-pdf-download-btn: #42AAB2;
+    --rp-iv-pdf-download-btn-hover: #2d838a;
+    --rp-iv-xlsx-download-btn: #EA8928;
+    --rp-iv-xlsx-download-btn-hover: #b86818;
+    --rp-iv-sale-team-line: #dad7ed;
+}
+
+.rp-iv-cp-handler-container{
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 45%;
+}
+
+.rp-iv-sale-team-container button{
+    padding-right: 25px;
+}
+
+.rp-iv-down-arrow{
+    position: absolute;
+    top: 7px;
+    left: auto;
+    bottom: auto;
+    right: 10px;
+    pointer-events: none;
+}
+
+.rp-iv-down-arrow:after{
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    vertical-align: middle;
+    -moz-transform: scale(0.9999);
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #ffffff;
+}
+
+.rp-iv-btn{
+    color: #ffffff;
+    padding: 8px 18px;
+    height: 35px;
+    border-radius: 10px;
+    background: var(--rp-iv-selection-btn);
+}
+
+.rp-iv-btn:hover{
+    color: #ffffff;
+}
+
+.rp-iv-date span{
+    top: 5px !important;
+    right: 8px !important;
+}
+
+.rp-iv-sale-team-container{
+    position: relative;
+}
+
+.rp-iv-main-table-container{
+    overflow: auto;
+}
+
+.rp-iv-main-table{
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.rp-iv-main-table thead{
+    position: sticky;
+    z-index: 100;
+    top: 0;
+}
+
+.rp-iv-main-table thead tr th{
+    color: #ffffff;
+    background: var(--rp-iv-primary);
+    padding: 5px 8px;
+    border: 1px solid black;
+}
+
+.rp-iv-main-table tr td{
+    border: 1px solid black;
+}
+
+.sales-details-header-label{
+                            margin: auto;
+                            text-align: center;
+                            font-size: 28px;
+                            font-weight: bold;
+                            color: #4E4496;
+                        }
+
+.rp-iv-tr-even{
+    font-weight: 400;
+    background: #E8E8E8;
+}

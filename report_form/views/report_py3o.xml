@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Delivery Order ( Cargate & Driver ) By MPP 28 Nov 2022 -->
+    <record id="action_delivery_order_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Delivery Order For Driver (B5)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">report_form.delivery_order_b5_pdf_report</field>
+        <field name="report_file">report_form.delivery_order_b5_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">report_form</field>
+        <field name="py3o_template_fallback">reports/delivery_order_b5.odt</field>
+    </record>
+    <record id="action_delivery_order_b5_pdf_report_server" model="ir.actions.server">
+        <field name="name">Delivery Order For Driver (B5)</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_delivery_order_b5_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_delivery_order_cargate_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Delivery Order For Car Gate (B5)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">report_form.delivery_order_cargate_b5_pdf_report</field>
+        <field name="report_file">report_form.delivery_order_cargate_b5_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">report_form</field>
+        <field name="py3o_template_fallback">reports/delivery_order_cargate_b5.odt</field>
+    </record>
+    <record id="action_delivery_order_cargate_b5_pdf_report_server" model="ir.actions.server">
+        <field name="name">Delivery Order For Car Gate (B5)</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_delivery_order_cargate_b5_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+    <!--Delivery Order ( Cargate & Driver ) By MPP 28 Nov 2022 -->
+
+
+    <!--Return in B5-->
+    <record id="action_return_in_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Return In</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">report_form.return_in_pdf_report</field>
+        <field name="report_file">report_form.return_in_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">report_form</field>
+        <field name="py3o_template_fallback">reports/return_in_b5.odt</field>
+    </record>
+    <record id="action_return_in_b5_pdf_server" model="ir.actions.server">
+        <field name="name">Return In</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_return_in_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!--Return out B5-->
+    <record id="action_return_out_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Return Out</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">report_form.return_out_pdf_report</field>
+        <field name="report_file">report_form.return_out_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">report_form</field>
+        <field name="py3o_template_fallback">reports/return_out_b5.odt</field>
+    </record>
+    <record id="action_return_out_b5_pdf_server" model="ir.actions.server">
+        <field name="name">Return Out</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_return_out_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+     <!--Goods Receipt Note PDF By ETK -->
+    <record id="action_grn_b5_pdf_report" model="ir.actions.report">
+        <field name="name">Goods Receipt Note (B5)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">py3o</field>
+        <field name="report_name">report_form.grn_b5_pdf_report</field>
+        <field name="report_file">report_form.grn_b5_pdf_report</field>
+        <field name="py3o_filetype">pdf</field>
+        <field name="module">report_form</field>
+        <field name="py3o_template_fallback">reports/grn_b5.odt</field>
+    </record>
+    <record id="action_grn_b5_pdf_report_server" model="ir.actions.server">
+        <field name="name">Goods Receipt Note (B5)</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.get_grn_b5_pdf_report()
+        </field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

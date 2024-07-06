@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_supplier" model="ir.ui.view">
+            <field name="name">purchase.order.form.supplier</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('supplier', '=', True)]</attribute>
+                    <attribute name="context">{'default_supplier':1, 'default_customer':0}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="credit_limit"/>
+                    <field name="total_due" force_save="1"/>
+                    <field name="invoice_date_due" force_save="1"/>
+                    <field name="purchase_date" invisible="1"/>
+                    <field name="over_credit" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

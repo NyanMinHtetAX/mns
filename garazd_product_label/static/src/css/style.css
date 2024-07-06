@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'zawgyione';
+    src: url('/garazd_product_label/static/src/fonts/Zawgyi-One/SmartZawgyiPro.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Myanmar3 !important;
+}
+.o_background_footer, .o_background_header, .o_report_layout_background {
+    font-family: Myanmar3 !important;
+}
+.fa {
+	font: normal normal normal 14px/1 FontAwesome !important;
+}

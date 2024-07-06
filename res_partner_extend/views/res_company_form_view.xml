@@ -1,0 +1,25 @@
+<odoo>
+     <record id="view_company_form_inherit" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='general_info']" position="after" >
+                    <page string="Field Sales"  groups="base.group_system,base.group_no_one">
+                        <group>
+                            <group string="Customer Visit" >
+                                 <field name="customer_visit" widget="boolean_toggle"/>
+                                 <field name="pre_sale_order" widget="boolean_toggle"/>
+                            </group>
+                            <group string="Inventory">
+                                 <field name="stock_exchange" widget="boolean_toggle"/>
+                                  <field name="stock_damage" widget="boolean_toggle"/>
+                                  <field name="stock_request" widget="boolean_toggle"/>
+                                  <field name="stock_return" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+     </record>
+</odoo>

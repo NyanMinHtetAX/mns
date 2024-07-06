@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="group_purchase_price" model="res.groups">
+            <field name="name">Readonly purchase line price</field>
+        </record>
+
+    </data>
+</odoo>

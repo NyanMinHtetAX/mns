@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_promotion_program_user,promotion.program.user,model_promotion_program,base.group_user,1,1,1,1
+access_buy_x_get_y_line_user,buy.x.get.y.line.user,model_buy_x_get_y_line,base.group_user,1,1,1,1
+access_discount_on_qty_line_user,discount.on.qty.line.user,model_discount_on_qty_line,base.group_user,1,1,1,1
+access_discount_on_combination_line_user,discount.on.combination.line.user,model_discount_on_combination_line,base.group_user,1,1,1,1
+access_discount_on_combination_qty_line_user,discount.on.combination.qty.line.user,model_discount_on_combination_qty_line,base.group_user,1,1,1,1
+access_discount_on_price_range_combination_user,discount.on.price.range.combination.user,model_discount_on_price_range_combination,base.group_user,1,1,1,1
+access_discount_on_price_range_multi_user,discount.on.price.range.multi.user,model_discount_on_price_range_multi,base.group_user,1,1,1,1

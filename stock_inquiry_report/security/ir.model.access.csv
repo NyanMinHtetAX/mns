@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_inquiry_report_wizard,stock.inquiry.report.wizard.user,model_stock_inquiry_report_wizard,base.group_user,1,1,1,1
+access_stock_inquiry_report_wizard_lines,stock.inquiry.report.wizard.lines.user,model_stock_inquiry_report_wizard_lines,base.group_user,1,1,1,1
+access_sstock_inquiry_excel_output,stock.inquiry.excel.output.user,model_stock_inquiry_excel_output,base.group_user,1,1,1,1
