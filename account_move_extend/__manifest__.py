@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Account Move Extend',
+
     'version': '1.1',
     'category': 'Account',
     'author': 'Asia Matrix, MPP',
