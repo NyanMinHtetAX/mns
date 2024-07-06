@@ -7,6 +7,7 @@
     'depends': [
             'base',
         ],
+
     'assets': {
         'web.assets_frontend': [
             'report_myanmar_font/static/src/scss/fonts.scss',
